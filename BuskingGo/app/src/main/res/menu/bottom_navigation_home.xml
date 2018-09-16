@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:title="홈"
+        android:icon="@drawable/ic_home_white_24dp"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/busking_list"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:title="버스킹목록"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/busking_regist"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:title="버스킹등록"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/seoul_street"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:title="거리예술존"
+        app:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/my_page"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_white_24dp"
+        android:title="마이페이지"
+        app:showAsAction="ifRoom" />
+
+</menu>
