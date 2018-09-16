@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">BuskingGo</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">홈</string>
+    <string name="buskinglist">버스킹목록</string>
+    <string name="buskingRegister">버스킹등록</string>
+    <string name="seoulBusking">거리예술존</string>
+    <string name="myPage">마이페이지</string>
 </resources>
