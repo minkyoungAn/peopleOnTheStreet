@@ -5,32 +5,32 @@
     <item
         android:id="@+id/action_home"
         android:enabled="true"
-        android:title="홈"
+        android:title="@string/home"
         android:icon="@drawable/ic_home_white_24dp"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/busking_list"
         android:enabled="true"
         android:icon="@drawable/ic_home_white_24dp"
-        android:title="버스킹목록"
+        android:title="@string/buskinglist"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/busking_regist"
         android:enabled="true"
         android:icon="@drawable/ic_home_white_24dp"
-        android:title="버스킹등록"
+        android:title="@string/buskingRegister"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/seoul_street"
         android:enabled="true"
         android:icon="@drawable/ic_home_white_24dp"
-        android:title="거리예술존"
+        android:title="@string/seoulBusking"
         app:showAsAction="ifRoom" />
     <item
         android:id="@+id/my_page"
         android:enabled="true"
         android:icon="@drawable/ic_home_white_24dp"
-        android:title="마이페이지"
+        android:title="@string/myPage"
         app:showAsAction="ifRoom" />
 
 </menu>

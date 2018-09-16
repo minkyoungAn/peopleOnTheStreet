@@ -4,27 +4,33 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity {
+
     HomeFragment homeFragment;
+    BuskingListFragment buskingListFragment;
+    BuskingRegisterFragment buskingRegisterFragment;
+    SeoulBuskingFragment seoulBuskingFragment;
     MyPageFragment myPageFragment;
+
     BottomNavigationView bottomNavigationView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         homeFragment = new HomeFragment();
+        buskingListFragment = new BuskingListFragment();
+        buskingRegisterFragment = new BuskingRegisterFragment();
+        seoulBuskingFragment = new SeoulBuskingFragment();
         myPageFragment = new MyPageFragment();
-
         bottomNavigationView = findViewById(R.id.bottom_navigation);
-        getSupportFragmentManager().beginTransaction().add(R.id.container, homeFragment).commit();
 
+        getSupportFragmentManager().beginTransaction().add(R.id.container, homeFragment).commit();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -34,13 +40,13 @@ public class MainActivity extends AppCompatActivity {
                         changeFragment(homeFragment);
                         break;
                     case R.id.busking_list: // 버스킹 목록
-                        //changeFragment(buskingListFragment); // 여기 들어가는 Fragment만 바꿔주면 됨!!
+                        changeFragment(buskingListFragment);
                         break;
                     case R.id.busking_regist: // 버스킹 등록
-                        //changeFragment(buskerRegistFragment);
+                        changeFragment(buskingRegisterFragment);
                         break;
                     case R.id.seoul_street: // 거리예술존
-                        //changeFragment();
+                        changeFragment(seoulBuskingFragment);
                         break;
                     case R.id.my_page: // 마이페이지
                         changeFragment(myPageFragment);
@@ -52,6 +58,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*
+    *  네비게이션 바 클릭시 fragment 교체
+    * */
     public void changeFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         getSupportFragmentManager().popBackStack();
