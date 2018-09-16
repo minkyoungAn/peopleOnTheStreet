@@ -35,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent registerIntent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                 LoginActivity.this.startActivity(registerIntent);
             }
         });
@@ -53,8 +53,6 @@ public class LoginActivity extends AppCompatActivity {
                 imm.hideSoftInputFromWindow(passwordText.getWindowToken(),0);
             }
         });
-
-
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

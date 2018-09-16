@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/login_background">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -54,10 +55,9 @@
                     android:layout_width="95dp"
                     android:layout_height="40dp"
                     android:layout_gravity="center"
-                    android:textSize="14sp"
+                    android:textSize="13sp"
                     android:text="중복체크"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold"
+                    android:textColor="#000000"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -75,9 +75,6 @@
                 android:textColor="#ffffff"
                 android:textColorHint="#ffffff"
                 tools:ignore="HardcodedText,RtlHardcoded" />
-            <!--android:background="@drawable/login_rounding"-->
-            <!--android:drawableLeft="@drawable/ic_lock_black_24dp"-->
-            <!--android:drawableStart="@drawable/ic_lock_black_24dp"-->
 
             <EditText
                 android:id="@+id/nicknameText"
@@ -96,32 +93,22 @@
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/addressText"
-                    android:layout_width="220dp"
+                <TextView
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginRight="5dp"
-                    android:textSize="14sp"
-                    android:singleLine="true"
-                    android:hint="주소"
                     android:padding="10dp"
-                    android:textColor="#ffffff"
-                    android:textColorHint="#ffffff"
-                    tools:ignore="HardcodedText,RtlHardcoded,TextFields" />
-
-                <Button
-                    android:id="@+id/addressButton"
-                    android:layout_width="95dp"
-                    android:layout_height="40dp"
-                    android:layout_gravity="center"
+                    android:text="주요 활동 장소"
                     android:textSize="14sp"
-                    android:text="주소검색"
-                    android:textColor="#FFFFFF"
-                    android:textStyle="bold" />
+                    android:textColor="#ffffff" />
+
+                <Spinner
+                    android:id="@+id/guSpinner"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"/>
 
             </LinearLayout>
 
@@ -136,45 +123,17 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="연령대"
+                    android:text="선호 장르"
                     android:textSize="14sp"
                     android:textColor="#ffffff" />
 
                 <Spinner
-                    android:id="@+id/ageSpinner"
+                    android:id="@+id/genreSpinner"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"/>
+                    android:layout_gravity="center" />
 
             </LinearLayout>
-
-            <RadioGroup
-                android:id="@+id/genderGroup"
-                android:layout_width="320dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/genderWoman"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:checked="true"
-                    android:text="여성"
-                    tools:ignore="HardcodedText" />
-
-                <RadioButton
-                    android:id="@+id/genderMan"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="남성"
-                    tools:ignore="HardcodedText" />
-
-            </RadioGroup>
-
 
             <Button
                 android:id="@+id/registerButton"
@@ -182,10 +141,9 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:text="가입하기"
-                android:textColor="#ffffff"
-                android:textStyle="bold" />
+                android:textColor="#000000" />
 
         </LinearLayout>
 
