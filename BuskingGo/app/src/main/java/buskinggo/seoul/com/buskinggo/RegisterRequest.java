@@ -3,7 +3,6 @@ package buskinggo.seoul.com.buskinggo;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 
-import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +21,7 @@ public class RegisterRequest extends StringRequest{
         parameters.put("userAge", userAge);
         parameters.put("userGender", userGender);
     }
+
 
     @Override
     public Map<String, String> getParams() {
