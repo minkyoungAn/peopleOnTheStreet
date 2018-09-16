@@ -8,4 +8,12 @@
     <string name="buskingRegister">버스킹등록</string>
     <string name="seoulBusking">거리예술존</string>
     <string name="myPage">마이페이지</string>
+    <string name="title_activity_busker_info">BuskerInfoActivity</string>
+    <string name="action_back">action_back</string>
+    <string name="favorite_cnt">0</string>
+    <string name="buskerInfoPlace">주요활동장소 :</string>
+    <string name="buskerInfoJenre">장르 :</string>
+    <string name="buskerInfoName">버스커명</string>
+    <string name="buskerInfoFavorite">좋아요</string>
+    <string name="todo">TODO</string>
 </resources>
