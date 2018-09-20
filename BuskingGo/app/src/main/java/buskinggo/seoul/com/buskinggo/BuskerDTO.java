@@ -7,14 +7,27 @@ public class BuskerDTO {
     private String genre;
     private String introduce;
     private int favorite;
+    private int myFavorite;
 
-    public BuskerDTO(){}
-    public BuskerDTO(String buskerName,String photo, String mainPlace, String genre, String introduce){
+    BuskerDTO(int favorite, int myFavorite){
+        this.favorite = favorite;
+        this.myFavorite = myFavorite;
+    }
+    BuskerDTO(String buskerName, String photo, String mainPlace, String genre, String introduce){
         this.buskerName = buskerName;
         this.photo = photo;
         this.mainPlace = mainPlace;
         this.genre = genre;
         this.introduce = introduce;
+    }
+    public BuskerDTO(String buskerName,String photo, String mainPlace, String genre, String introduce, int favorite, int myFavorite){
+        this.buskerName = buskerName;
+        this.photo = photo;
+        this.mainPlace = mainPlace;
+        this.genre = genre;
+        this.introduce = introduce;
+        this.favorite = favorite;
+        this.myFavorite = myFavorite;
     }
 
 
@@ -64,5 +77,14 @@ public class BuskerDTO {
 
     public void setFavorite(int favorite) {
         this.favorite = favorite;
+    }
+
+
+    public int getMyFavorite() {
+        return myFavorite;
+    }
+
+    public void setMyFavorite(int myFavorite) {
+        this.myFavorite = myFavorite;
     }
 }

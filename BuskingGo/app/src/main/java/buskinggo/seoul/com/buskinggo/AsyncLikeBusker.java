@@ -11,13 +11,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+
 /*
-*  버스커 상세정보 가져오기
+*  좋아요한 버스커 정보
+*  내가 좋아요한 버스커/ 버스커 좋아요 수
 * */
-public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
+public class AsyncLikeBusker extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncBuskerInfo(AsyncListener asyncListener){
+    AsyncLikeBusker(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -33,7 +35,7 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
             data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskerInfoLoad.php";
+            link = "http://buskinggo.cafe24.com/" + "LikeBusker.php";
 
             URL url = new URL(link);
 
@@ -74,15 +76,12 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String buskerName, photo, mainPlace, genre, introduce;
+            int likeSum, myLike;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                buskerName = object.getString("buskerName");
-                photo = object.getString("photo");
-                mainPlace = object.getString("mainPlace");
-                genre = object.getString("genre");
-                introduce = object.getString("introduce");
-                buskerDTO = new BuskerDTO(buskerName, photo, mainPlace, genre, introduce);
+                likeSum = object.getInt("likeSum");
+                myLike = object.getInt("myLike");
+                buskerDTO = new BuskerDTO(likeSum, myLike);
 
                 count++;
             }

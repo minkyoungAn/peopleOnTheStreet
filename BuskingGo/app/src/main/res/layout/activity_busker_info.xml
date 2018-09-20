@@ -93,15 +93,22 @@
                 android:textColor="@color/white"
                 android:text="@string/buskerInfoFavorite"
                 android:padding="8dp"/>
-            <TextView
-                android:id="@+id/busker_info_favorite_item"
+            <ImageView
+                android:id="@+id/busker_info_favorite_img"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_favorite_border_white_24dp"
-                android:drawablePadding="8dp"
-                android:layout_toEndOf="@+id/busker_info_favorite"
+                android:src="@drawable/ic_favorite_border_white_24dp"
+                android:layout_toEndOf="@id/busker_info_favorite"
+                android:paddingTop="8dp"
+                android:contentDescription="@string/todo" />
+            <TextView
+                android:id="@+id/busker_info_favorite_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/busker_info_favorite_img"
                 android:background="@android:color/transparent"
                 android:paddingTop="8dp"
+                android:layout_marginStart="4dp"
                 android:textColor="@color/white"
                 android:text="@string/favorite_cnt"
                 android:textSize="16sp" />

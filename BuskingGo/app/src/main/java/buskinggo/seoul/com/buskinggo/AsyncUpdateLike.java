@@ -1,6 +1,7 @@
 package buskinggo.seoul.com.buskinggo;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -11,15 +12,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-/*
-*  버스커 상세정보 가져오기
-* */
-public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
-    private AsyncListener asyncListener;
 
-    AsyncBuskerInfo(AsyncListener asyncListener){
-        this.asyncListener = asyncListener;
-    }
+/*
+ *  좋아요한 버스커 정보 갱신
+ *  좋아요 추가/ 삭제
+ * */
+public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
+
     @Override
     protected String doInBackground(Integer... params) {
         HttpURLConnection httpURLConnection = null;
@@ -27,13 +26,15 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
         try {
             int userNo = params[0];
             int buskerNo = params[1];
+            int check = params[2];
 
             String data;
             String link;
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
             data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskerInfoLoad.php";
+            data += "&" + URLEncoder.encode("check", "UTF-8") + "=" + check;
+            link = "http://buskinggo.cafe24.com/" + "UpdateLikeBusker.php";
 
             URL url = new URL(link);
 
@@ -55,6 +56,7 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
                 sb.append(line); // 데이터 받기
             }
 
+            Log.w("test", sb.toString());
             return sb.toString();
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,34 +66,5 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
                 httpURLConnection.disconnect();
             }
         }
-    }
-
-    @Override
-    protected void onPostExecute(String result) {   // 결과 처리부분
-        try {
-            BuskerDTO buskerDTO = null;
-            JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
-
-            int count = 0;
-            String buskerName, photo, mainPlace, genre, introduce;
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-                buskerName = object.getString("buskerName");
-                photo = object.getString("photo");
-                mainPlace = object.getString("mainPlace");
-                genre = object.getString("genre");
-                introduce = object.getString("introduce");
-                buskerDTO = new BuskerDTO(buskerName, photo, mainPlace, genre, introduce);
-
-                count++;
-            }
-
-            // ui 작업 리스너 호출
-            asyncListener.taskComplete(buskerDTO);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
     }
 }
