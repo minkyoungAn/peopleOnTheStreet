@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 public class BuskingRegisterFragment extends Fragment {
 
 
+
+
     public BuskingRegisterFragment() {
         // Required empty public constructor
     }

@@ -21,8 +21,8 @@
         <activity
             android:name=".BuskerInfoActivity"
             android:label="@string/title_activity_busker_info" >
-
         </activity>
+        <activity android:name=".RegisterActivity" />
     </application>
 
 </manifest>
