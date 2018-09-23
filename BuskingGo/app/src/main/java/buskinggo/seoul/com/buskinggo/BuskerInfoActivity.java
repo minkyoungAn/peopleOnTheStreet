@@ -1,15 +1,18 @@
 package buskinggo.seoul.com.buskinggo;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;
@@ -25,6 +28,9 @@ public class BuskerInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_busker_info);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
+        setSupportActionBar(toolbar);
+        Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
         final ListView buskingListView = findViewById(R.id.lv_busker_info);
         TextView noList = findViewById(R.id.tv_no_list_my_busking);
         buskingListView.setEmptyView(noList);
@@ -45,7 +51,6 @@ public class BuskerInfoActivity extends AppCompatActivity {
                     buskingList.addAll(buskingDTOS);
                     adapter.notifyDataSetChanged();
                 }
-
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskerNo);
 
@@ -106,6 +111,19 @@ public class BuskerInfoActivity extends AppCompatActivity {
                     new AsyncUpdateLike().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo, 1);
                 }
 
+            }
+        });
+
+        // 리스트뷰 클릭이벤트
+        buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(BuskerInfoActivity.this, BuskingInfoActivity.class);
+                intent.putExtra("buskerNo", buskerNo);
+                intent.putExtra("date", buskingList.get(position).getBuskingDate());
+                intent.putExtra("time", buskingList.get(position).getBuskingTime());
+                intent.putExtra("place", buskingList.get(position).getPlace());
+                startActivity(intent);
             }
         });
     }
