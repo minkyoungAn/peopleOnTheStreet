@@ -44,4 +44,20 @@
     <string name="seoulBusking">거리예술존</string>
     <string name="myPage">마이페이지</string>
 
+    <string name="title_activity_busker_info">BuskerInfoActivity</string>
+    <string name="action_back">action_back</string>
+    <string name="favorite_cnt">0</string>
+    <string name="buskerInfoPlace">주요활동장소 :</string>
+    <string name="buskerInfoJenre">장르 :</string>
+    <string name="buskerInfoName">버스커명</string>
+    <string name="buskerInfoFavorite">좋아요</string>
+    <string name="todo">TODO</string>
+    <string name="introduce">소개</string>
+    <string name="busker_info_list">등록된 공연 리스트</string>
+    <string name="date">일시</string>
+    <string name="place">장소</string>
+    <string name="time">시간</string>
+    <string name="no_list">- 예정된 공연이 없습니다.</string>
+
+
 </resources>
