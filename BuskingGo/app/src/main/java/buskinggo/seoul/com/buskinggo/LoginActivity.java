@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -67,8 +68,9 @@ public class LoginActivity extends AppCompatActivity {
                              JSONObject jsonResponse = new JSONObject(response);
                              boolean success = jsonResponse.getBoolean("success");
                              if(success){
+                                 String userNickname = jsonResponse.getString("Nickname");
                                  AsyncLogin asyncLogin = new AsyncLogin();
-                                 asyncLogin.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userEmail, userPassword);
+                                 asyncLogin.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userEmail, userPassword, userNickname);
 
                                  AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                  dialog = builder.setMessage("로그인에 성공하셨습니다.")
@@ -115,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             // 로그인 정보 어플리케이션에 저장
             MyApplication.userEmail = params[0];
             MyApplication.password = params[1];
+            MyApplication.userNickname = params[2];
             return null;
         }
     }

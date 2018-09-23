@@ -7,13 +7,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class NicknameRequest extends StringRequest{
-    final static private String URL = "http://buskinggo.cafe24.com/UserLogin.php";
+    final static private String URL = "http://buskinggo.cafe24.com/ChangeNickname.php";
     private Map<String, String> parameters;
 
-    public NicknameRequest(String userEmail, Response.Listener<String> listener){
+    public NicknameRequest(String userEmail, String changedNickname, Response.Listener<String> listener){
         super(Method.POST, URL, listener, null);  // 해당 파라미터를 POST방식으로 전송
         parameters = new HashMap<>();
         parameters.put("userEmail", userEmail);
+        parameters.put("changedNickname", changedNickname);
     }
 
     @Override

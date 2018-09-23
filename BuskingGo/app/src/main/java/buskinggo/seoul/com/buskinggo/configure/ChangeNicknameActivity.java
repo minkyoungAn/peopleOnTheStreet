@@ -1,14 +1,10 @@
 package buskinggo.seoul.com.buskinggo.configure;
 
-import android.app.Application;
-import android.graphics.Bitmap;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.OvalShape;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.RequestQueue;
@@ -21,33 +17,43 @@ import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
 
 public class ChangeNicknameActivity extends AppCompatActivity {
-    String userNickname;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_nickname);
 
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
+        final EditText changeNicknameText = findViewById(R.id.changeNicknameText);
+        changeNicknameText.setText(MyApplication.userNickname);
+
+        Button confirmNicknameButton = findViewById(R.id.confirmNicknameButton);
+        confirmNicknameButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonResponse = new JSONObject(response);
-                    boolean success = jsonResponse.getBoolean("success");
-                    if (success) {
-                        userNickname = jsonResponse.getString("userNickname");
-                        TextView nicknameText = findViewById(R.id.changeNicknameText);
-                        nicknameText.setText(userNickname);
-                    } else {
-                        Toast.makeText(getApplicationContext(), "정보를 가져오지 못했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+            public void onClick(View v) {
+                final String changedNickname = changeNicknameText.getText().toString();
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            boolean success = jsonResponse.getBoolean("success");
+                            if (success) {
+                                MyApplication.userNickname = changedNickname;
+                                Toast.makeText(getApplicationContext(), "닉네임을 성공적으로 변경하였습니다.", Toast.LENGTH_SHORT).show();
+                                finish();
+                            } else {
+                                Toast.makeText(getApplicationContext(), "정보를 가져오지 못했습니다. 다시 시도해주세요.", Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                };
+                NicknameRequest nicknameChangeRequest = new NicknameRequest(MyApplication.userEmail, changedNickname, responseListener);
+                RequestQueue queue = Volley.newRequestQueue(ChangeNicknameActivity.this);
+                queue.add(nicknameChangeRequest);
             }
-        };
-        NicknameRequest nicknameChangeRequest = new NicknameRequest(MyApplication.userEmail, responseListener);
-        RequestQueue queue = Volley.newRequestQueue(ChangeNicknameActivity.this);
-        queue.add(nicknameChangeRequest);
+        });
+
     }
 }
