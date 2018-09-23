@@ -11,7 +11,7 @@ import android.support.v7.widget.Toolbar;
 public class BuskerInfoActivity extends Activity {
     int userNo = 1;
     int buskerNo = 3;
-
+    int favorite = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +27,17 @@ public class BuskerInfoActivity extends Activity {
                 TextView tvJenre = findViewById(R.id.busker_info_jenre_item);
                 TextView tvPlace = findViewById(R.id.busker_info_place_item);
                 TextView tvIntroduce = findViewById(R.id.busker_info_introduce_item);
-
+                TextView tvFavorite = findViewById(R.id.busker_info_favorite_cnt);
+                ImageView ivFavorite = findViewById(R.id.busker_info_favorite_img);
+                System.out.println("확인 전"+favorite);
+                if(buskerDTO.getMyFavorite() != 0){
+                    // 있으면 하트 칠하기
+                    ivFavorite.setImageResource(R.drawable.ic_favorite_white_24dp);
+                    favorite = 1;
+                    System.out.println("확인 후" + favorite);
+                }
+                // 총 좋아요 수 출력
+                tvFavorite.setText(String.valueOf(buskerDTO.getFavorite()));
                 tvName.setText(buskerDTO.getBuskerName());
                 tvJenre.setText(buskerDTO.getGenre());
                 tvPlace.setText(buskerDTO.getMainPlace());
@@ -38,24 +48,6 @@ public class BuskerInfoActivity extends Activity {
         });
         asyncBuskerInfo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo);
 
-        // 좋아요 수 가져오기
-        AsyncLikeBusker asyncLikeBusker = new AsyncLikeBusker(new AsyncListener() {
-            @Override
-            public void taskComplete(BuskerDTO buskerDTO) {
-                TextView tvFavorite = findViewById(R.id.busker_info_favorite_cnt);
-                ImageView ivFavorite = findViewById(R.id.busker_info_favorite_img);
-
-                if(buskerDTO.getMyFavorite() != 0){
-                    // 있으면 하트 칠하기
-                    ivFavorite.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    ivFavorite.setTag("CHECK");
-                }
-                // 총 좋아요 수 출력
-                tvFavorite.setText(buskerDTO.getFavorite());
-            }
-        });
-        asyncLikeBusker.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo);
-
         final TextView tvFavorite = findViewById(R.id.busker_info_favorite_cnt);
         final ImageView ivFavorite = findViewById(R.id.busker_info_favorite_img);
 
@@ -63,17 +55,18 @@ public class BuskerInfoActivity extends Activity {
         ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ivFavorite.getTag().toString().equals("CHECK")){
+                System.out.println("좋아요 클릭" + favorite);
+                if(favorite == 1){
                     ivFavorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
-                    ivFavorite.setTag("CHECK_NON");
+                    favorite = 0;
                     int cnt = Integer.parseInt(tvFavorite.getText().toString()) - 1;
                     tvFavorite.setText(String.valueOf(cnt));
                     // 좋아요 삭제
                     new AsyncUpdateLike().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo, 0);
 
-                }else{
+                }else if (favorite == 0){
                     ivFavorite.setImageResource(R.drawable.ic_favorite_white_24dp);
-                    ivFavorite.setTag("CHECK");
+                    favorite = 1;
                     int cnt = Integer.parseInt(tvFavorite.getText().toString()) + 1;
                     tvFavorite.setText(String.valueOf(cnt));
                     // 좋아요 추가

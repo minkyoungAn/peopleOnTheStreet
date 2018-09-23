@@ -11,15 +11,13 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-
 /*
-*  좋아요한 버스커 정보
-*  내가 좋아요한 버스커/ 버스커 좋아요 수
-* */
-public class AsyncLikeBusker extends AsyncTask<Integer, String, String> {
+ *  버스커 이미지 가져오기
+ * */
+public class AsyncBuskerPhoto extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncLikeBusker(AsyncListener asyncListener){
+    AsyncBuskerPhoto(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -35,7 +33,7 @@ public class AsyncLikeBusker extends AsyncTask<Integer, String, String> {
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
             data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "LikeBusker.php";
+            link = "http://buskinggo.cafe24.com/" + "BuskerInfoLoad.php";
 
             URL url = new URL(link);
 
@@ -72,25 +70,23 @@ public class AsyncLikeBusker extends AsyncTask<Integer, String, String> {
     protected void onPostExecute(String result) {   // 결과 처리부분
         try {
             BuskerDTO buskerDTO = null;
+            System.out.println(result);
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
+            String buskerName, photo, mainPlace, genre, introduce;
+            buskerName = jsonObject.getString("buskerName");
+            photo = jsonObject.getString("photo");
+            mainPlace = jsonObject.getString("mainPlace");
+            genre = jsonObject.getString("genre");
+            introduce = jsonObject.getString("introduce");
+            String likeSum = jsonObject.getString("likeSum");
+            String myLike = jsonObject.getString("myLike");
+            buskerDTO = new BuskerDTO(buskerName, photo, mainPlace, genre, introduce, Integer.parseInt(likeSum), Integer.parseInt(myLike));
 
-            int count = 0;
-            int likeSum, myLike;
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-                likeSum = object.getInt("likeSum");
-                myLike = object.getInt("myLike");
-                buskerDTO = new BuskerDTO(likeSum, myLike);
-
-                count++;
-            }
 
             // ui 작업 리스너 호출
             asyncListener.taskComplete(buskerDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 }

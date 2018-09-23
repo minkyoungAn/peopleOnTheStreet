@@ -27,6 +27,7 @@ public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
             int userNo = params[0];
             int buskerNo = params[1];
             int check = params[2];
+            System.out.println(check);
 
             String data;
             String link;
@@ -34,7 +35,7 @@ public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
             data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
             data += "&" + URLEncoder.encode("check", "UTF-8") + "=" + check;
-            link = "http://buskinggo.cafe24.com/" + "UpdateLikeBusker.php";
+            link = "http://buskinggo.cafe24.com/" + "UpdateLike.php";
 
             URL url = new URL(link);
 
