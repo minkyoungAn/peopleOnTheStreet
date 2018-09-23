@@ -9,11 +9,11 @@ public class BuskerDTO {
     private int favorite;
     private int myFavorite;
 
-    BuskerDTO(int favorite, int myFavorite){
+    public BuskerDTO(int favorite, int myFavorite){
         this.favorite = favorite;
         this.myFavorite = myFavorite;
     }
-    BuskerDTO(String buskerName, String photo, String mainPlace, String genre, String introduce){
+    public BuskerDTO(String buskerName, String photo, String mainPlace, String genre, String introduce){
         this.buskerName = buskerName;
         this.photo = photo;
         this.mainPlace = mainPlace;

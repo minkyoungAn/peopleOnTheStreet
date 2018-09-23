@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -22,7 +23,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent mainIntent = getIntent();
+        UserDTO userDTO = (UserDTO) mainIntent.getSerializableExtra("userDTO");
 
+        System.out.println(userDTO.getUserNo() + userDTO.getMainPlace()+ userDTO.getNickName());
         homeFragment = new HomeFragment();
         buskingListFragment = new BuskingListFragment();
         buskingRegisterFragment = new BuskingRegisterFragment();

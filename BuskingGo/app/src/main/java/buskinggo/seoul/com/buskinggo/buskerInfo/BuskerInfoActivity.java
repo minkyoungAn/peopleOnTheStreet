@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -13,6 +13,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Objects;
+
+import buskinggo.seoul.com.buskinggo.AsyncListener;
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.BuskingInfoActivity;
+import buskinggo.seoul.com.buskinggo.R;
 
 public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;

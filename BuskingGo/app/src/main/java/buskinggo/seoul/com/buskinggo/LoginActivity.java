@@ -25,13 +25,15 @@ public class LoginActivity extends AppCompatActivity {
     private AlertDialog dialog;
     EditText emailText;
     EditText passwordText;
+
+
     @SuppressLint("ServiceCast")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        TextView registerButton = (TextView)findViewById(R.id.registerButton);
+        TextView registerButton = findViewById(R.id.registerButton);
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -40,17 +42,20 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        emailText = (EditText) findViewById(R.id.emailText);
-        passwordText = (EditText) findViewById(R.id.passwordText);
-        final Button loginButton = (Button) findViewById(R.id.loginButton);
+        emailText = findViewById(R.id.emailText);
+        passwordText = findViewById(R.id.passwordText);
+        final Button loginButton = findViewById(R.id.loginButton);
         RelativeLayout rl = findViewById(R.id.rl_login);
 
         rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(emailText.getWindowToken(),0);
-                imm.hideSoftInputFromWindow(passwordText.getWindowToken(),0);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(emailText.getWindowToken(),0);
+                    imm.hideSoftInputFromWindow(passwordText.getWindowToken(),0);
+                }
+
             }
         });
 
@@ -66,7 +71,15 @@ public class LoginActivity extends AppCompatActivity {
                          try{
                              JSONObject jsonResponse = new JSONObject(response);
                              boolean success = jsonResponse.getBoolean("success");
+
                              if(success){
+                                 String userNo = jsonResponse.getString("userNo");
+                                 String nickname = jsonResponse.getString("Nickname");
+                                 String mainPlace = jsonResponse.getString("MainPlace");
+                                 String likeGenre = jsonResponse.getString("LikeGenre");
+                                 String checkBusker = jsonResponse.getString("checkBusker");
+                                 UserDTO userDTO = new UserDTO(Integer.parseInt(userNo), nickname, mainPlace, likeGenre, Integer.parseInt(checkBusker));
+
                                  AsyncLogin asyncLogin = new AsyncLogin();
                                  asyncLogin.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userEmail, userPassword);
 
@@ -76,7 +89,10 @@ public class LoginActivity extends AppCompatActivity {
                                          .create();
                                  dialog.show();
                                  // 화면 전환
+                                 Bundle bundle = new Bundle();
+                                 bundle.putSerializable("userDTO", userDTO);
                                  Intent loginIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                 loginIntent.putExtras(bundle);
                                  LoginActivity.this.startActivity(loginIntent);
                                  finish();
                              }else{
