@@ -27,13 +27,13 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
         HttpURLConnection httpURLConnection = null;
 
         try {
-            int buskerNo = params[1];
+            int buskerNo = params[0];
 
             String data;
             String link;
 
             data = URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskerInfoLoad.php";
+            link = "http://buskinggo.cafe24.com/" + "BuskingListByBusker.php";
 
             URL url = new URL(link);
 
@@ -52,7 +52,7 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
             String line;
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line); // 데이터 받기
+                sb.append(line);
             }
 
             return sb.toString();
@@ -67,29 +67,28 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
     }
 
     @Override
-    protected void onPostExecute(String result) {   // 결과 처리부분
+    protected void onPostExecute(String result) {
         try {
-            BuskerDTO buskerDTO = null;
+
+            ArrayList<BuskingDTO> buskingList = new ArrayList<>();
+
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String place, buskingTime, buskingDate;
-            ArrayList<BuskingDTO> buskingDTOS = new ArrayList<>();
+            String date, place, time;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
+                date = object.getString("date");
                 place = object.getString("place");
-                buskingTime = object.getString("buskingTime");
-                buskingDate = object.getString("buskingDate");
+                time = object.getString("time");
 
-                BuskingDTO buskingDTO = new BuskingDTO(place, buskingDate, buskingTime);
-                buskingDTOS.add(buskingDTO);
-
+                BuskingDTO buskingDTO = new BuskingDTO(date, time, place);
+                buskingList.add(buskingDTO);
                 count++;
             }
 
-            // ui 작업 리스너 호출
-            asyncListener.taskComplete(buskerDTO); // arraylist형으로 바꾸기
+            asyncListener.taskComplete(buskingList);
         } catch (Exception e) {
             e.printStackTrace();
         }

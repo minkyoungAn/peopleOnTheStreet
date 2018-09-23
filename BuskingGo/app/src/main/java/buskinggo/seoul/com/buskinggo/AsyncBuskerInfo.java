@@ -2,7 +2,6 @@ package buskinggo.seoul.com.buskinggo;
 
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -69,9 +68,12 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
     @Override
     protected void onPostExecute(String result) {   // 결과 처리부분
         try {
-            BuskerDTO buskerDTO = null;
-            System.out.println(result);
+
+            BuskerDTO buskerDTO;
+
             JSONObject jsonObject = new JSONObject(result);
+
+            if(jsonObject.getString("success").equals("false")) return;
             String buskerName, photo, mainPlace, genre, introduce;
             buskerName = jsonObject.getString("buskerName");
             photo = jsonObject.getString("photo");

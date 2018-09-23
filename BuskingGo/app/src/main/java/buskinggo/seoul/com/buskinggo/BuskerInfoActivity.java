@@ -2,22 +2,53 @@ package buskinggo.seoul.com.buskinggo;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.Activity;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.support.v7.widget.Toolbar;
 
-public class BuskerInfoActivity extends Activity {
+import java.util.ArrayList;
+
+public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;
     int buskerNo = 3;
     int favorite = 0;
+
+    ArrayList<BuskingDTO> buskingList;
+    MyBuskingListAdapter adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busker_info);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
+        final ListView buskingListView = findViewById(R.id.lv_busker_info);
+        TextView noList = findViewById(R.id.tv_no_list_my_busking);
+        buskingListView.setEmptyView(noList);
+
+        buskingList = new ArrayList<>();
+        adapter = new MyBuskingListAdapter(getApplicationContext(),R.layout.my_busking_list_item, buskingList);
+        buskingListView.setAdapter(adapter);
+
+        // 공연리스트뷰 로드
+        new AsyncBuskingListByBusker(new AsyncListener() {
+            @Override
+            public void taskComplete(BuskerDTO buskerDTO) {}
+
+            @Override
+            public void taskComplete(ArrayList<BuskingDTO> buskingDTOS) {
+                if(buskingDTOS != null){
+                    buskingList.clear();
+                    buskingList.addAll(buskingDTOS);
+                    adapter.notifyDataSetChanged();
+                }
+
+            }
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskerNo);
+
 
         // DB 저장된 값 로드
         AsyncBuskerInfo asyncBuskerInfo = new AsyncBuskerInfo(new AsyncListener() {
@@ -29,12 +60,11 @@ public class BuskerInfoActivity extends Activity {
                 TextView tvIntroduce = findViewById(R.id.busker_info_introduce_item);
                 TextView tvFavorite = findViewById(R.id.busker_info_favorite_cnt);
                 ImageView ivFavorite = findViewById(R.id.busker_info_favorite_img);
-                System.out.println("확인 전"+favorite);
+
                 if(buskerDTO.getMyFavorite() != 0){
                     // 있으면 하트 칠하기
                     ivFavorite.setImageResource(R.drawable.ic_favorite_white_24dp);
                     favorite = 1;
-                    System.out.println("확인 후" + favorite);
                 }
                 // 총 좋아요 수 출력
                 tvFavorite.setText(String.valueOf(buskerDTO.getFavorite()));
@@ -45,6 +75,9 @@ public class BuskerInfoActivity extends Activity {
 
                 // 이미지처리 필요
             }
+
+            @Override
+            public void taskComplete(ArrayList<BuskingDTO> buskingDTOS) {}
         });
         asyncBuskerInfo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo);
 
@@ -75,8 +108,6 @@ public class BuskerInfoActivity extends Activity {
 
             }
         });
-        // 리스트뷰 처리 필요
-
     }
 
 }

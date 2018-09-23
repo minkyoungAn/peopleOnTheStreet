@@ -149,6 +149,17 @@
         </RelativeLayout>
     </GridLayout>
 
+    <TextView
+        android:id="@+id/tv_no_list_my_busking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gl_busker_info"
+        android:text="@string/no_list"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="16sp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"/>
     <ListView
         android:id="@+id/lv_busker_info"
         android:layout_marginLeft="16sp"
