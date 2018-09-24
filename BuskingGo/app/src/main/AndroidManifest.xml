@@ -23,7 +23,6 @@
             android:label="@string/title_activity_busker_info"
             android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity"
             >
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />

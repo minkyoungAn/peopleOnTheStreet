@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 public class MyLikeFragment extends Fragment {
 
-    public static final String ARG_OBJECT = "object";
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

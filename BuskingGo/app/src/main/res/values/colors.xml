@@ -11,4 +11,6 @@
     <color name="navigationView">#212121</color>
     <color name="itemBusking">#616161</color>
 
+    <color name="background_tab_pressed">#6633B5E5</color>
+
 </resources>
