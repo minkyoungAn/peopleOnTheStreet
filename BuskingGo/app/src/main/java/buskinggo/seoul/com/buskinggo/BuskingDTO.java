@@ -13,12 +13,12 @@ public class BuskingDTO {
     private String introduce;
 
 
-    BuskingDTO(String buskingDate, String buskingTime, String place){
+    public BuskingDTO(String buskingDate, String buskingTime, String place){
         this.buskingDate = buskingDate;
         this.buskingTime = buskingTime;
         this.place = place;
     }
-    BuskingDTO(String buskerNo, String photo, String buskingDate, String buskingTime, String place, String introduce){
+    public BuskingDTO(String buskerNo, String photo, String buskingDate, String buskingTime, String place, String introduce){
         this.buskerNo = buskerNo;
         this.photo = photo;
         this.buskingDate = buskingDate;
