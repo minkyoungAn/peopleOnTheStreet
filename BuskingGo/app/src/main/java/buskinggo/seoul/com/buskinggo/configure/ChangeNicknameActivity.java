@@ -49,7 +49,7 @@ public class ChangeNicknameActivity extends AppCompatActivity {
                         }
                     }
                 };
-                NicknameRequest nicknameChangeRequest = new NicknameRequest(MyApplication.userEmail, changedNickname, responseListener);
+                ChangeNicknameRequest nicknameChangeRequest = new ChangeNicknameRequest(MyApplication.userEmail, changedNickname, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(ChangeNicknameActivity.this);
                 queue.add(nicknameChangeRequest);
             }

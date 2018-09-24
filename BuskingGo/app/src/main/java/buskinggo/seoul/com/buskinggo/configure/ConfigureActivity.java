@@ -24,6 +24,16 @@ public class ConfigureActivity extends AppCompatActivity {
             }
         });
 
+        Button changePasswordButton = (Button) findViewById(R.id.changePasswordButton);
+        changePasswordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent PasswordIntent = new Intent(ConfigureActivity.this, ChangePasswordActivity.class);
+                startActivity(PasswordIntent);
+            }
+        });
+
+
     }
 
 }

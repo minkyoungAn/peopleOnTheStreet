@@ -14,25 +14,29 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_busker_info"
-            android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity">
+            android:parentActivityName=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".configure.ConfigureActivity" />
-        <activity android:name=".configure.ChangeNicknameActivity"></activity>
-        <activity android:name="BuskingInfoActivity"
+        <activity android:name=".configure.ChangeNicknameActivity" />
+        <activity
+            android:name=".BuskingInfoActivity"
             android:label="BuskingInfoActivity"
-            android:parentActivityName="buskinggo.seoul.com.buskinggo.BuskerInfoActivity">
+            android:parentActivityName=".BuskerInfoActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.BuskerInfoActivity" />
         </activity>
+        <activity android:name=".configure.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>
