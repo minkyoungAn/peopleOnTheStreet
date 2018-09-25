@@ -30,6 +30,7 @@ public class MyPageFragment extends Fragment {
     private Fragment myLikeFragment;
     private Fragment myWantGoFragment;
     private Fragment myPastFragment;
+    UserDTO userDTO;
 
     @Nullable
     @Override
@@ -91,6 +92,7 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        userDTO = ((MainActivity) Objects.requireNonNull(getActivity())).userDTO;
 
         // setting 클릭시 이동
         ImageView setting = Objects.requireNonNull(getView()).findViewById(R.id.iv_my_page_setting);
@@ -98,10 +100,8 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
-                intent.putExtra("userDTO", ((MainActivity) Objects.requireNonNull(getActivity())).userDTO);
-
+                intent.putExtra("userDTO", userDTO);
                 startActivity(intent);
-
             }
         });
 

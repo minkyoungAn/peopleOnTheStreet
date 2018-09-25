@@ -29,10 +29,11 @@
         tools:ignore="UnknownId">
 
         <ImageView
+            android:id="@+id/busker_info_photo"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_rowSpan="4"
-            android:background="@color/spaceGray"
+            android:background="@color/black"
             android:contentDescription="@string/todo" />
 
         <TextView
