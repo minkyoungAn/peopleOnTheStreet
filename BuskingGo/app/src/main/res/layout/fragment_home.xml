@@ -17,57 +17,53 @@
         android:textStyle="bold"
         android:textColor="@color/white"/>
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_below="@id/text_home">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/recommendBusking"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="40dp"
+            android:text="이런 버스킹 어때요?"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/recommendBusking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
-                android:text="이런 버스킹 어때요?"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText"/>
+        <GridView
+            android:layout_width="280dp"
+            android:layout_height="130dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:horizontalSpacing="30dp"
+            android:numColumns="2"
+            android:verticalSpacing="10dp" />
 
-            <GridView
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:numColumns="2"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="30dp"/>
+        <TextView
+            android:id="@+id/todayBusking"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="30dp"
+            android:text="오늘의 버스킹"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:ignore="HardcodedText" />
 
-            <TextView
-                android:id="@+id/todayBusking"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
-                android:text="오늘의 버스킹"
-                android:textColor="@color/white"
-                android:textSize="20sp"
-                tools:ignore="HardcodedText"/>
+        <ListView
+            android:id="@+id/today_busking_listview"
+            android:layout_width="280dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center_horizontal"
+            android:dividerHeight="10dp"
+            android:layout_marginTop="10dp">
 
-            <ListView
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp">
+        </ListView>
 
-            </ListView>
-
-        </LinearLayout>
-
-    </ScrollView>
+    </LinearLayout>
 
 </RelativeLayout>
