@@ -1,6 +1,8 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +13,18 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import buskinggo.seoul.com.buskinggo.AsyncListener;
+import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.BuskingInfoActivity;
+import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;
@@ -28,10 +40,11 @@ public class BuskerInfoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_busker_info);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar); // 툴바
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
-        final ListView buskingListView = findViewById(R.id.lv_busker_info);
+
+        final ListView buskingListView = findViewById(R.id.lv_busker_info); // 리스트뷰
         TextView noList = findViewById(R.id.tv_no_list_my_busking);
         buskingListView.setEmptyView(noList);
 
@@ -41,16 +54,30 @@ public class BuskerInfoActivity extends AppCompatActivity {
 
         // 공연리스트뷰 로드
         new AsyncBuskingListByBusker(new AsyncListener() {
-            @Override
-            public void taskComplete(BuskerDTO buskerDTO) {}
+
 
             @Override
-            public void taskComplete(ArrayList<BuskingDTO> buskingDTOS) {
+            public void buskerComplete(BuskerDTO buskerDTO) {
+
+            }
+
+            @Override
+            public void buskerComplete(ArrayList<BuskerDTO> buskerDTOS) {
+
+            }
+
+            @Override
+            public void buskingComplete(ArrayList<BuskingDTO> buskingDTOS) {
                 if(buskingDTOS != null){
                     buskingList.clear();
                     buskingList.addAll(buskingDTOS);
                     adapter.notifyDataSetChanged();
                 }
+            }
+
+            @Override
+            public void buskingComplete(BuskingDTO buskingDTOS) {
+
             }
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskerNo);
 
@@ -58,7 +85,7 @@ public class BuskerInfoActivity extends AppCompatActivity {
         // DB 저장된 값 로드
         AsyncBuskerInfo asyncBuskerInfo = new AsyncBuskerInfo(new AsyncListener() {
             @Override
-            public void taskComplete(BuskerDTO buskerDTO) {
+            public void buskerComplete(BuskerDTO buskerDTO) {
                 TextView tvName = findViewById(R.id.busker_info_name);
                 TextView tvJenre = findViewById(R.id.busker_info_jenre_item);
                 TextView tvPlace = findViewById(R.id.busker_info_place_item);
@@ -78,11 +105,28 @@ public class BuskerInfoActivity extends AppCompatActivity {
                 tvPlace.setText(buskerDTO.getMainPlace());
                 tvIntroduce.setText(buskerDTO.getIntroduce());
 
-                // 이미지처리 필요
+                // 프로필이미지 출력
+                if(buskerDTO.getPhoto()!=null){
+                    bitmapImgDownload(buskerDTO.getPhoto());
+                }
+
             }
 
             @Override
-            public void taskComplete(ArrayList<BuskingDTO> buskingDTOS) {}
+            public void buskerComplete(ArrayList<BuskerDTO> buskerDTOS) {
+
+            }
+
+            @Override
+            public void buskingComplete(ArrayList<BuskingDTO> buskingDTOS) {
+
+            }
+
+            @Override
+            public void buskingComplete(BuskingDTO buskingDTOS) {
+
+            }
+
         });
         asyncBuskerInfo.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userNo, buskerNo);
 
@@ -128,4 +172,19 @@ public class BuskerInfoActivity extends AppCompatActivity {
         });
     }
 
+    void bitmapImgDownload(String photo) {
+        // 이미지 다운로드
+        AsyncPhoto asyncPhoto = new AsyncPhoto(new AsyncPhotoListener() {
+            @Override
+            public void taskComplete(File file) {
+                if(file != null){
+                    ImageView ivPhoto = findViewById(R.id.busker_info_photo);
+                    Bitmap bitmap = new PhotoResizing().loadPictureWithResize(file, 160);
+                    ivPhoto.setImageBitmap(bitmap);
+                }
+            }
+        });
+      asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
+
+    }
 }

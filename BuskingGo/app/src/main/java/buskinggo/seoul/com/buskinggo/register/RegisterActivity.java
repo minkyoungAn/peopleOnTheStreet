@@ -1,8 +1,6 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.register;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Patterns;
@@ -17,6 +15,8 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import buskinggo.seoul.com.buskinggo.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

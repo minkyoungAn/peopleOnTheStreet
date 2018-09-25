@@ -2,8 +2,15 @@ package buskinggo.seoul.com.buskinggo;
 
 import java.util.ArrayList;
 
-public interface AsyncListener {
-    void  taskComplete(BuskerDTO buskerDTO);
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
-    void taskComplete(ArrayList<BuskingDTO> buskingDTOS);
+public interface AsyncListener {
+    void buskerComplete(BuskerDTO buskerDTO);
+
+    void buskerComplete(ArrayList<BuskerDTO> buskerDTOS);
+
+    void buskingComplete(ArrayList<BuskingDTO> buskingDTOS);
+
+    void buskingComplete(BuskingDTO buskingDTOS);
 }

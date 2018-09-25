@@ -1,8 +1,7 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,13 +10,17 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+
+import buskinggo.seoul.com.buskinggo.AsyncListener;
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
+
 /*
- *  버스커 이미지 가져오기
- * */
-public class AsyncBuskerPhoto extends AsyncTask<Integer, String, String> {
+*  버스커 상세정보 가져오기
+* */
+public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncBuskerPhoto(AsyncListener asyncListener){
+    AsyncBuskerInfo(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -69,9 +72,12 @@ public class AsyncBuskerPhoto extends AsyncTask<Integer, String, String> {
     @Override
     protected void onPostExecute(String result) {   // 결과 처리부분
         try {
-            BuskerDTO buskerDTO = null;
-            System.out.println(result);
+
+            BuskerDTO buskerDTO;
+
             JSONObject jsonObject = new JSONObject(result);
+
+            if(jsonObject.getString("success").equals("false")) return;
             String buskerName, photo, mainPlace, genre, introduce;
             buskerName = jsonObject.getString("buskerName");
             photo = jsonObject.getString("photo");
@@ -84,7 +90,7 @@ public class AsyncBuskerPhoto extends AsyncTask<Integer, String, String> {
 
 
             // ui 작업 리스너 호출
-            asyncListener.taskComplete(buskerDTO);
+            asyncListener.buskerComplete(buskerDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }

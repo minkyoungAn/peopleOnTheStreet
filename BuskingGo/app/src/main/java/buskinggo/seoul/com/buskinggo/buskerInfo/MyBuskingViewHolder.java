@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.widget.TextView;
 
