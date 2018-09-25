@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,10 +11,14 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.Toolbar;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.Objects;
+
+import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,12 +30,15 @@ public class MyPageFragment extends Fragment {
     private Fragment myLikeFragment;
     private Fragment myWantGoFragment;
     private Fragment myPastFragment;
-
+    UserDTO userDTO;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_page, container, false);
+
+        Toolbar toolbar = view.findViewById(R.id.my_page_toolbar);
+        Objects.requireNonNull(getActivity()).setActionBar(toolbar);
 
         myLikeFragment = new MyLikeFragment();
         myWantGoFragment = new MyWantGoFragment();
@@ -43,11 +51,9 @@ public class MyPageFragment extends Fragment {
 
         pager.setCurrentItem(0);
         PagerSlidingTabStrip tabs = view.findViewById(R.id.tabs);
+        tabs.setTextColor(0xFFFFFFFF);
         tabs.setShouldExpand(true);
         tabs.setViewPager(pager);
-
-        Objects.requireNonNull(getActivity()).setTitle("마이페이지");
-
 
         return view;
     }
@@ -81,5 +87,23 @@ public class MyPageFragment extends Fragment {
         public int getCount() {
             return 3;
         }
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        userDTO = ((MainActivity) Objects.requireNonNull(getActivity())).userDTO;
+
+        // setting 클릭시 이동
+        ImageView setting = Objects.requireNonNull(getView()).findViewById(R.id.iv_my_page_setting);
+        setting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
+                intent.putExtra("userDTO", userDTO);
+                startActivity(intent);
+            }
+        });
+
     }
 }
