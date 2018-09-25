@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuskerInfoActivity"
+    tools:context=".buskerInfo.BuskerInfoActivity"
     android:background="@color/black">
 
     <android.support.v7.widget.Toolbar
@@ -29,10 +29,11 @@
         tools:ignore="UnknownId">
 
         <ImageView
+            android:id="@+id/busker_info_photo"
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_rowSpan="4"
-            android:background="@color/spaceGray"
+            android:background="@color/black"
             android:contentDescription="@string/todo" />
 
         <TextView
@@ -160,6 +161,7 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         android:visibility="gone"/>
+
     <ListView
         android:id="@+id/lv_busker_info"
         android:layout_marginLeft="16sp"

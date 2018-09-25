@@ -8,7 +8,9 @@
     <color name="white">#ffffff</color>
     <color name="spaceGray">#c0c5ce</color>
     <color name="mainBackground">#424242</color>
-    <color name="navigationView">#212121</color>
-    <color name="itemBusking">#616161</color>
+    <color name="navigationViewBackground">#212121</color>
+    <color name="itemBuskingBackground">#616161</color>
+
+    <color name="background_tab_pressed">#6633B5E5</color>
 
 </resources>

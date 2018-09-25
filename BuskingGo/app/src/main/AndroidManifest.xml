@@ -3,6 +3,8 @@
     package="buskinggo.seoul.com.buskinggo">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -10,16 +12,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_busker_info"
-            android:parentActivityName=".MainActivity">
+        <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".MainActivity">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+        <activity
+            android:name=".buskerInfo.BuskerInfoActivity"
+            android:label="@string/title_activity_busker_info"
+            android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity">
 
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -31,10 +39,11 @@
         <activity
             android:name=".BuskingInfoActivity"
             android:label="BuskingInfoActivity"
-            android:parentActivityName=".BuskerInfoActivity">
+            android:parentActivityName="buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity">
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="buskinggo.seoul.com.buskinggo.BuskerInfoActivity" />
+                android:value="buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity" />
         </activity>
         <activity android:name=".configure.ChangePasswordActivity" />
         <activity android:name=".configure.RegisterBuskerActivity"></activity>

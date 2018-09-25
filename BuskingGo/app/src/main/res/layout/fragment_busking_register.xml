@@ -1,14 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".BuskingRegisterFragment">
+    tools:context=".BuskingRegisterFragment"
+    android:background="@color/mainBackground">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="버스킹 등록 입니다" />
+        android:id="@+id/text_home"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/buskingRegister"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"/>
 
-</FrameLayout>
+    <ImageButton
+        android:id="@+id/busking_image"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="75dp"
+        tools:ignore="ContentDescription"/>
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/busking_image"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/date"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/date_button"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:background="@drawable/rounded_btn"
+        android:layout_below="@id/dateTextView"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:padding="5dp"
+        android:text="2018.10.11"
+        android:textSize="15sp"
+        android:textColor="@color/white"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/timeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/busking_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="110dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/time"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/time_button"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/timeTextView"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_btn"
+        android:padding="5dp"
+        android:text="17:30"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+
+    <TextView
+        android:id="@+id/place_TextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_button"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/place"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/select_place_TextView"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/place_TextView"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_btn"
+        android:padding="5dp"
+        android:text="경기도 김포시 수기로 8"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        tools:ignore="HardcodedText" />
+
+    <Button
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_toEndOf="@id/select_place_TextView"
+        android:layout_below="@id/place_TextView"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="7dp"
+        android:background="@drawable/ic_place_select"/>
+
+    <TextView
+        android:id="@+id/introduce_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/select_place_TextView"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp"
+        android:text="@string/introduce"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold"/>
+
+    <EditText
+        android:id="@+id/edit_text_box"
+        android:layout_width="280dp"
+        android:layout_height="90dp"
+        android:layout_below="@id/introduce_textView"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edit_text_box"
+        android:gravity="top"/>
+
+    <Button
+        android:id="@+id/busking_register_button"
+        android:layout_width="280dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/edit_text_box"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="15dp"
+        android:background="@color/itemBuskingBackground"
+        android:text="등록하기"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

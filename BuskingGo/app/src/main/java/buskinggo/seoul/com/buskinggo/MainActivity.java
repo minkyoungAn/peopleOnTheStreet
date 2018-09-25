@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -15,6 +16,7 @@ public class MainActivity extends AppCompatActivity {
     BuskingRegisterFragment buskingRegisterFragment;
     SeoulBuskingFragment seoulBuskingFragment;
     MyPageFragment myPageFragment;
+    UserDTO userDTO;
 
     BottomNavigationView bottomNavigationView;
 
@@ -22,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Intent mainIntent = getIntent();
+        userDTO = (UserDTO) mainIntent.getSerializableExtra("userDTO");
 
         homeFragment = new HomeFragment();
         buskingListFragment = new BuskingListFragment();
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home: // 홈
+
                         changeFragment(homeFragment);
                         break;
                     case R.id.busking_list: // 버스킹 목록

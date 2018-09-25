@@ -1,8 +1,11 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -11,8 +14,16 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
+
+import buskinggo.seoul.com.buskinggo.AsyncListener;
+import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.BuskingInfoActivity;
+import buskinggo.seoul.com.buskinggo.R;
 
 public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;
@@ -78,7 +89,11 @@ public class BuskerInfoActivity extends AppCompatActivity {
                 tvPlace.setText(buskerDTO.getMainPlace());
                 tvIntroduce.setText(buskerDTO.getIntroduce());
 
-                // 이미지처리 필요
+                // 프로필이미지 출력
+                if(buskerDTO.getPhoto()!=null){
+                    bitmapImgDownload(buskerDTO.getPhoto());
+                }
+
             }
 
             @Override
@@ -128,4 +143,19 @@ public class BuskerInfoActivity extends AppCompatActivity {
         });
     }
 
+    void bitmapImgDownload(String photo) {
+        // 이미지 다운로드
+        AsyncBuskerPhoto asyncBuskerPhoto = new AsyncBuskerPhoto(new AsyncPhotoListener() {
+            @Override
+            public void taskComplete(File file) {
+                if(file != null){
+                    ImageView ivPhoto = findViewById(R.id.busker_info_photo);
+                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                    ivPhoto.setImageBitmap(bitmap);
+                }
+            }
+        });
+      asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
+
+    }
 }
