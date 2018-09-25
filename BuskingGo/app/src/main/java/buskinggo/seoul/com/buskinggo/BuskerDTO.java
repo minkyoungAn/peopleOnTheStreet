@@ -1,6 +1,9 @@
 package buskinggo.seoul.com.buskinggo;
 
+import android.graphics.Bitmap;
+
 public class BuskerDTO {
+    private String buskerNo;
     private String buskerName;
     private String photo;
     private String mainPlace;
@@ -9,9 +12,17 @@ public class BuskerDTO {
     private int favorite;
     private int myFavorite;
 
+    private Bitmap bitmap;
+
     public BuskerDTO(int favorite, int myFavorite){
         this.favorite = favorite;
         this.myFavorite = myFavorite;
+    }
+    public BuskerDTO(String buskeNo, String buskerName, String photo, String genre){
+        this.buskerNo = buskeNo;
+        this.buskerName = buskerName;
+        this.photo = photo;
+        this.genre = genre;
     }
     public BuskerDTO(String buskerName, String photo, String mainPlace, String genre, String introduce){
         this.buskerName = buskerName;
@@ -86,5 +97,13 @@ public class BuskerDTO {
 
     public void setMyFavorite(int myFavorite) {
         this.myFavorite = myFavorite;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }

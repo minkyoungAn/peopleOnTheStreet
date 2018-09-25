@@ -18,7 +18,7 @@ public class AsyncBuskerPhoto extends AsyncTask<String, String, File> {
     private AsyncPhotoListener asyncListener;
 
 
-    AsyncBuskerPhoto(AsyncPhotoListener asyncListener){
+    public AsyncBuskerPhoto(AsyncPhotoListener asyncListener){
         this.asyncListener = asyncListener;
     }
 

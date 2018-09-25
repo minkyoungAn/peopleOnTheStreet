@@ -91,7 +91,7 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
                 count++;
             }
 
-            asyncListener.taskComplete(buskingList);
+            asyncListener.buskingComplete(buskingList);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -18,6 +18,7 @@ import com.astuetz.PagerSlidingTabStrip;
 
 import java.util.Objects;
 
+import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeFragment;
 import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 
 /**
@@ -25,12 +26,14 @@ import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
  */
 public class MyPageFragment extends Fragment {
 
+
     public MyPageFragment(){}
 
     private Fragment myLikeFragment;
     private Fragment myWantGoFragment;
     private Fragment myPastFragment;
     UserDTO userDTO;
+
 
     @Nullable
     @Override
@@ -74,10 +77,19 @@ public class MyPageFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if( position == 0 ) {
+                Bundle args = new Bundle();
+                args.putSerializable("userDTO", userDTO);
+                myLikeFragment.setArguments(args);
                 return myLikeFragment;
             } else if ( position == 1 ) {
+                Bundle args = new Bundle();
+                args.putSerializable("userDTO", userDTO);
+                myWantGoFragment.setArguments(args);
                 return myWantGoFragment;
             } else {
+                Bundle args = new Bundle();
+                args.putSerializable("userDTO", userDTO);
+                myPastFragment.setArguments(args);
                 return myPastFragment;
             }
         }

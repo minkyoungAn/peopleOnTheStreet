@@ -1,26 +1,30 @@
-package buskinggo.seoul.com.buskinggo.buskerInfo;
+package buskinggo.seoul.com.buskinggo.MyPageLike;
 
 import android.os.AsyncTask;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 
 import buskinggo.seoul.com.buskinggo.AsyncListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
 /*
-*  버스커 상세정보 가져오기
-* */
-public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
+ *  내가 좋아요한 버스커 가져오기
+ * */
+public class AsyncMyLike extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncBuskerInfo(AsyncListener asyncListener){
+    AsyncMyLike(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -29,14 +33,13 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
 
         try {
             int userNo = params[0];
-            int buskerNo = params[1];
+            userNo = 1;
 
             String data;
             String link;
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
-            data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskerInfoLoad.php";
+            link = "http://buskinggo.cafe24.com/" + "LikeBuskerInfoLoad.php";
 
             URL url = new URL(link);
 
@@ -73,24 +76,26 @@ public class AsyncBuskerInfo extends AsyncTask<Integer, String, String> {
     protected void onPostExecute(String result) {   // 결과 처리부분
         try {
 
-            BuskerDTO buskerDTO;
+            ArrayList<BuskerDTO> buskerDTOS = new ArrayList<>();
 
             JSONObject jsonObject = new JSONObject(result);
+            JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-            if(jsonObject.getString("success").equals("false")) return;
-            String buskerName, photo, mainPlace, genre, introduce;
-            buskerName = jsonObject.getString("buskerName");
-            photo = jsonObject.getString("photo");
-            mainPlace = jsonObject.getString("mainPlace");
-            genre = jsonObject.getString("genre");
-            introduce = jsonObject.getString("introduce");
-            String likeSum = jsonObject.getString("likeSum");
-            String myLike = jsonObject.getString("myLike");
-            buskerDTO = new BuskerDTO(buskerName, photo, mainPlace, genre, introduce, Integer.parseInt(likeSum), Integer.parseInt(myLike));
+            int count = 0;
+            String userNo, buskerName, photo, genre;
+            while (count < jsonArray.length()) {
+                JSONObject object = jsonArray.getJSONObject(count);
+                userNo = object.getString("userNo");
+                buskerName = object.getString("buskerName");
+                photo = object.getString("photo");
+                genre = object.getString("genre");
 
-
+                BuskerDTO buskerDTO = new BuskerDTO(userNo, buskerName, photo, genre);
+                buskerDTOS.add(buskerDTO);
+                count++;
+            }
             // ui 작업 리스너 호출
-            asyncListener.buskerComplete(buskerDTO);
+            asyncListener.buskerComplete(buskerDTOS);
         } catch (Exception e) {
             e.printStackTrace();
         }
