@@ -19,6 +19,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.util.Objects;
 
 import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
+import buskinggo.seoul.com.buskinggo.configure.ConfigureActivity;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -99,9 +100,8 @@ public class MyPageFragment extends Fragment {
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
-                intent.putExtra("userDTO", userDTO);
-                startActivity(intent);
+                Intent configureIntent = new Intent(getView().getContext(), ConfigureActivity.class);
+                startActivity(configureIntent);
             }
         });
 
