@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -24,6 +23,7 @@ import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.BuskingInfoActivity;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class BuskerInfoActivity extends AppCompatActivity {
     int userNo = 1;
@@ -145,7 +145,7 @@ public class BuskerInfoActivity extends AppCompatActivity {
 
     void bitmapImgDownload(String photo) {
         // 이미지 다운로드
-        AsyncBuskerPhoto asyncBuskerPhoto = new AsyncBuskerPhoto(new AsyncPhotoListener() {
+        AsyncPhoto asyncPhoto = new AsyncPhoto(new AsyncPhotoListener() {
             @Override
             public void taskComplete(File file) {
                 if(file != null){
@@ -155,7 +155,7 @@ public class BuskerInfoActivity extends AppCompatActivity {
                 }
             }
         });
-      asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
+      asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
 
     }
 }

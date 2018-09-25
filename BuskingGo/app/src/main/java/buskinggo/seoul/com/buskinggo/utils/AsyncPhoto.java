@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.buskerInfo;
+package buskinggo.seoul.com.buskinggo.utils;
 
 import android.os.AsyncTask;
 import android.os.Environment;
@@ -14,11 +14,11 @@ import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 /*
  *  버스커 이미지 가져오기
  * */
-public class AsyncBuskerPhoto extends AsyncTask<String, String, File> {
+public class AsyncPhoto extends AsyncTask<String, String, File> {
     private AsyncPhotoListener asyncListener;
 
 
-    AsyncBuskerPhoto(AsyncPhotoListener asyncListener){
+    public AsyncPhoto(AsyncPhotoListener asyncListener){
         this.asyncListener = asyncListener;
     }
 
