@@ -12,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -33,7 +33,7 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />
         </activity>
-        <activity android:name=".RegisterActivity" />
+        <activity android:name=".register.RegisterActivity" />
         <activity android:name=".configure.ConfigureActivity" />
         <activity android:name=".configure.ChangeNicknameActivity" />
         <activity
