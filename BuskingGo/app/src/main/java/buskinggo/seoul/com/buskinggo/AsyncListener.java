@@ -6,7 +6,11 @@ import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
 public interface AsyncListener {
-    void  taskComplete(BuskerDTO buskerDTO);
+    void buskerComplete(BuskerDTO buskerDTO);
 
-    void taskComplete(ArrayList<BuskingDTO> buskingDTOS);
+    void buskerComplete(ArrayList<BuskerDTO> buskerDTOS);
+
+    void buskingComplete(ArrayList<BuskingDTO> buskingDTOS);
+
+    void buskingComplete(BuskingDTO buskingDTOS);
 }

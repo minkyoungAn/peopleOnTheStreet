@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home: // 홈
-
                         changeFragment(homeFragment);
                         break;
                     case R.id.busking_list: // 버스킹 목록

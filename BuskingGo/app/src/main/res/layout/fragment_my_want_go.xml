@@ -9,9 +9,10 @@
         android:id="@+id/text1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/white"
         android:text="테스트중2"
         />
-    <!--<GridView
+    <GridView
         android:numColumns="2"
         android:id="@+id/lv_my_want"
         android:layout_width="match_parent"
@@ -20,6 +21,6 @@
         android:layout_marginRight="16sp"
         android:divider="@color/black"
         android:dividerHeight="4dp"
-        android:orientation="vertical" />-->
+        android:orientation="vertical" />
 
 </RelativeLayout>

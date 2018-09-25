@@ -34,6 +34,7 @@
             android:layout_height="160dp"
             android:layout_rowSpan="4"
             android:background="@color/black"
+            android:scaleType="fitCenter"
             android:contentDescription="@string/todo" />
 
         <TextView
