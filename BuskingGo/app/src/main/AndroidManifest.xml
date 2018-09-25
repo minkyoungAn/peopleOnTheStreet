@@ -36,7 +36,8 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.BuskerInfoActivity" />
         </activity>
-        <activity android:name=".configure.ChangePasswordActivity"></activity>
+        <activity android:name=".configure.ChangePasswordActivity" />
+        <activity android:name=".configure.RegisterBuskerActivity"></activity>
     </application>
 
 </manifest>
