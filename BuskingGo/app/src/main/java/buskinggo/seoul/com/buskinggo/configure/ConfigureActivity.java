@@ -8,7 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import buskinggo.seoul.com.buskinggo.LoginActivity;
+import buskinggo.seoul.com.buskinggo.login.LoginActivity;
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
 

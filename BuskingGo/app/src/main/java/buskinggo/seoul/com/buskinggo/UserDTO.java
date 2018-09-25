@@ -10,7 +10,7 @@ public class UserDTO implements Serializable{
     private String likeGenre;
     private int checkBusker;
 
-    UserDTO(int userNo, String nickName, String mainPlace, String likeGenre, int checkBusker){
+    public UserDTO(int userNo, String nickName, String mainPlace, String likeGenre, int checkBusker){
         this.userNo = userNo;
 
         this.nickName = nickName;

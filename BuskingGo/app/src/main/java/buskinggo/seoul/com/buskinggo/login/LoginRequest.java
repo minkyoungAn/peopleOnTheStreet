@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.login;
 
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;

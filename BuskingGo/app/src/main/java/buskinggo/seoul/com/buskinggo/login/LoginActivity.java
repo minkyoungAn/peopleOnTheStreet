@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.login;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -7,7 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -20,6 +19,12 @@ import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONObject;
+
+import buskinggo.seoul.com.buskinggo.MainActivity;
+import buskinggo.seoul.com.buskinggo.MyApplication;
+import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.register.RegisterActivity;
+import buskinggo.seoul.com.buskinggo.UserDTO;
 
 public class LoginActivity extends AppCompatActivity {
 
