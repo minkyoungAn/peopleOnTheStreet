@@ -28,7 +28,8 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
         String fileNmae = params[0]; // db에 저장된 file 이름
         String saveFolder= params[1]; // buskerPhoto 또는 buskingPhoto 명명
 
-        fileNmae = "batman_logo.jpg"; // 예시자료임!!!!
+
+        fileNmae = fileNmae + ".jpg";
 
         File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), saveFolder); // 폴더 변수
         boolean bool = false;

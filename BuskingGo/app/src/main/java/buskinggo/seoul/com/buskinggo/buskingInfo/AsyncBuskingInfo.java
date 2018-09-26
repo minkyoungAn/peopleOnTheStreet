@@ -57,7 +57,6 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             while ((line = reader.readLine()) != null) {
                 sb.append(line); // 데이터 받기
             }
-            System.out.println("sb : " + sb.toString());
 
             return sb.toString();
         } catch (Exception e) {

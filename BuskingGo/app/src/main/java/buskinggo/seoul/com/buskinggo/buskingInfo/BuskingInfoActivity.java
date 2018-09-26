@@ -18,7 +18,7 @@ import buskinggo.seoul.com.buskinggo.AsyncListener;
 import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
@@ -65,10 +65,12 @@ public class BuskingInfoActivity extends AppCompatActivity {
                     ivWant.setImageResource(R.drawable.ic_star_white_24dp);
                     want = 1;
                 }
+                String time = buskingDTO.getBuskingTime();
+                time = time.substring(0,5);
 
                 tvName.setText(buskingDTO.getBuskerName());
                 tvDate.setText(buskingDTO.getBuskingDate());
-                tvTime.setText(buskingDTO.getBuskingTime());
+                tvTime.setText(time);
                 tvPlace.setText(buskingDTO.getPlace());
                 tvIntroduce.setText(buskingDTO.getIntroduce());
                 tvWantSum.setText(String.valueOf(buskingDTO.getWantSum()));

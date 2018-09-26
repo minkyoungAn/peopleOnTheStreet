@@ -54,6 +54,7 @@ public class MyBuskingListAdapter extends BaseAdapter {
             viewHolder.place = convertView.findViewById(R.id.tv_place_busking_item);
             viewHolder.time = convertView.findViewById(R.id.tv_time_busking_item);
 
+
             convertView.setTag(viewHolder);
 
         }else{
