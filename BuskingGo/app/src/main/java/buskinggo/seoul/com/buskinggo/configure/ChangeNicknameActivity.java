@@ -24,7 +24,7 @@ public class ChangeNicknameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_change_nickname);
 
         final EditText changeNicknameText = findViewById(R.id.changeNicknameText);
-        changeNicknameText.setText(MyApplication.userNickname);
+        changeNicknameText.setText(MyApplication.userDTO.getNickName());
 
         Button confirmNicknameButton = findViewById(R.id.confirmNicknameButton);
         confirmNicknameButton.setOnClickListener(new View.OnClickListener() {
@@ -38,7 +38,7 @@ public class ChangeNicknameActivity extends AppCompatActivity {
                             JSONObject jsonResponse = new JSONObject(response);
                             boolean success = jsonResponse.getBoolean("success");
                             if (success) {
-                                MyApplication.userNickname = changedNickname;
+                                MyApplication.userDTO.setNickName(changedNickname);
                                 Toast.makeText(getApplicationContext(), "닉네임을 성공적으로 변경하였습니다.", Toast.LENGTH_SHORT).show();
                                 finish();
                             } else {

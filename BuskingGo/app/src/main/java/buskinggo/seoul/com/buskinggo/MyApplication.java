@@ -4,10 +4,9 @@ import android.app.Application;
 import android.content.res.Configuration;
 
 public class MyApplication extends Application {
-
     public static String userEmail;
     public static String password;
-    public static String userNickname;
+    public static UserDTO userDTO;
 
     /** onCreate()
      * 액티비티, 리시버, 서비스가 생성되기전 어플리케이션이 시작 중일때
