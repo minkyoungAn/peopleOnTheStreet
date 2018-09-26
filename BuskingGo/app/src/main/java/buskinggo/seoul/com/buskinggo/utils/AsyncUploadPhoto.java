@@ -8,8 +8,14 @@ import android.widget.Toast;
 
 import java.util.HashMap;
 
+import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.configure.AsyncRegisListener;
+
 
 public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
+
+    private AsyncRegisListener asyncListener;
+
     private Context mContext;
     private ProgressDialog progressDialog;
     private String url;
@@ -18,9 +24,10 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
     private String ImageName = "image_data";
     private HashMap<String, String> HashMapParams;
 
-    public AsyncUploadPhoto(Context context, HashMap<String, String> extraData) {
+    public AsyncUploadPhoto(Context context, HashMap<String, String> extraData, AsyncRegisListener asyncListener) {
         mContext = context;
         this.HashMapParams = extraData;
+        this.asyncListener = asyncListener;
     }
 
     @Override
@@ -47,5 +54,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
         super.onPostExecute(resultMessage);
         progressDialog.dismiss();
         Toast.makeText(mContext, resultMessage, Toast.LENGTH_LONG).show();
+        asyncListener.taskComplete();
     }
 }

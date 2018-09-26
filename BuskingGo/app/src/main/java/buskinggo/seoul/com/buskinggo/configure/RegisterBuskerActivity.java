@@ -2,11 +2,15 @@ package buskinggo.seoul.com.buskinggo.configure;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.provider.MediaStore;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -16,14 +20,27 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
+
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.login.LoginActivity;
+import buskinggo.seoul.com.buskinggo.login.LoginRequest;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncUploadPhoto;
 import buskinggo.seoul.com.buskinggo.utils.PictureDialog;
+
+import static buskinggo.seoul.com.buskinggo.MyApplication.userEmail;
 
 public class RegisterBuskerActivity extends AppCompatActivity {
 
@@ -32,10 +49,6 @@ public class RegisterBuskerActivity extends AppCompatActivity {
     private Spinner guSpinner;
     private Spinner genreSpinner;
     private Button confirmBuskerButton;
-//    private String buskerName;
-//    private String buskerGu;
-//    private String buskerGenre;
-//    private String buskerIntroduction;
     private EditText buskerNameText;
     private EditText buskerIntroductionText;
 
@@ -46,6 +59,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] byteArray;
     String ConvertImage;
+    String pastImage;
     private int GALLERY = 1, CAMERA = 2;
 
     @Override
@@ -63,6 +77,10 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         genreSpinner = findViewById(R.id.genreSpinner);
         genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(genreAdapter);
+
+        if(MyApplication.userDTO.getCheckBusker() == 1) {
+            requestBuskerInfos();
+        }
 
         GetImageFromGalleryButton = findViewById(R.id.getImageFromGalleryButton);
         ShowSelectedImage = findViewById(R.id.showImageFromGalleryButton);
@@ -82,6 +100,55 @@ public class RegisterBuskerActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void requestBuskerInfos() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try{
+                    JSONObject jsonResponse = new JSONObject(response);
+                    boolean success = jsonResponse.getBoolean("success");
+                    if(success){
+                        buskerNameText.setText(jsonResponse.getString("BuskerName"));
+                        buskerIntroductionText.setText(jsonResponse.getString("Introduce"));
+                        setSpinText(guSpinner, jsonResponse.getString("MainPlace"));
+                        setSpinText(genreSpinner, jsonResponse.getString("Genre"));
+
+                        // 사진 불러오기
+                        AsyncPhoto asyncPhoto = new AsyncPhoto(new AsyncPhotoListener() {
+                            @Override
+                            public void taskComplete(File file) {
+                                if(file != null){
+                                    Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+                                    ShowSelectedImage.setImageBitmap(bitmap);
+                                }
+                            }
+                        });
+                        asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, jsonResponse.getString("Photo"), "buskerPhoto");
+                        pastImage = jsonResponse.getString("Photo");
+                    }else{
+                        Toast.makeText(RegisterBuskerActivity.this, "버스커 정보를 불러오는데 실패하였습니다", Toast.LENGTH_LONG)
+                                .show();
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        };
+        BuskerInfoRequest buskerInfoRequest = new BuskerInfoRequest(String.valueOf(MyApplication.userDTO.getUserNo()), responseListener);
+        RequestQueue queue = Volley.newRequestQueue(RegisterBuskerActivity.this);
+        queue.add(buskerInfoRequest);
+    }
+
+    private void setSpinText(Spinner spin, String text) {
+        for(int i= 0; i < spin.getAdapter().getCount(); i++)
+        {
+            if(spin.getAdapter().getItem(i).toString().equals(text))
+            {
+                spin.setSelection(i);
+            }
+        }
     }
 
     @Override
@@ -113,17 +180,28 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
         byteArray = byteArrayOutputStream.toByteArray();
         ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        String url = "http://buskinggo.cafe24.com/registerBusker.php";
 
         HashMap<String, String> extraData = new HashMap<>();
+        String url = null;
+        if(MyApplication.userDTO.getCheckBusker() == 1) {
+            url = "http://buskinggo.cafe24.com/updateBusker.php";
+            extraData.put("pastImage", pastImage);
+        } else {
+            url = "http://buskinggo.cafe24.com/registerBusker.php";
+        }
+
         extraData.put("buskerName", buskerNameText.getText().toString());
         extraData.put("buskerGu", guSpinner.getSelectedItem().toString());
         extraData.put("buskerGenre", genreSpinner.getSelectedItem().toString());
         extraData.put("buskerIntroduction", buskerIntroductionText.getText().toString());
         extraData.put("userNo", String.valueOf(MyApplication.userDTO.getUserNo()));
 
-        AsyncUploadPhoto AsyncTaskUploadClassOBJ = new AsyncUploadPhoto(RegisterBuskerActivity.this, extraData);
+        AsyncUploadPhoto AsyncTaskUploadClassOBJ = new AsyncUploadPhoto(RegisterBuskerActivity.this, extraData, new AsyncRegisListener() {
+            @Override
+            public void taskComplete() {
+                MyApplication.userDTO.setCheckBusker(1);
+            }
+        });
         AsyncTaskUploadClassOBJ.execute(url, ConvertImage);
     }
-
 }

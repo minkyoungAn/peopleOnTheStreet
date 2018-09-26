@@ -25,10 +25,10 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
 
     @Override
     protected File doInBackground(String... params) {
-        String fileNmae = params[0]; // db에 저장된 file 이름
+        String fileName = params[0]; // db에 저장된 file 이름
         String saveFolder= params[1]; // buskerPhoto 또는 buskingPhoto 명명
 
-        fileNmae = "batman_logo.jpg"; // 예시자료임!!!!
+        fileName = fileName + ".jpg";
 
         File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), saveFolder); // 폴더 변수
         boolean bool = false;
@@ -36,7 +36,7 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
             bool = dir.mkdirs(); // 폴더 없으면 폴더 생성
         }
         System.out.println("mkdirs() : "+ bool);
-        File file = new File(dir, fileNmae); // 파일 변수
+        File file = new File(dir, fileName); // 파일 변수
 
         if (file.exists()){
             return file; // 이미 있다면 바로 사용.
@@ -46,7 +46,7 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
         try {
 
             String link;
-            link = "http://buskinggo.cafe24.com/" + saveFolder +"/"+ fileNmae;
+            link = "http://buskinggo.cafe24.com/" + saveFolder +"/"+ fileName;
 
             URL url = new URL(link);
 
