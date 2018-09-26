@@ -11,8 +11,8 @@ import android.widget.BaseAdapter;
 import java.io.File;
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;

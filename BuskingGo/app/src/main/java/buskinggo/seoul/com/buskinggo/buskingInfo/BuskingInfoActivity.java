@@ -7,25 +7,33 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
 public class BuskingInfoActivity extends AppCompatActivity {
     int userNo; // 현재 유저
     int buskingNo; // 선택한 버스커
     int want = 0; // 가볼래요 유무
+
+    ReplyListAdapter adapter; // 댓글
+    LinkedList<ReplyDTO> replyList; // 댓글 리스트
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +46,32 @@ public class BuskingInfoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.busking_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
+
+        final ListView replyListview = findViewById(R.id.lv_reply); // 리스트뷰
+        TextView noList = findViewById(R.id.tv_no_list_reply);
+        replyListview.setEmptyView(noList);
+
+        replyList = new LinkedList<>();
+        adapter = new ReplyListAdapter(getApplicationContext(),R.layout.busking_lnfo_reply_item, replyList);
+        replyListview.setAdapter(adapter);
+        setListViewHeight(replyListview);
+
+        // 댓글 로드
+        new AsyncReplyList(new AsyncReplyList.ReplyListener() {
+
+            @Override
+            public void taskComplete(LinkedList<ReplyDTO> list) {
+                if (list != null) {
+                    replyList.clear();
+                    replyList.addAll(list);
+                    System.out.println(replyList.get(0).getComment());
+                    setListViewHeight(replyListview);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskingNo);
 
         // DB 저장된 값 로드
         AsyncBuskingInfo asyncBuskingInfo = new AsyncBuskingInfo(new AsyncListener() {
@@ -111,7 +144,6 @@ public class BuskingInfoActivity extends AppCompatActivity {
 
             }
         });
-
     }
 
     void bitmapImgDownload(String photo) {
@@ -128,5 +160,24 @@ public class BuskingInfoActivity extends AppCompatActivity {
         });
         asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskingPhoto");
 
+    }
+
+    void setListViewHeight(ListView listView){
+        ListAdapter listAdapter = listView.getAdapter();
+        if(listAdapter == null){
+            return;
+        }
+
+        int totalHeight = 0;
+        for(int i = 0; i < listAdapter.getCount(); i++){
+            View listitem = listAdapter.getView(i, null, listView);
+            listitem.measure(0,0);
+            totalHeight += listitem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() -1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 }

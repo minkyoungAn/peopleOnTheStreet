@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-
 /*
  *  버스커 이미지 가져오기
  * */

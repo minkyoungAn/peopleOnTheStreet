@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
 
 public class MyBuskingListAdapter extends BaseAdapter {

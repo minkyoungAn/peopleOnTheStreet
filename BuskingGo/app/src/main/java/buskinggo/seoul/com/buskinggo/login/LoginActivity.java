@@ -24,7 +24,7 @@ import buskinggo.seoul.com.buskinggo.MainActivity;
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.register.RegisterActivity;
-import buskinggo.seoul.com.buskinggo.UserDTO;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
 public class LoginActivity extends AppCompatActivity {
 

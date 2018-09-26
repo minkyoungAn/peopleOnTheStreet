@@ -22,6 +22,7 @@ import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeFragment;
 import buskinggo.seoul.com.buskinggo.MyPagePast.MyPastFragment;
 import buskinggo.seoul.com.buskinggo.MyPageWantGo.MyWantGoFragment;
 import buskinggo.seoul.com.buskinggo.configure.ConfigureActivity;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
 /**
  * A simple {@link Fragment} subclass.

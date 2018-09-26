@@ -11,8 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 
 /*
 *  버스커 상세정보 가져오기

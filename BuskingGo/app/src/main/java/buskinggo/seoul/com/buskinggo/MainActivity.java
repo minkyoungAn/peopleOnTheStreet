@@ -9,6 +9,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
+
 public class MainActivity extends AppCompatActivity {
 
     HomeFragment homeFragment;
