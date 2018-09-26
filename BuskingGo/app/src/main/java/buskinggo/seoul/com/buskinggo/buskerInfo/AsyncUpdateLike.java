@@ -1,10 +1,6 @@
 package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.os.AsyncTask;
-import android.util.Log;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,7 +23,6 @@ public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
             int userNo = params[0];
             int buskerNo = params[1];
             int check = params[2];
-            System.out.println(check);
 
             String data;
             String link;
@@ -57,7 +52,6 @@ public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
                 sb.append(line); // 데이터 받기
             }
 
-            Log.w("test", sb.toString());
             return sb.toString();
         } catch (Exception e) {
             e.printStackTrace();

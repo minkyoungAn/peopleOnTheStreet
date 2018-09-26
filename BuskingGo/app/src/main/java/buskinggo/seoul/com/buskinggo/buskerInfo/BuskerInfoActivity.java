@@ -27,9 +27,9 @@ import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class BuskerInfoActivity extends AppCompatActivity {
-    int userNo = 1;
-    int buskerNo = 3;
-    int favorite = 0;
+    int userNo = 1; // 현재 유저
+    int buskerNo = 3; // 선택한 버스커
+    int favorite = 0; // 좋아요 유무
 
     ArrayList<BuskingDTO> buskingList;
     MyBuskingListAdapter adapter;

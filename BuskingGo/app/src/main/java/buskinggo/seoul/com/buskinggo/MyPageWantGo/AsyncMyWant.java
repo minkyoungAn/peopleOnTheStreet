@@ -33,7 +33,6 @@ public class AsyncMyWant extends AsyncTask<Integer, String, String> {
 
         try {
             int userNo = params[0];
-            userNo = 1;
 
             String data;
             String link;

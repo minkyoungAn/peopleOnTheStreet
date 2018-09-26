@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo.MyPageWantGo;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -8,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
 
@@ -17,14 +19,13 @@ import java.util.Objects;
 import buskinggo.seoul.com.buskinggo.AsyncListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.MyPageLike.AsyncMyLike;
-import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeBuskerAdapter;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.UserDTO;
-import buskinggo.seoul.com.buskinggo.buskerInfo.MyBuskingListAdapter;
+import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 
 public class MyWantGoFragment extends Fragment {
     ArrayList<BuskingDTO> buskingList;
+    GridView buskingListView;
     MyWantBuskingAdapter adapter;
     UserDTO userDTO;
 
@@ -36,13 +37,13 @@ public class MyWantGoFragment extends Fragment {
             userDTO = (UserDTO) this.getArguments().getSerializable("userDTO");
         }
 
-        final GridView buskerListView = view.findViewById(R.id.lv_my_want);
+        buskingListView = view.findViewById(R.id.lv_my_want);
         TextView noList = view.findViewById(R.id.tv_no_list_my_want);
-        buskerListView.setEmptyView(noList);
+        buskingListView.setEmptyView(noList);
 
         buskingList = new ArrayList<>();
         adapter = new MyWantBuskingAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(),R.layout.my_want_busking_list_item, buskingList);
-        buskerListView.setAdapter(adapter);
+        buskingListView.setAdapter(adapter);
 
         // 공연리스트뷰 로드
         new AsyncMyWant(new AsyncListener() {
@@ -74,5 +75,14 @@ public class MyWantGoFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
+                intent.putExtra("userNo", userDTO.getUserNo());
+                intent.putExtra("buskingNo", buskingList.get(position).getBuskingNo());
+                startActivity(intent);
+            }
+        });
     }
 }

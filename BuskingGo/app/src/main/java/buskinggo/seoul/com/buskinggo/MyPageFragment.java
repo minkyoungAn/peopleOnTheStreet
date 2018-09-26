@@ -19,6 +19,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.util.Objects;
 
 import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeFragment;
+import buskinggo.seoul.com.buskinggo.MyPagePast.MyPastFragment;
 import buskinggo.seoul.com.buskinggo.MyPageWantGo.MyWantGoFragment;
 import buskinggo.seoul.com.buskinggo.configure.ConfigureActivity;
 

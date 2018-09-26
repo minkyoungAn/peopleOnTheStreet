@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.MyPageLike;
+package buskinggo.seoul.com.buskinggo.MyPagePast;
 
 import android.os.AsyncTask;
 
@@ -19,12 +19,12 @@ import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
 /*
- *  내가 좋아요한 버스커 가져오기
+ *  내가 가볼래요한 공연 가져오기
  * */
-public class AsyncMyLike extends AsyncTask<Integer, String, String> {
+public class AsyncMyPast extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncMyLike(AsyncListener asyncListener){
+    AsyncMyPast(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -38,7 +38,7 @@ public class AsyncMyLike extends AsyncTask<Integer, String, String> {
             String link;
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
-            link = "http://buskinggo.cafe24.com/" + "LikeBuskerInfoLoad.php";
+            link = "http://buskinggo.cafe24.com/" + "PastBuskingInfoLoad.php";
 
             URL url = new URL(link);
 
@@ -75,26 +75,29 @@ public class AsyncMyLike extends AsyncTask<Integer, String, String> {
     protected void onPostExecute(String result) {   // 결과 처리부분
         try {
 
-            ArrayList<BuskerDTO> buskerDTOS = new ArrayList<>();
+            ArrayList<BuskingDTO> buskingDTOS = new ArrayList<>();
 
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String buskerNo, buskerName, photo, genre;
+            String buskingNo, buskerName, photo, place, buskingDate, buskingTime;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                buskerNo = object.getString("userNo");
+                buskingNo = object.getString("buskingNo");
                 buskerName = object.getString("buskerName");
                 photo = object.getString("photo");
-                genre = object.getString("genre");
+                place = object.getString("place");
+                buskingDate = object.getString("buskingDate");
+                buskingTime = object.getString("buskingTime");
 
-                BuskerDTO buskerDTO = new BuskerDTO(buskerNo, buskerName, photo, genre);
-                buskerDTOS.add(buskerDTO);
+
+                BuskingDTO buskingDTO = new BuskingDTO(buskingNo, buskerName, photo, place, buskingDate, buskingTime);
+                buskingDTOS.add(buskingDTO);
                 count++;
             }
             // ui 작업 리스너 호출
-            asyncListener.buskerComplete(buskerDTOS);
+            asyncListener.buskingComplete(buskingDTOS);
         } catch (Exception e) {
             e.printStackTrace();
         }

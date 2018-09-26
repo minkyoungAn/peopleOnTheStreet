@@ -18,8 +18,8 @@ public class BuskerDTO {
         this.favorite = favorite;
         this.myFavorite = myFavorite;
     }
-    public BuskerDTO(String buskeNo, String buskerName, String photo, String genre){
-        this.buskerNo = buskeNo;
+    public BuskerDTO(String buskerNo, String buskerName, String photo, String genre){
+        this.buskerNo = buskerNo;
         this.buskerName = buskerName;
         this.photo = photo;
         this.genre = genre;
@@ -105,5 +105,13 @@ public class BuskerDTO {
 
     public void setBitmap(Bitmap bitmap) {
         this.bitmap = bitmap;
+    }
+
+    public String getBuskerNo() {
+        return buskerNo;
+    }
+
+    public void setBuskerNo(String buskerNo) {
+        this.buskerNo = buskerNo;
     }
 }

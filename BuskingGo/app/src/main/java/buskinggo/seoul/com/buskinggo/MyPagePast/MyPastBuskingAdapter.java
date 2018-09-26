@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.MyPageWantGo;
+package buskinggo.seoul.com.buskinggo.MyPagePast;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -13,20 +13,21 @@ import java.util.ArrayList;
 
 import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.MyPagePast.MyPastBuskingViewHolder;
 import buskinggo.seoul.com.buskinggo.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
-public class MyWantBuskingAdapter extends BaseAdapter {
+public class MyPastBuskingAdapter extends BaseAdapter {
 
-    private MyWantBuskingViewHolder viewHolder;
+    private MyPastBuskingViewHolder viewHolder;
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<BuskingDTO> buskingList;
     private int mLayout;
 
 
-    MyWantBuskingAdapter(Context context, int layout, ArrayList<BuskingDTO> buskingList) {
+    MyPastBuskingAdapter(Context context, int layout, ArrayList<BuskingDTO> buskingList) {
         this.mContext = context;
         this.mLayout = layout;
         this.buskingList = buskingList;
@@ -55,18 +56,18 @@ public class MyWantBuskingAdapter extends BaseAdapter {
         if (convertView == null) {
             convertView = mInflater.inflate(mLayout, viewGroup, false);
 
-            viewHolder = new MyWantBuskingViewHolder();
-            viewHolder.name = convertView.findViewById(R.id.want_name_item);
-            viewHolder.place = convertView.findViewById(R.id.want_place_item);
-            viewHolder.date = convertView.findViewById(R.id.want_date_item);
-            viewHolder.time = convertView.findViewById(R.id.want_time_item);
-            viewHolder.photo = convertView.findViewById(R.id.want_photo_item);
+            viewHolder = new MyPastBuskingViewHolder();
+            viewHolder.name = convertView.findViewById(R.id.past_name_item);
+            viewHolder.place = convertView.findViewById(R.id.past_place_item);
+            viewHolder.date = convertView.findViewById(R.id.past_date_item);
+            viewHolder.time = convertView.findViewById(R.id.past_time_item);
+            viewHolder.photo = convertView.findViewById(R.id.past_photo_item);
 
             convertView.setTag(viewHolder);
 
         } else {
 
-            viewHolder = (MyWantBuskingViewHolder) convertView.getTag();
+            viewHolder = (MyPastBuskingViewHolder) convertView.getTag();
         }
 
         String name = buskingList.get(position).getBuskerName();
@@ -75,7 +76,7 @@ public class MyWantBuskingAdapter extends BaseAdapter {
         String time = buskingList.get(position).getBuskingTime();
         String photo = buskingList.get(position).getPhoto();
         time = time.substring(0, 5);
-        
+
         //|| photo.equals("null")
         if (date.equals("null") || place.equals("null") || time.equals("null") || name.equals("null") ) {
             return convertView;
