@@ -45,6 +45,7 @@
     <string name="myPage">마이페이지</string>
 
     <string name="title_activity_busker_info">BuskerInfoActivity</string>
+    <string name="title_activity_busking_info">BuskingInfoActivity</string>
     <string name="action_back">action_back</string>
     <string name="favorite_cnt">0</string>
     <string name="buskerInfoPlace">주요활동장소 :</string>

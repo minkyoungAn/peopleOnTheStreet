@@ -1,8 +1,7 @@
-package buskinggo.seoul.com.buskinggo.buskerInfo;
+package buskinggo.seoul.com.buskinggo.buskingInfo;
 
 import android.os.AsyncTask;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,18 +10,17 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
 
 import buskinggo.seoul.com.buskinggo.AsyncListener;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
 /*
- *  버스커의 공연정보 가져오기
+ *  버스커 상세정보 가져오기
  * */
-public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String> {
+public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncBuskingListByBusker(AsyncListener asyncListener){
+    AsyncBuskingInfo(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -30,13 +28,15 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
         HttpURLConnection httpURLConnection = null;
 
         try {
-            int buskerNo = params[0];
+            int userNo = params[0];
+            int buskingNo = params[1];
 
             String data;
             String link;
 
-            data = URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskingListByBusker.php";
+            data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
+            data += "&" + URLEncoder.encode("buskingNo", "UTF-8") + "=" + buskingNo;
+            link = "http://buskinggo.cafe24.com/" + "BuskingInfoLoad.php";
 
             URL url = new URL(link);
 
@@ -55,8 +55,9 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
             String line;
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
+                sb.append(line); // 데이터 받기
             }
+            System.out.println("sb : " + sb.toString());
 
             return sb.toString();
         } catch (Exception e) {
@@ -70,30 +71,28 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String result) {   // 결과 처리부분
         try {
 
-            ArrayList<BuskingDTO> buskingList = new ArrayList<>();
+            BuskingDTO buskingDTO;
 
             JSONObject jsonObject = new JSONObject(result);
-            JSONArray jsonArray = jsonObject.getJSONArray("response");
 
-            int count = 0;
-            String date, place, time;
-            int buskingNo;
-            while (count < jsonArray.length()) {
-                JSONObject object = jsonArray.getJSONObject(count);
-                buskingNo = object.getInt("buskingNo");
-                date = object.getString("date");
-                place = object.getString("place");
-                time = object.getString("time");
+            if(jsonObject.getString("success").equals("false")) return;
+            String photo, buskerName, buskingDate, buskingTime, place, introduce, wantSum, myWant;
+            photo = jsonObject.getString("photo");
+            buskerName = jsonObject.getString("buskerName");
+            buskingDate = jsonObject.getString("buskingDate");
+            buskingTime = jsonObject.getString("buskingTime");
+            place = jsonObject.getString("place");
+            introduce = jsonObject.getString("introduce");
+            wantSum = jsonObject.getString("wantSum");
+            myWant = jsonObject.getString("myWant");
+            buskingDTO = new BuskingDTO(photo, buskerName, buskingDate, buskingTime, place, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
 
-                BuskingDTO buskingDTO = new BuskingDTO(buskingNo, date, time, place);
-                buskingList.add(buskingDTO);
-                count++;
-            }
 
-            asyncListener.buskingComplete(buskingList);
+            // ui 작업 리스너 호출
+            asyncListener.buskingComplete(buskingDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }

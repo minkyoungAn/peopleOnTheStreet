@@ -81,10 +81,11 @@ public class AsyncMyWant extends AsyncTask<Integer, String, String> {
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String buskingNo, buskerName, photo, place, buskingDate, buskingTime;
+            int buskingNo;
+            String buskerName, photo, place, buskingDate, buskingTime;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                buskingNo = object.getString("buskingNo");
+                buskingNo = object.getInt("buskingNo");
                 buskerName = object.getString("buskerName");
                 photo = object.getString("photo");
                 place = object.getString("place");

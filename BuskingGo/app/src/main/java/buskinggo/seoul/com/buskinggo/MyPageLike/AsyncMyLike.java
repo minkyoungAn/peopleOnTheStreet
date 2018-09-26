@@ -81,10 +81,11 @@ public class AsyncMyLike extends AsyncTask<Integer, String, String> {
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String buskerNo, buskerName, photo, genre;
+            int buskerNo;
+            String buskerName, photo, genre;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                buskerNo = object.getString("userNo");
+                buskerNo = object.getInt("userNo");
                 buskerName = object.getString("buskerName");
                 photo = object.getString("photo");
                 genre = object.getString("genre");

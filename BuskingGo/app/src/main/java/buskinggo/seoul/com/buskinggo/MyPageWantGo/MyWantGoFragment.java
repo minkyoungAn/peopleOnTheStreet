@@ -22,6 +22,7 @@ import buskinggo.seoul.com.buskinggo.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.UserDTO;
 import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 
 public class MyWantGoFragment extends Fragment {
     ArrayList<BuskingDTO> buskingList;
@@ -78,7 +79,7 @@ public class MyWantGoFragment extends Fragment {
         buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
+                Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
                 intent.putExtra("userNo", userDTO.getUserNo());
                 intent.putExtra("buskingNo", buskingList.get(position).getBuskingNo());
                 startActivity(intent);
