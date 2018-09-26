@@ -6,12 +6,15 @@
     android:background="@color/mainBackground"
     >
     <TextView
-        android:id="@+id/text1"
+        android:id="@+id/tv_no_list_my_want"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16sp"
+        android:text="@string/no_want"
         android:textColor="@color/white"
-        android:text="테스트중2"
-        />
+        android:textSize="14sp"
+        android:visibility="gone"/>
+
     <GridView
         android:numColumns="2"
         android:id="@+id/lv_my_want"

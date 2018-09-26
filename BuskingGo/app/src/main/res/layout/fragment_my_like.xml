@@ -9,9 +9,10 @@
         android:id="@+id/tv_no_list_my_like"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_margin="16sp"
         android:text="@string/no_like"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:visibility="gone"/>
 
     <GridView
