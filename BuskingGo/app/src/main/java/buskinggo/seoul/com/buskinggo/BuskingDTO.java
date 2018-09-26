@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BuskingDTO {
+    private String buskingNo;
+    private String buskerName;
     private String buskerNo;
     private String photo;
     private String buskingDate;
@@ -18,15 +20,16 @@ public class BuskingDTO {
         this.buskingTime = buskingTime;
         this.place = place;
     }
-    public BuskingDTO(String buskerNo, String photo, String buskingDate, String buskingTime, String place, String introduce){
-        this.buskerNo = buskerNo;
+    public BuskingDTO(String buskingNo, String buskerName, String photo, String place, String buskingDate, String buskingTime){
+        this.buskingNo = buskingNo;
+        this.buskerName = buskerName;
         this.photo = photo;
+        this.place = place;
         this.buskingDate = buskingDate;
         this.buskingTime = buskingTime;
-        this.place = place;
-        this.introduce = introduce;
 
     }
+
 
     public String getBuskerNo() {
         return buskerNo;
@@ -74,5 +77,21 @@ public class BuskingDTO {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public String getBuskingNo() {
+        return buskingNo;
+    }
+
+    public void setBuskingNo(String buskingNo) {
+        this.buskingNo = buskingNo;
+    }
+
+    public String getBuskerName() {
+        return buskerName;
+    }
+
+    public void setBuskerName(String buskerName) {
+        this.buskerName = buskerName;
     }
 }

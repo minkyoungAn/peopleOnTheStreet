@@ -34,8 +34,9 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
         boolean bool = false;
         if (!dir.exists()) {
             bool = dir.mkdirs(); // 폴더 없으면 폴더 생성
+            System.out.println("mkdirs() : "+ bool);
         }
-        System.out.println("mkdirs() : "+ bool);
+
         File file = new File(dir, fileNmae); // 파일 변수
 
         if (file.exists()){
