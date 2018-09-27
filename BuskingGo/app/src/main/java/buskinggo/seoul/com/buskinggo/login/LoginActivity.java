@@ -150,6 +150,15 @@ public class LoginActivity extends AppCompatActivity {
                 queue.add(loginRequest);
             }
         });
+
+        TextView forgotButton = findViewById(R.id.forgotButton);
+        forgotButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent forgotIntent = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(forgotIntent);
+            }
+        });
     }
 
     @Override
