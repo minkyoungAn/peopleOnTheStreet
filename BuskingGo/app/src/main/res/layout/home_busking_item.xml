@@ -10,8 +10,8 @@
     <ImageView
         android:id="@+id/like_busker_photo_item"
         android:background="@color/itemBuskingBackground"
-        android:layout_width="130dp"
-        android:layout_height="80dp"
+        android:layout_width="140dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:layout_marginBottom="4sp"/>
 
@@ -29,17 +29,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
-        android:text="장소"/>
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="@string/place"/>
 
     <TextView
         android:id="@+id/textViewBuskingTime"
         android:layout_below="@id/busker_name"
-        android:layout_toEndOf="@id/textViewBuskingPlace"
+        android:layout_alignEnd="@+id/like_busker_photo_item"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:textColor="@color/white"
-        android:text="시간"/>
+        android:drawableStart="@drawable/ic_access_time_white_18dp"
+        android:drawablePadding="4dp"
+        android:text="@string/time"/>
 
 
 </RelativeLayout>

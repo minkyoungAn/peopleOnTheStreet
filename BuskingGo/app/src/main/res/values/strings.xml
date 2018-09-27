@@ -39,8 +39,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="home">홈</string>
-    <string name="buskinglist">버스킹목록</string>
-    <string name="buskingRegister">버스킹등록</string>
+    <string name="buskinglist">버스킹 목록</string>
+    <string name="buskingRegister">버스킹 등록</string>
     <string name="seoulBusking">거리예술존</string>
     <string name="myPage">마이페이지</string>
 
@@ -52,10 +52,9 @@
     <string name="buskerInfoJenre">장르 :</string>
     <string name="buskerInfoName">버스커명</string>
     <string name="buskerInfoFavorite">좋아요</string>
-    <string name="todo">TODO</string>
     <string name="introduce">소개</string>
     <string name="busker_info_list">등록된 공연 리스트</string>
-    <string name="date">일시</string>
+    <string name="date">날짜</string>
     <string name="place">장소</string>
     <string name="time">시간</string>
     <string name="no_list">- 예정된 공연이 없습니다.</string>
@@ -68,6 +67,11 @@
     <string name="ok">확인</string>
     <string name="no_reply">등록된 댓글이 없습니다</string>
     <string name="want">가볼래요</string>
+    <string name="logout">로그아웃</string>
+    <string name="change_pwd">비밀번호 변경</string>
+    <string name="change_nickname">닉네임 변경</string>
+    <string name="busker_register">버스커 등록</string>
+    <string name="todo">TODO</string>
 
 
 </resources>

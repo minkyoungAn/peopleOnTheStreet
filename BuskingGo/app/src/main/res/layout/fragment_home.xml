@@ -8,18 +8,19 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16sp">
 
-        <TextView
+       <!-- <TextView
             android:id="@+id/text_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginStart="30dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16sp"
             android:text="@string/home"
-            android:textSize="30sp"
+            android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white"/>-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -31,8 +32,8 @@
                 android:id="@+id/recommend_busking_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16sp"
                 android:text="이런 버스킹 어때요?"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -40,10 +41,10 @@
 
             <GridView
                 android:id="@+id/recommend_busking_gridView"
-                android:layout_width="280dp"
-                android:layout_height="285dp"
+                android:layout_margin="16sp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
                 android:dividerHeight="10dp"
                 android:horizontalSpacing="10dip"
                 android:numColumns="2"
@@ -54,8 +55,8 @@
                 android:id="@+id/today_busking_textView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="50dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginStart="16sp"
+                android:layout_marginTop="16sp"
                 android:text="오늘의 버스킹"
                 android:textColor="@color/white"
                 android:textSize="20sp"
@@ -63,11 +64,10 @@
 
             <ListView
                 android:id="@+id/today_busking_listview"
-                android:layout_width="280dp"
+                android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="16sp"
                 android:dividerHeight="10dp"/>
 
         </LinearLayout>
