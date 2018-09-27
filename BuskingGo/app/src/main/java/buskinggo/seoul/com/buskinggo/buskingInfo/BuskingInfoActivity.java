@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
 
+import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
@@ -52,7 +53,7 @@ public class BuskingInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busking_info);
         Intent intent = getIntent();
-        userNo = intent.getIntExtra("userNo", 0);
+        userNo = MyApplication.userDTO.getUserNo();
         buskingNo = intent.getIntExtra("buskingNo", 0);
 
         Toolbar toolbar = findViewById(R.id.busking_info_toolbar);

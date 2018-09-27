@@ -16,6 +16,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
@@ -38,7 +39,7 @@ public class BuskerInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busker_info);
         Intent intent = getIntent();
-        userNo = intent.getIntExtra("userNo", 0);
+        userNo = MyApplication.userDTO.getUserNo();
         buskerNo = intent.getIntExtra("buskerNo", 0);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);

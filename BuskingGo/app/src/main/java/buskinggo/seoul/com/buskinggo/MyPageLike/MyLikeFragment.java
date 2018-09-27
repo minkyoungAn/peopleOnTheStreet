@@ -77,7 +77,6 @@ public class MyLikeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
-                intent.putExtra("userNo", userDTO.getUserNo());
                 intent.putExtra("buskerNo", buskerList.get(position).getBuskerNo());
                 startActivity(intent);
             }

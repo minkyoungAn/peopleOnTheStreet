@@ -78,7 +78,6 @@ public class MyWantGoFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
-                intent.putExtra("userNo", userDTO.getUserNo());
                 intent.putExtra("buskingNo", buskingList.get(position).getBuskingNo());
                 startActivity(intent);
             }
