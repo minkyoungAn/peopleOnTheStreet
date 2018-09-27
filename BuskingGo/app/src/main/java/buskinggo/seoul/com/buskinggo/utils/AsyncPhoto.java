@@ -25,7 +25,7 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
     protected File doInBackground(String... params) {
         String fileName = params[0]; // db에 저장된 file 이름
         String saveFolder= params[1]; // buskerPhoto 또는 buskingPhoto 명명
-        
+
         fileName = fileName + ".jpg";
 
 
@@ -33,10 +33,8 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
         boolean bool = false;
         if (!dir.exists()) {
             bool = dir.mkdirs(); // 폴더 없으면 폴더 생성
-            System.out.println("mkdirs() : "+ bool);
         }
 
-        System.out.println("mkdirs() : "+ bool);
         File file = new File(dir, fileName); // 파일 변수
 
         if (file.exists()){

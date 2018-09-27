@@ -16,6 +16,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
@@ -33,9 +34,7 @@ public class MyLikeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_like,null);
-        if(this.getArguments() != null){
-            userDTO = (UserDTO) this.getArguments().getSerializable("userDTO");
-        }
+        userDTO = MyApplication.userDTO;
 
         buskerListView = view.findViewById(R.id.lv_my_like);
         TextView noList = view.findViewById(R.id.tv_no_list_my_like);

@@ -3,12 +3,10 @@ package buskinggo.seoul.com.buskinggo.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.configure.AsyncRegisListener;
 
 

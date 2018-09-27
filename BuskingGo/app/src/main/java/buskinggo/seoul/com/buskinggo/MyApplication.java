@@ -3,6 +3,8 @@ package buskinggo.seoul.com.buskinggo;
 import android.app.Application;
 import android.content.res.Configuration;
 
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
+
 public class MyApplication extends Application {
     public static String userEmail;
     public static String password;
