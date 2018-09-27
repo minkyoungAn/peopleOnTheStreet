@@ -36,7 +36,8 @@
         <activity
             android:name=".buskingInfo.BuskingInfoActivity"
             android:label="@string/title_activity_busking_info"
-            android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity">
+            android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />

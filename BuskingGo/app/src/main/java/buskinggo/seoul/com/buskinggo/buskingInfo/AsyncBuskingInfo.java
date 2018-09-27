@@ -11,8 +11,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 
 /*
  *  버스커 상세정보 가져오기
@@ -57,7 +57,6 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             while ((line = reader.readLine()) != null) {
                 sb.append(line); // 데이터 받기
             }
-            System.out.println("sb : " + sb.toString());
 
             return sb.toString();
         } catch (Exception e) {

@@ -1,9 +1,9 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.utils;
 
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 
 public interface AsyncListener {
     void buskerComplete(BuskerDTO buskerDTO);

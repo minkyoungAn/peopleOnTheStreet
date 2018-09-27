@@ -9,8 +9,6 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-
 /*
  *  버스커 이미지 가져오기
  * */
@@ -27,8 +25,9 @@ public class AsyncPhoto extends AsyncTask<String, String, File> {
     protected File doInBackground(String... params) {
         String fileName = params[0]; // db에 저장된 file 이름
         String saveFolder= params[1]; // buskerPhoto 또는 buskingPhoto 명명
-
+        
         fileName = fileName + ".jpg";
+
 
         File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath(), saveFolder); // 폴더 변수
         boolean bool = false;

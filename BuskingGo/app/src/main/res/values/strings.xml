@@ -63,6 +63,11 @@
     <string name="no_like">좋아요한 버스커가 없습니다</string>
     <string name="no_want">가볼래요 한 공연이 없습니다</string>
     <string name="no_past">가볼래요 한 지난 공연이 없습니다.</string>
+    <string name="reply">답글 달기</string>
+    <string name="reply_hint">힘이 되는 한마디 남겨주세요.</string>
+    <string name="ok">확인</string>
+    <string name="no_reply">등록된 댓글이 없습니다</string>
+    <string name="want">가볼래요</string>
 
 
 </resources>

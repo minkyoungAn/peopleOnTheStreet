@@ -22,6 +22,7 @@ import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeFragment;
 import buskinggo.seoul.com.buskinggo.MyPagePast.MyPastFragment;
 import buskinggo.seoul.com.buskinggo.MyPageWantGo.MyWantGoFragment;
 import buskinggo.seoul.com.buskinggo.configure.ConfigureActivity;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,7 +52,9 @@ public class MyPageFragment extends Fragment {
 
         ViewPager pager = view.findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter(getChildFragmentManager()));
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(1);
+
+
 
 
         pager.setCurrentItem(0);

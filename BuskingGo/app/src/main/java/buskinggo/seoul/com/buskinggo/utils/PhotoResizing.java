@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

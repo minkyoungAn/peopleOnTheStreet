@@ -25,6 +25,7 @@
         android:layout_marginRight="16sp"
         android:divider="@color/black"
         android:dividerHeight="4dp"
-        android:orientation="vertical" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal"/>
 
 </RelativeLayout>

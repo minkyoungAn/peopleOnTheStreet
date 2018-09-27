@@ -11,7 +11,7 @@
     <ImageView
         android:id="@+id/want_photo_item"
         android:background="@color/itemBuskingBackground"
-        android:layout_width="150dp"
+        android:layout_width="140dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:layout_marginBottom="4sp"

@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.MyPageLike;
+package buskinggo.seoul.com.buskinggo.buskingInfo;
 
 import android.os.AsyncTask;
 
@@ -11,32 +11,31 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
-import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
-import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
 
 /*
- *  내가 좋아요한 버스커 가져오기
+ *  댓글 가져오기
  * */
-public class AsyncMyLike extends AsyncTask<Integer, String, String> {
-    private AsyncListener asyncListener;
+public class AsyncReplyList extends AsyncTask<Integer, String, String> {
+    private ReplyListener replyListener;
 
-    AsyncMyLike(AsyncListener asyncListener){
-        this.asyncListener = asyncListener;
+    AsyncReplyList(ReplyListener replyListener){
+        this.replyListener = replyListener;
     }
     @Override
     protected String doInBackground(Integer... params) {
         HttpURLConnection httpURLConnection = null;
 
         try {
-            int userNo = params[0];
+            int buskingNo = params[0];
 
             String data;
             String link;
 
-            data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
-            link = "http://buskinggo.cafe24.com/" + "LikeBuskerInfoLoad.php";
+            data = URLEncoder.encode("buskingNo", "UTF-8") + "=" + buskingNo;
+            link = "http://buskinggo.cafe24.com/" + "ReplyListLoad.php";
 
             URL url = new URL(link);
 
@@ -55,7 +54,7 @@ public class AsyncMyLike extends AsyncTask<Integer, String, String> {
             String line;
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line); // 데이터 받기
+                sb.append(line);
             }
 
             return sb.toString();
@@ -70,32 +69,41 @@ public class AsyncMyLike extends AsyncTask<Integer, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String result) {   // 결과 처리부분
+    protected void onPostExecute(String result) {
         try {
 
-            ArrayList<BuskerDTO> buskerDTOS = new ArrayList<>();
+            LinkedList<ReplyDTO> replyList = new LinkedList<>();
 
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            int buskerNo;
-            String buskerName, photo, genre;
+            String name, currentTime, comment, replyNo, reReplyNo;
+            int commentNo;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
-                buskerNo = object.getInt("userNo");
-                buskerName = object.getString("buskerName");
-                photo = object.getString("photo");
-                genre = object.getString("genre");
+                commentNo = object.getInt("commentNo");
+                name = object.getString("nickname");
+                currentTime = object.getString("currentTime");
+                comment = object.getString("contents");
+                replyNo = object.getString("replyNo");
+                reReplyNo = object.getString("reReplyNo");
 
-                BuskerDTO buskerDTO = new BuskerDTO(buskerNo, buskerName, photo, genre);
-                buskerDTOS.add(buskerDTO);
+                ReplyDTO replyDTO;
+
+                replyDTO = new ReplyDTO(commentNo, name, currentTime, comment, Integer.parseInt(replyNo), Integer.parseInt(reReplyNo));
+                replyList.add(replyDTO);
+
                 count++;
             }
-            // ui 작업 리스너 호출
-            asyncListener.buskerComplete(buskerDTOS);
+
+            replyListener.taskComplete(replyList);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public interface ReplyListener{
+        void taskComplete(LinkedList<ReplyDTO> list);
     }
 }

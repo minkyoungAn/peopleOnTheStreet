@@ -16,12 +16,11 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
-import buskinggo.seoul.com.buskinggo.UserDTO;
-import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 
 public class MyPastFragment extends Fragment{
