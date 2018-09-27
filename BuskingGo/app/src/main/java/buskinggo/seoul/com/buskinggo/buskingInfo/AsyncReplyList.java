@@ -16,7 +16,7 @@ import java.util.LinkedList;
 import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
 
 /*
- *  버스커의 공연정보 가져오기
+ *  댓글 가져오기
  * */
 public class AsyncReplyList extends AsyncTask<Integer, String, String> {
     private ReplyListener replyListener;
@@ -78,7 +78,7 @@ public class AsyncReplyList extends AsyncTask<Integer, String, String> {
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String name, currentTime, comment, replyNo;
+            String name, currentTime, comment, replyNo, reReplyNo;
             int commentNo;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
@@ -87,15 +87,13 @@ public class AsyncReplyList extends AsyncTask<Integer, String, String> {
                 currentTime = object.getString("currentTime");
                 comment = object.getString("contents");
                 replyNo = object.getString("replyNo");
+                reReplyNo = object.getString("reReplyNo");
 
                 ReplyDTO replyDTO;
-                if(replyNo.equals("null")){
-                    replyDTO = new ReplyDTO(commentNo, name, currentTime, comment, 0);
-                    replyList.add(replyDTO);
-                }else{
-                    replyDTO = new ReplyDTO(commentNo, name, currentTime, comment, Integer.parseInt(replyNo));
-                    replyList.add(replyDTO);
-                }
+
+                replyDTO = new ReplyDTO(commentNo, name, currentTime, comment, Integer.parseInt(replyNo), Integer.parseInt(reReplyNo));
+                replyList.add(replyDTO);
+
                 count++;
             }
 

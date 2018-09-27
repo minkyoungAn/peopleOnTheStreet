@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".buskingInfo.BuskingInfoActivity"
-    android:background="@color/black">
+    android:background="@color/black"
+    android:id="@+id/rl_container_reply">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/busking_info_toolbar"
@@ -31,7 +32,9 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black">
+            android:background="@color/black"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
             <GridLayout
                 android:id="@+id/gl_busking_info"
@@ -235,7 +238,8 @@
             android:hint="@string/reply_hint"
             android:textSize="12sp"
             tools:ignore="RtlSymmetry"
-            android:inputType="text" />
+            android:inputType="text"
+            />
         <Button
             android:id="@+id/reply_comment_btn"
             android:layout_weight="0.15"

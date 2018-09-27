@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo.buskingInfo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -8,9 +9,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
@@ -22,6 +27,7 @@ import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
@@ -32,8 +38,15 @@ public class BuskingInfoActivity extends AppCompatActivity {
     int buskingNo; // 선택한 버스커
     int want = 0; // 가볼래요 유무
 
+    int replyNo = 100; // 댓글
+    int reReplyNo = 0; // 대댓글
+
     ReplyListAdapter adapter; // 댓글
     LinkedList<ReplyDTO> replyList; // 댓글 리스트
+    ListView replyListview;
+
+    InputMethodManager imm;
+    EditText editText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +61,7 @@ public class BuskingInfoActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
 
-        final ListView replyListview = findViewById(R.id.lv_reply); // 리스트뷰
+        replyListview = findViewById(R.id.lv_reply); // 리스트뷰
         TextView noList = findViewById(R.id.tv_no_list_reply);
         replyListview.setEmptyView(noList);
 
@@ -57,21 +70,10 @@ public class BuskingInfoActivity extends AppCompatActivity {
         replyListview.setAdapter(adapter);
         setListViewHeight(replyListview);
 
-        // 댓글 로드
-        new AsyncReplyList(new AsyncReplyList.ReplyListener() {
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-            @Override
-            public void taskComplete(LinkedList<ReplyDTO> list) {
-                if (list != null) {
-                    replyList.clear();
-                    replyList.addAll(list);
-                    System.out.println(replyList.get(0).getComment());
-                    setListViewHeight(replyListview);
-                    adapter.notifyDataSetChanged();
-                }
-            }
 
-        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskingNo);
+        loadReply();
 
         // DB 저장된 값 로드
         AsyncBuskingInfo asyncBuskingInfo = new AsyncBuskingInfo(new AsyncListener() {
@@ -144,6 +146,51 @@ public class BuskingInfoActivity extends AppCompatActivity {
 
             }
         });
+
+        // 댓글 달기
+        Button replyBtn = findViewById(R.id.reply_comment_btn);
+        replyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText = findViewById(R.id.reply_comment_edit);
+                String contents = editText.getText().toString();
+
+                if(replyList.size() != 0){
+                    replyNo = replyList.getFirst().getReplyNo();
+                    replyNo += 100;
+                }
+
+                // db 저장
+                AsyncInsertReply asyncInsertReply = new AsyncInsertReply(new AsyncInsertReply.AsyncReplyListener() {
+                    @Override
+                    public void taskComplete() {
+                        // 리스트 갱신
+                        loadReply();
+                    }
+                });
+                asyncInsertReply.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, String.valueOf(userNo), String.valueOf(buskingNo), contents, String.valueOf(replyNo), String.valueOf(reReplyNo));
+
+                // 키보드 내리기
+                hideKeyboard();
+                editText.setText("");
+
+            }
+        });
+
+        // 전체화면 클릭시 키보드 내리기
+        RelativeLayout rl = findViewById(R.id.rl_container_reply);
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+            }
+        });
+
+    }
+
+    void hideKeyboard(){
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
     }
 
     void bitmapImgDownload(String photo) {
@@ -179,5 +226,23 @@ public class BuskingInfoActivity extends AppCompatActivity {
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() -1));
         listView.setLayoutParams(params);
         listView.requestLayout();
+    }
+
+    void loadReply(){
+        // 댓글 로드
+        new AsyncReplyList(new AsyncReplyList.ReplyListener() {
+
+            @Override
+            public void taskComplete(LinkedList<ReplyDTO> list) {
+                if (list != null) {
+                    replyList.clear();
+                    replyList.addAll(list);
+                    setListViewHeight(replyListview);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskingNo);
+
     }
 }

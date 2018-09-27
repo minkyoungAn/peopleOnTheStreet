@@ -6,13 +6,15 @@ public class ReplyDTO {
     private String currentTime;
     private String comment;
     private int replyNo;
+    private int reReplyNo;
 
-    public ReplyDTO(int commentNo, String userNickName, String currentTime, String comment, int replyNo){
+    public ReplyDTO(int commentNo, String userNickName, String currentTime, String comment, int replyNo, int reReplyNo){
         this.commentNo = commentNo;
         this.userNickName = userNickName;
         this.currentTime = currentTime;
         this.comment = comment;
         this.replyNo = replyNo;
+        this.reReplyNo = reReplyNo;
     }
 
     public int getCommentNo() {
@@ -53,5 +55,13 @@ public class ReplyDTO {
 
     public void setReplyNo(int replyNo) {
         this.replyNo = replyNo;
+    }
+
+    public int getReReplyNo() {
+        return reReplyNo;
+    }
+
+    public void setReReplyNo(int reReplyNo) {
+        this.reReplyNo = reReplyNo;
     }
 }
