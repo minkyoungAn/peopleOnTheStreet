@@ -44,7 +44,7 @@
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />
         </activity>
         <activity android:name=".configure.ChangePasswordActivity" />
-        <activity android:name=".configure.RegisterBuskerActivity"></activity>
+        <activity android:name=".configure.RegisterBuskerActivity"/>
     </application>
 
 </manifest>

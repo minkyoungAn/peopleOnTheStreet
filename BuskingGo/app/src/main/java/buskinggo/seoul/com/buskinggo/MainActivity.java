@@ -43,18 +43,34 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home: // 홈
+                        findViewById(R.id.action_home).setClickable(false);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(homeFragment);
                         break;
                     case R.id.busking_list: // 버스킹 목록
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(false);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingListFragment);
                         break;
                     case R.id.busking_regist: // 버스킹 등록
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(false);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingRegisterFragment);
                         break;
                     case R.id.seoul_street: // 거리예술존
                         changeFragment(seoulBuskingFragment);
                         break;
                     case R.id.my_page: // 마이페이지
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(false);
                         changeFragment(myPageFragment);
                         break;
                 }
