@@ -63,19 +63,15 @@ public class ReplyListAdapter extends BaseAdapter {
             viewHolder = (ReplyViewHolder) convertView.getTag();
         }
 
-        int commentNo = replyList.get(position).getCommentNo();
         String name = replyList.get(position).getUserNickName();
         String currentTime = replyList.get(position).getCurrentTime();
         String comment = replyList.get(position).getComment();
         currentTime = currentTime.substring(0,16);
 
-
-
         if(currentTime.equals("null") || name.equals("null") || comment.equals("null")){
             return convertView;
 
         }else{
-            System.out.println(position + " | " + commentNo +" | "+ name +" | "+ currentTime +" | "+ comment);
             viewHolder.userNickName.setText(name);
             viewHolder.currentTime.setText(currentTime);
             viewHolder.comment.setText(comment);

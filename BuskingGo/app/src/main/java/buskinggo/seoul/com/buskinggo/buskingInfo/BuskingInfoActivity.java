@@ -27,7 +27,6 @@ import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
-import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;

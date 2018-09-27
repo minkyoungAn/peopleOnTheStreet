@@ -52,7 +52,9 @@ public class MyPageFragment extends Fragment {
 
         ViewPager pager = view.findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter(getChildFragmentManager()));
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(1);
+
+
 
 
         pager.setCurrentItem(0);
