@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.buskerInfo;
+package buskinggo.seoul.com.buskinggo.MyPageWantGo;
 
 import android.os.AsyncTask;
 
@@ -6,6 +6,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -14,15 +15,16 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import buskinggo.seoul.com.buskinggo.AsyncListener;
+import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
 
 /*
- *  버스커의 공연정보 가져오기
+ *  내가 가볼래요한 공연 가져오기
  * */
-public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String> {
+public class AsyncMyWant extends AsyncTask<Integer, String, String> {
     private AsyncListener asyncListener;
 
-    AsyncBuskingListByBusker(AsyncListener asyncListener){
+    AsyncMyWant(AsyncListener asyncListener){
         this.asyncListener = asyncListener;
     }
     @Override
@@ -30,13 +32,13 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
         HttpURLConnection httpURLConnection = null;
 
         try {
-            int buskerNo = params[0];
+            int userNo = params[0];
 
             String data;
             String link;
 
-            data = URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
-            link = "http://buskinggo.cafe24.com/" + "BuskingListByBusker.php";
+            data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
+            link = "http://buskinggo.cafe24.com/" + "WantBuskingInfoLoad.php";
 
             URL url = new URL(link);
 
@@ -55,7 +57,7 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
             String line;
 
             while ((line = reader.readLine()) != null) {
-                sb.append(line);
+                sb.append(line); // 데이터 받기
             }
 
             return sb.toString();
@@ -70,30 +72,33 @@ public class AsyncBuskingListByBusker extends AsyncTask<Integer, String, String>
     }
 
     @Override
-    protected void onPostExecute(String result) {
+    protected void onPostExecute(String result) {   // 결과 처리부분
         try {
 
-            ArrayList<BuskingDTO> buskingList = new ArrayList<>();
+            ArrayList<BuskingDTO> buskingDTOS = new ArrayList<>();
 
             JSONObject jsonObject = new JSONObject(result);
             JSONArray jsonArray = jsonObject.getJSONArray("response");
 
             int count = 0;
-            String date, place, time;
             int buskingNo;
+            String buskerName, photo, place, buskingDate, buskingTime;
             while (count < jsonArray.length()) {
                 JSONObject object = jsonArray.getJSONObject(count);
                 buskingNo = object.getInt("buskingNo");
-                date = object.getString("date");
+                buskerName = object.getString("buskerName");
+                photo = object.getString("photo");
                 place = object.getString("place");
-                time = object.getString("time");
+                buskingDate = object.getString("buskingDate");
+                buskingTime = object.getString("buskingTime");
 
-                BuskingDTO buskingDTO = new BuskingDTO(buskingNo, date, time, place);
-                buskingList.add(buskingDTO);
+
+                BuskingDTO buskingDTO = new BuskingDTO(buskingNo, buskerName, photo, place, buskingDate, buskingTime);
+                buskingDTOS.add(buskingDTO);
                 count++;
             }
-
-            asyncListener.buskingComplete(buskingList);
+            // ui 작업 리스너 호출
+            asyncListener.buskingComplete(buskingDTOS);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -4,21 +4,203 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".buskerInfo.BuskerInfoActivity"
+    tools:context=".buskingInfo.BuskingInfoActivity"
     android:background="@color/black">
 
     <android.support.v7.widget.Toolbar
-        android:id="@+id/busker_info_toolbar"
+        android:id="@+id/busking_info_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:accessibilityHeading="false"
-        android:background="?attr/colorPrimary"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:title="버스킹 상세정보"
         app:titleTextColor="@color/white" />
 
+    <GridLayout
+        android:id="@+id/gl_busking_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_below="@+id/busking_info_toolbar"
+        android:columnCount="2"
+        tools:ignore="UnknownId">
 
+        <ImageView
+            android:id="@+id/busking_info_photo"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_rowSpan="2"
+            android:background="@color/black"
+            android:scaleType="fitCenter"
+            android:contentDescription="@string/todo" />
+
+        <TextView
+            android:id="@+id/busking_info_name"
+            android:layout_width="wrap_content"
+            android:layout_rowWeight="3"
+            android:layout_height="40dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:layout_gravity="bottom"
+            android:text="버스커명"
+            android:padding="8dp"/>
+
+        <RelativeLayout
+            android:layout_rowWeight="3"
+            android:layout_gravity="top">
+
+            <TextView
+                android:id="@+id/busking_info_want"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"
+                android:text="가볼래요"
+                android:padding="8dp"/>
+
+            <ImageView
+                android:id="@+id/busking_info_want_img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_border_white_24dp"
+                android:layout_toEndOf="@id/busking_info_want"
+                android:paddingTop="4dp"
+                android:contentDescription="@string/todo" />
+            <TextView
+                android:id="@+id/busking_info_want_cnt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/busking_info_want_img"
+                android:background="@android:color/transparent"
+                android:paddingTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textColor="@color/white"
+                android:text="0"
+                android:textSize="14sp" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/busking_info_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:text="일시"
+            android:textSize="16sp" />
+        <TextView
+            android:layout_marginTop="8dp"
+            android:id="@+id/busking_info_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:text="시간"
+            android:textSize="16sp" />
+        <TextView
+            android:id="@+id/busking_info_date_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:text="0000-00-00"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/busking_info_time_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:padding="8dp"
+            android:textColor="@color/white"
+            android:text="00:00"
+            android:textSize="14sp" />
+
+        <TextView
+            android:layout_columnSpan="2"
+            android:id="@+id/busking_info_place"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:text="장소"
+            android:paddingLeft="8dp"
+            android:paddingTop="8dp"/>
+        <TextView
+            android:layout_columnSpan="2"
+            android:id="@+id/busking_info_place_item"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:paddingLeft="8dp"
+            android:text="천호동"
+            />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_columnSpan="2">
+
+
+            <TextView
+                android:id="@+id/busking_info_introduce"
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="버스킹 소개"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:padding="8dp"/>
+            <TextView
+                android:id="@+id/busking_info_introduce_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/busking_info_introduce"
+                android:padding="8dp"
+                android:textSize="14sp"
+                android:textColor="@color/white"/>
+
+            <TextView
+                android:layout_marginTop="16sp"
+                android:layout_below="@+id/busking_info_introduce_item"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="댓글"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:textColor="@color/white"
+                />
+        </RelativeLayout>
+    </GridLayout>
+
+    <TextView
+        android:id="@+id/tv_no_list_my_busking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gl_busking_info"
+        android:text="@string/no_list"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="16sp"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        android:visibility="gone"/>
+
+    <ListView
+        android:id="@+id/lv_busking_info"
+        android:layout_marginLeft="16sp"
+        android:layout_marginRight="16sp"
+        android:layout_below="@+id/gl_busking_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:dividerHeight="4dp"
+        android:divider="@color/black"
+        android:orientation="vertical"/>
 
 </RelativeLayout>

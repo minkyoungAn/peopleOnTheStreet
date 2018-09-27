@@ -45,6 +45,14 @@ public class ConfigureActivity extends AppCompatActivity {
             }
         });
 
+        Button registerBuskerButton = (Button) findViewById(R.id.registerBuskerButton);
+        registerBuskerButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent regisBuskerIntent = new Intent(ConfigureActivity.this, RegisterBuskerActivity.class);
+                startActivity(regisBuskerIntent);
+            }
+        });
     }
 
     void showLogout() {
@@ -52,9 +60,9 @@ public class ConfigureActivity extends AppCompatActivity {
                 .setMessage("로그아웃 하시겠습니까?")
                 .setPositiveButton("로그아웃", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
+                        MyApplication.userDTO = null;
                         MyApplication.userEmail = "";
                         MyApplication.password = "";
-                        MyApplication.userNickname = "";
                         finishAffinity();
                         Intent logoutIntent = new Intent(ConfigureActivity.this, LoginActivity.class);
                         startActivity(logoutIntent);

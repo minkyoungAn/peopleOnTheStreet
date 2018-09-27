@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.buskerInfo;
+package buskinggo.seoul.com.buskinggo.buskingInfo;
 
 import android.os.AsyncTask;
 
@@ -10,10 +10,10 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 /*
- *  좋아요한 버스커 정보 갱신
- *  좋아요 추가/ 삭제
+ *  가볼래요한 버스킹 정보 갱신
+ *  가볼래요 추가/ 삭제
  * */
-public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
+public class AsyncUpdateWant extends AsyncTask<Integer, String, String> {
 
     @Override
     protected String doInBackground(Integer... params) {
@@ -21,16 +21,16 @@ public class AsyncUpdateLike extends AsyncTask<Integer, String, String> {
 
         try {
             int userNo = params[0];
-            int buskerNo = params[1];
+            int buskingNo = params[1];
             int check = params[2];
 
             String data;
             String link;
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
-            data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskerNo;
+            data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskingNo;
             data += "&" + URLEncoder.encode("check", "UTF-8") + "=" + check;
-            link = "http://buskinggo.cafe24.com/" + "UpdateLike.php";
+            link = "http://buskinggo.cafe24.com/" + "UpdateWant.php";
 
             URL url = new URL(link);
 

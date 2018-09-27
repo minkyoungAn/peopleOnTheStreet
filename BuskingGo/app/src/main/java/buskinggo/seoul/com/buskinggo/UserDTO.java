@@ -12,7 +12,6 @@ public class UserDTO implements Serializable{
 
     public UserDTO(int userNo, String nickName, String mainPlace, String likeGenre, int checkBusker){
         this.userNo = userNo;
-
         this.nickName = nickName;
         this.mainPlace = mainPlace;
         this.likeGenre = likeGenre;

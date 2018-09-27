@@ -5,28 +5,44 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class BuskingDTO {
+    private int buskingNo;
+    private String buskerName;
     private String buskerNo;
     private String photo;
     private String buskingDate;
     private String buskingTime;
     private String place;
     private String introduce;
+    private int wantSum;
+    private int myWant;
 
 
-    public BuskingDTO(String buskingDate, String buskingTime, String place){
+    public BuskingDTO(int buskingNo, String buskingDate, String buskingTime, String place){
+        this.buskingNo = buskingNo;
         this.buskingDate = buskingDate;
         this.buskingTime = buskingTime;
         this.place = place;
     }
-    public BuskingDTO(String buskerNo, String photo, String buskingDate, String buskingTime, String place, String introduce){
-        this.buskerNo = buskerNo;
+    public BuskingDTO(int buskingNo, String buskerName, String photo, String place, String buskingDate, String buskingTime){
+        this.buskingNo = buskingNo;
+        this.buskerName = buskerName;
         this.photo = photo;
+        this.place = place;
         this.buskingDate = buskingDate;
         this.buskingTime = buskingTime;
-        this.place = place;
-        this.introduce = introduce;
-
     }
+
+    public BuskingDTO(String photo, String buskerName, String buskingDate, String buskingTime, String place, String introduce, int wantSum, int myWant){
+        this.buskerName = buskerName;
+        this.photo = photo;
+        this.place = place;
+        this.buskingDate = buskingDate;
+        this.buskingTime = buskingTime;
+        this.introduce = introduce;
+        this.wantSum = wantSum;
+        this.myWant = myWant;
+    }
+
 
     public String getBuskerNo() {
         return buskerNo;
@@ -74,5 +90,37 @@ public class BuskingDTO {
 
     public void setIntroduce(String introduce) {
         this.introduce = introduce;
+    }
+
+    public int getBuskingNo() {
+        return buskingNo;
+    }
+
+    public void setBuskingNo(int buskingNo) {
+        this.buskingNo = buskingNo;
+    }
+
+    public String getBuskerName() {
+        return buskerName;
+    }
+
+    public void setBuskerName(String buskerName) {
+        this.buskerName = buskerName;
+    }
+
+    public int getWantSum() {
+        return wantSum;
+    }
+
+    public void setWantSum(int wantSum) {
+        this.wantSum = wantSum;
+    }
+
+    public int getMyWant() {
+        return myWant;
+    }
+
+    public void setMyWant(int myWant) {
+        this.myWant = myWant;
     }
 }

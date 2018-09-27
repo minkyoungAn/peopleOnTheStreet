@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo.MyPageLike;
+package buskinggo.seoul.com.buskinggo.MyPagePast;
 
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -22,49 +22,52 @@ import buskinggo.seoul.com.buskinggo.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.UserDTO;
 import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 
-public class MyLikeFragment extends Fragment {
-
-    ArrayList<BuskerDTO> buskerList;
-    MyLikeBuskerAdapter adapter;
-    GridView buskerListView;
+public class MyPastFragment extends Fragment{
+    ArrayList<BuskingDTO> buskingList;
+    ListView buskingListView;
+    MyPastBuskingAdapter adapter;
     UserDTO userDTO;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_my_like,null);
+        View view =  inflater.inflate(R.layout.fragment_my_past_list,null);
         if(this.getArguments() != null){
             userDTO = (UserDTO) this.getArguments().getSerializable("userDTO");
         }
 
-        buskerListView = view.findViewById(R.id.lv_my_like);
-        TextView noList = view.findViewById(R.id.tv_no_list_my_like);
-        buskerListView.setEmptyView(noList);
+        buskingListView = view.findViewById(R.id.lv_my_past);
+        TextView noList = view.findViewById(R.id.tv_no_list_my_past);
+        buskingListView.setEmptyView(noList);
 
-        buskerList = new ArrayList<>();
-        adapter = new MyLikeBuskerAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(),R.layout.my_like_busker_list_item, buskerList);
-        buskerListView.setAdapter(adapter);
+        buskingList = new ArrayList<>();
+        adapter = new MyPastBuskingAdapter(Objects.requireNonNull(getActivity()).getApplicationContext(),R.layout.my_past_busking_list_item, buskingList);
+        buskingListView.setAdapter(adapter);
 
         // 공연리스트뷰 로드
-        new AsyncMyLike(new AsyncListener() {
+        new AsyncMyPast(new AsyncListener() {
 
             @Override
             public void buskerComplete(BuskerDTO buskerDTO) {}
             @Override
-            public void buskerComplete(ArrayList<BuskerDTO> buskerDTO) {
-                if(buskerDTO != null){
-                    buskerList.clear();
-                    buskerList.addAll(buskerDTO);
+            public void buskerComplete(ArrayList<BuskerDTO> buskerDTO) {}
+            @Override
+            public void buskingComplete(ArrayList<BuskingDTO> buskingDTOS) {
+                if(buskingDTOS != null){
+                    buskingList.clear();
+                    buskingList.addAll(buskingDTOS);
                     adapter.notifyDataSetChanged();
                 }
+
             }
-            @Override
-            public void buskingComplete(ArrayList<BuskingDTO> buskingDTOS) {}
             @Override
             public void buskingComplete(BuskingDTO buskingDTOS) {}
 
 
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userDTO.getUserNo());
+
 
         return view;
 
@@ -73,18 +76,14 @@ public class MyLikeFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        buskerListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
+                Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
                 intent.putExtra("userNo", userDTO.getUserNo());
-                intent.putExtra("buskerNo", buskerList.get(position).getBuskerNo());
+                intent.putExtra("buskingNo", buskingList.get(position).getBuskingNo());
                 startActivity(intent);
             }
         });
-
-
-
     }
 }

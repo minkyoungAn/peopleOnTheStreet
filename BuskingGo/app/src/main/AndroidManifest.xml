@@ -5,6 +5,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.CAMERA"/>
 
     <application
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +25,6 @@
             android:name=".buskerInfo.BuskerInfoActivity"
             android:label="@string/title_activity_busker_info"
             android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity">
-
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="buskinggo.seoul.com.buskinggo.MainActivity" />
@@ -32,14 +32,14 @@
         <activity android:name=".register.RegisterActivity" />
         <activity android:name=".configure.ConfigureActivity" />
         <activity android:name=".configure.ChangeNicknameActivity" />
-        <activity
-            android:name=".BuskingInfoActivity"
-            android:label="BuskingInfoActivity"
-            android:parentActivityName="buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity">
 
+        <activity
+            android:name=".buskingInfo.BuskingInfoActivity"
+            android:label="@string/title_activity_busking_info"
+            android:parentActivityName="buskinggo.seoul.com.buskinggo.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity" />
+                android:value="buskinggo.seoul.com.buskinggo.MainActivity" />
         </activity>
         <activity android:name=".configure.ChangePasswordActivity" />
         <activity android:name=".configure.RegisterBuskerActivity"></activity>

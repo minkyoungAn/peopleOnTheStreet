@@ -45,6 +45,7 @@
     <string name="myPage">마이페이지</string>
 
     <string name="title_activity_busker_info">BuskerInfoActivity</string>
+    <string name="title_activity_busking_info">BuskingInfoActivity</string>
     <string name="action_back">action_back</string>
     <string name="favorite_cnt">0</string>
     <string name="buskerInfoPlace">주요활동장소 :</string>
@@ -60,6 +61,8 @@
     <string name="no_list">- 예정된 공연이 없습니다.</string>
     <string name="no_favorite">좋아요한 버스커가 없습니다.</string>
     <string name="no_like">좋아요한 버스커가 없습니다</string>
+    <string name="no_want">가볼래요 한 공연이 없습니다</string>
+    <string name="no_past">가볼래요 한 지난 공연이 없습니다.</string>
 
 
 </resources>

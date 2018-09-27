@@ -2,7 +2,6 @@ package buskinggo.seoul.com.buskinggo.MyPageLike;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,7 +15,7 @@ import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
-//import buskinggo.seoul.com.buskinggo.buskerInfo.AsyncBuskerPhoto;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class MyLikeBuskerAdapter extends BaseAdapter {
     private Context mContext;
@@ -51,7 +50,6 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-
         if(convertView == null){
             convertView = mInflater.inflate(mLayout, viewGroup, false);
 
@@ -76,16 +74,15 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
         }else{
             viewHolder.name.setText(name);
             viewHolder.genre.setText(genre);
-            //bitmapImgDownload(photo);
+            bitmapImgDownload(photo);
         }
 
         return convertView;
     }
 
-    /*
     private void bitmapImgDownload(String photo) {
         // 이미지 다운로드
-        AsyncBuskerPhoto asyncBuskerPhoto = new AsyncBuskerPhoto(new AsyncPhotoListener() {
+        AsyncPhoto asyncBuskerPhoto = new AsyncPhoto(new AsyncPhotoListener() {
             @Override
             public void taskComplete(File file) {
                 if(file != null){
@@ -97,7 +94,6 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
         asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
 
     }
-    */
 
 
 }

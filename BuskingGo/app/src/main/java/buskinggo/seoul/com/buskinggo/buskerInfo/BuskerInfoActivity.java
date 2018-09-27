@@ -2,7 +2,6 @@ package buskinggo.seoul.com.buskinggo.buskerInfo;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,15 +20,15 @@ import buskinggo.seoul.com.buskinggo.AsyncListener;
 import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.BuskingInfoActivity;
 import buskinggo.seoul.com.buskinggo.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class BuskerInfoActivity extends AppCompatActivity {
-    int userNo = 1;
-    int buskerNo = 3;
-    int favorite = 0;
+    int userNo; // 현재 유저
+    int buskerNo; // 선택한 버스커
+    int favorite = 0; // 좋아요 유무
 
     ArrayList<BuskingDTO> buskingList;
     MyBuskingListAdapter adapter;
@@ -38,6 +37,9 @@ public class BuskerInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busker_info);
+        Intent intent = getIntent();
+        userNo = intent.getIntExtra("userNo", 0);
+        buskerNo = intent.getIntExtra("buskerNo", 0);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
@@ -163,10 +165,8 @@ public class BuskerInfoActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(BuskerInfoActivity.this, BuskingInfoActivity.class);
-                intent.putExtra("buskerNo", buskerNo);
-                intent.putExtra("date", buskingList.get(position).getBuskingDate());
-                intent.putExtra("time", buskingList.get(position).getBuskingTime());
-                intent.putExtra("place", buskingList.get(position).getPlace());
+                intent.putExtra("userNo", userNo);
+                intent.putExtra("buskingNo", buskingList.get(position).getBuskingNo());
                 startActivity(intent);
             }
         });
