@@ -16,7 +16,7 @@ import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
-import buskinggo.seoul.com.buskinggo.buskerInfo.AsyncBuskerPhoto;
+//import buskinggo.seoul.com.buskinggo.buskerInfo.AsyncBuskerPhoto;
 
 public class MyLikeBuskerAdapter extends BaseAdapter {
     private Context mContext;
@@ -76,12 +76,13 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
         }else{
             viewHolder.name.setText(name);
             viewHolder.genre.setText(genre);
-            bitmapImgDownload(photo);
+            //bitmapImgDownload(photo);
         }
 
         return convertView;
     }
 
+    /*
     private void bitmapImgDownload(String photo) {
         // 이미지 다운로드
         AsyncBuskerPhoto asyncBuskerPhoto = new AsyncBuskerPhoto(new AsyncPhotoListener() {
@@ -96,6 +97,7 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
         asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
 
     }
+    */
 
 
 }

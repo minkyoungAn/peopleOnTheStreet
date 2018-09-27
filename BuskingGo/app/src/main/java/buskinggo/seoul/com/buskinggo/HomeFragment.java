@@ -6,10 +6,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.json.JSONArray;
@@ -41,7 +42,7 @@ public class HomeFragment extends Fragment {
     private ArrayList<HashMap<String, ArrayList<String>>> recommendBuskingArrayList;
     private ArrayList<HashMap<String, ArrayList<String>>> TodayBuskingArrayList;
 
-    private ListView recommendBuskingListView;
+    private GridView recommendGridView;
     private ListView todayBuskingListView;
 
     public HomeFragment() {
@@ -54,9 +55,14 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         context = container.getContext();
         todayBuskingListView = view.findViewById(R.id.today_busking_listview);
+        recommendGridView = view.findViewById(R.id.recommend_busking_gridView);
 
         TodayBuskingAsync todayBuskingAsync = new TodayBuskingAsync();
-        todayBuskingAsync.execute("http://buskinggo.cafe24.com/TodayBuskingList.php");
+        todayBuskingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
+        RecommendBuskingAsync recommendBuskingAsync = new RecommendBuskingAsync();
+        recommendBuskingAsync.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+
 
         return view;
     }
@@ -83,16 +89,19 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            TodayBuskingListAdapter todayBuskingListAdapter = new TodayBuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
-            todayBuskingListView.setAdapter(todayBuskingListAdapter);
+
+            BuskingListAdapter buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
+            todayBuskingListView.setAdapter(buskingListAdapter);
+            setListViewHeightBasedOnChildren(todayBuskingListView);
+
+
         }
 
         @Override
         protected String doInBackground(String... strings) {
-            String serverURL = strings[0];
 
             try{
-                URL url = new URL(serverURL);
+                URL url = new URL("http://buskinggo.cafe24.com/TodayBuskingList.php");
 
                 Map<String,Object> params = new LinkedHashMap<>();
 
@@ -132,4 +141,95 @@ public class HomeFragment extends Fragment {
         }
     }
 
+    private class RecommendBuskingAsync extends AsyncTask<String, Void, String> {
+        String errorString = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+
+            JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+
+            try {
+                jsonObject = new JSONObject(result);
+                jsonArray = jsonObject.getJSONArray(TAG_JSON);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            RecommendAdapter recommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
+            recommendGridView.setAdapter(recommendAdapter);
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            try{
+                URL url = new URL("http://buskinggo.cafe24.com/TodayBuskingList.php");
+
+                Map<String,Object> params = new LinkedHashMap<>();
+
+                StringBuilder postData = new StringBuilder();
+                for (Map.Entry<String,Object> param : params.entrySet()) {
+                    if (postData.length() != 0) postData.append('&');
+                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
+                }
+                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+
+                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
+                conn.setDoOutput(true);
+                conn.getOutputStream().write(postDataBytes);
+
+                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+
+                StringBuilder sb = new StringBuilder();
+                for (int c; (c = in.read()) >= 0;)
+                    sb.append((char)c);
+                String response = sb.toString().trim();
+
+                in.close();
+                conn.disconnect();
+                return response;
+
+            }
+            catch (IOException e){
+                errorString = e.toString();
+
+                return null;
+            }
+        }
+    }
+
+    //ScrollView안에 listview를 넣기 위해서 item 갯수에 따라 height값을 동적으로 변경
+    public static void setListViewHeightBasedOnChildren(ListView listView) {
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            // pre-condition
+            return;
+        }
+
+        int totalHeight = 0;
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.AT_MOST);
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            View listItem = listAdapter.getView(i, null, listView);
+            listItem.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
 }
