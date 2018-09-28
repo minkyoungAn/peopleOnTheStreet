@@ -7,7 +7,7 @@ import java.util.Date;
 public class BuskingDTO {
     private int buskingNo;
     private String buskerName;
-    private String buskerNo;
+    private int buskerNo;
     private String photo;
     private String buskingDate;
     private String buskingTime;
@@ -32,9 +32,10 @@ public class BuskingDTO {
         this.buskingTime = buskingTime;
     }
 
-    public BuskingDTO(String photo, String buskerName, String buskingDate, String buskingTime, String place, String introduce, int wantSum, int myWant){
+    public BuskingDTO(String photo, int buskerNo, String buskerName, String buskingDate, String buskingTime, String place, String introduce, int wantSum, int myWant){
         this.buskerName = buskerName;
         this.photo = photo;
+        this.buskerNo = buskerNo;
         this.place = place;
         this.buskingDate = buskingDate;
         this.buskingTime = buskingTime;
@@ -44,11 +45,11 @@ public class BuskingDTO {
     }
 
 
-    public String getBuskerNo() {
+    public int getBuskerNo() {
         return buskerNo;
     }
 
-    public void setBuskerNo(String buskerNo) {
+    public void setBuskerNo(int buskerNo) {
         this.buskerNo = buskerNo;
     }
 

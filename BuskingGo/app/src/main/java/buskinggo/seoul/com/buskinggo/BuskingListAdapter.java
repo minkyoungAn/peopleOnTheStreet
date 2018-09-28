@@ -61,12 +61,14 @@ public class BuskingListAdapter extends BaseAdapter {
         }
 
         String Photo;
+        String date = null; // 날짜추가부분
         String place = null;
         String time = null;
         String name = null;
 
         try {
             Photo = String.valueOf(jsonObject.get("Photo"));
+            //date = String.valueOf(jsonObject.get("Date"));
             place = String.valueOf(jsonObject.get("Place"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
@@ -78,10 +80,12 @@ public class BuskingListAdapter extends BaseAdapter {
         TextView nameTextview = view.findViewById(R.id.textViewBuskerName);
         TextView placeTextview = view.findViewById(R.id.textViewBuskingPlace);
         TextView timeTextview = view.findViewById(R.id.textViewBuskingTime);
+        //TextView dateTextview = view.findViewById(R.id.tv_date_item);
 
         nameTextview.setText(name);
         placeTextview.setText(place);
         timeTextview.setText(time);
+        //dateTextview.setText(date);
 
         return view;
     }

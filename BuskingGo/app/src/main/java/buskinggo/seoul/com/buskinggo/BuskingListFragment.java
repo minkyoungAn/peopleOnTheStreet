@@ -2,6 +2,7 @@ package buskinggo.seoul.com.buskinggo;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -29,6 +30,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 
 
 /**
@@ -73,6 +76,21 @@ public class BuskingListFragment extends Fragment {
             }
         });
 
+        buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
+                    System.out.println(buskingNo);
+                    Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
+                    intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
 
 
         BuskingListFragment.BuskingAsync todayBuskingAsync = new BuskingListFragment.BuskingAsync();
@@ -81,6 +99,7 @@ public class BuskingListFragment extends Fragment {
         return view;
     }
 
+    JSONArray jsonArray;
     private class BuskingAsync extends AsyncTask<String, Void, String> {
         String errorString = null;
 
@@ -94,7 +113,7 @@ public class BuskingListFragment extends Fragment {
             super.onPostExecute(result);
 
             JSONObject jsonObject;
-            JSONArray jsonArray = new JSONArray();
+            jsonArray = new JSONArray();
 
             try {
                 jsonObject = new JSONObject(result);
