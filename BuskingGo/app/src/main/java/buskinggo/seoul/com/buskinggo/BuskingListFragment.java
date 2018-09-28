@@ -55,7 +55,7 @@ public class BuskingListFragment extends Fragment {
         Spinner Main_spinner = view.findViewById(R.id.sort_spinner);
 
         //스피너 어댑터 설정
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(context,R.array.sort,android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(context,R.array.sort,R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Main_spinner.setAdapter(adapter);
 

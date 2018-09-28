@@ -99,7 +99,6 @@
                             android:id="@+id/guSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_box"
                             android:layout_gravity="center" />
 
                     </LinearLayout>
@@ -126,7 +125,6 @@
                             android:id="@+id/genreSpinner"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/edit_text_box"
                             android:layout_gravity="center" />
 
                     </LinearLayout>
