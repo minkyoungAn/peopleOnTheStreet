@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -26,19 +27,21 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"/>
 
-            <ImageButton
-                android:id="@+id/busking_image"
+            <ImageView
+                android:id="@+id/buskingSelectedImage"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
+                android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="75dp"
-                tools:ignore="ContentDescription"/>
+                android:layout_marginTop="77dp"
+                android:background="@color/spaceGray"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:id="@+id/ll_busking_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/busking_image"
+                android:layout_below="@+id/buskingSelectedImage"
                 android:orientation="horizontal"
                 android:layout_margin="16sp"
                 >
@@ -167,6 +170,7 @@
                 android:layout_below="@id/introduce_textView"
                 android:background="@drawable/edit_text_box"
                 android:inputType="text"
+                android:gravity="top"
                 tools:ignore="LabelFor" />
 
             <Button
@@ -181,6 +185,15 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
+
+            <ImageButton
+                android:id="@+id/buskingGetImageButton"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignBottom="@+id/buskingSelectedImage"
+                android:layout_alignEnd="@+id/buskingSelectedImage"
+                android:background="@android:color/transparent"
+                android:src="@drawable/ic_add_a_photo_black_24dp" />
         </RelativeLayout>
 
     </ScrollView>

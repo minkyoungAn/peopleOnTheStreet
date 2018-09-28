@@ -158,8 +158,8 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            RecommendAdapter RecommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
-            recommendGridView.setAdapter(RecommendAdapter);
+            RecommendAdapter recommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
+            recommendGridView.setAdapter(recommendAdapter);
         }
 
         @Override
