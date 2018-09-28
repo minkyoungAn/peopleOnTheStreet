@@ -17,7 +17,6 @@
         android:layout_marginTop="16sp"
         android:textColor="@color/white"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:text="닉네임 변경"
         tools:ignore="HardcodedText" />
 
@@ -35,6 +34,7 @@
             android:layout_height="wrap_content"
             android:text="변경할 닉네임"
             android:textColor="@color/white"
+            android:textSize="14sp"
             tools:ignore="HardcodedText,LabelFor"
             android:inputType="text" />
 
@@ -44,6 +44,7 @@
             android:layout_height="wrap_content"
             android:text="변경"
             android:textColor="@color/white"
+            android:layout_marginTop="16sp"
             android:backgroundTint="@color/navigationViewBackground"
             tools:ignore="HardcodedText" />
 

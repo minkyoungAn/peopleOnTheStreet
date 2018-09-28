@@ -4,6 +4,7 @@ package buskinggo.seoul.com.buskinggo;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,9 +13,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -40,7 +43,7 @@ public class BuskingRegisterFragment extends Fragment {
     private String buskingTime;
     private String place = "test";
     private String introduce;
-
+    InputMethodManager imm;
 
     public BuskingRegisterFragment() {
         // Required empty public constructor
@@ -54,6 +57,18 @@ public class BuskingRegisterFragment extends Fragment {
         final Button timeButton = view.findViewById(R.id.time_button);
         Button registerButton = view.findViewById(R.id.busking_register_button);
         final EditText introduceEditText = view.findViewById(R.id.edit_text_box);
+
+
+        imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        RelativeLayout relativeLayout = view.findViewById(R.id.rl_container_busking_register);
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                imm.hideSoftInputFromWindow(introduceEditText.getWindowToken(), 0);
+            }
+        });
+
+
 
         //dateButton, timeButton에 초기값을 주기 위해서 현재 날짜, 시간 정보 가져오기
         long now = System.currentTimeMillis();

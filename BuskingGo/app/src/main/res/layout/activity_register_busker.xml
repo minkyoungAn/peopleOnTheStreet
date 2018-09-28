@@ -23,15 +23,17 @@
                 android:layout_marginTop="16sp"
                 android:text="@string/busker_register"
                 android:textColor="@color/white"
-                android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textSize="20sp"/>
 
             <LinearLayout
                 android:id="@+id/ll_busker_register"
                 android:layout_below="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="16sp"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="16sp"
+                android:layout_marginEnd="16sp"
+                android:layout_marginBottom="16sp"
                 android:orientation="vertical">
 
                 <RelativeLayout
@@ -63,6 +65,7 @@
                     android:id="@+id/buskerNameText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16sp"
                     android:hint="@string/buskerInfoName"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
@@ -147,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="128dp"
                 android:layout_margin="16sp"
+                android:padding="16sp"
                 android:textSize="14sp"
                 android:gravity="top"
                 android:background="@drawable/edit_text_box"

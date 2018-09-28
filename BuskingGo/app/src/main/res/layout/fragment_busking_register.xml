@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".BuskingRegisterFragment"
-    android:background="@color/mainBackground">
+    android:background="@color/mainBackground"
+    android:id="@+id/rl_container_busking_register">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,11 +24,11 @@
                 android:layout_marginStart="16sp"
                 android:text="@string/buskingRegister"
                 android:textSize="20sp"
-                android:textStyle="bold"
                 android:textColor="@color/white"/>
 
             <ImageButton
                 android:id="@+id/busking_image"
+                android:background="@drawable/photo_border"
                 android:layout_width="160dp"
                 android:layout_height="160dp"
                 android:layout_centerHorizontal="true"
