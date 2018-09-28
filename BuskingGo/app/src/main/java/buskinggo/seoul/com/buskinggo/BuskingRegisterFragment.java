@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -25,17 +24,12 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -44,6 +38,7 @@ import java.util.Locale;
 
 import buskinggo.seoul.com.buskinggo.configure.AsyncRegisListener;
 import buskinggo.seoul.com.buskinggo.configure.RegisterBuskerActivity;
+import buskinggo.seoul.com.buskinggo.map.ChooseAddrMap;
 import buskinggo.seoul.com.buskinggo.utils.AsyncUploadPhoto;
 import buskinggo.seoul.com.buskinggo.utils.PictureDialog;
 
@@ -55,16 +50,17 @@ public class BuskingRegisterFragment extends Fragment {
 
     private String buskingDate;
     private String buskingTime;
-    private String place = "test";
+    private String place;
     private String introduce;
     InputMethodManager imm;
 
+    private TextView select_place_TextView;
     private Bitmap FixBitmap;
     private ImageView buskingSelectedImage;
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] byteArray;
     String ConvertImage;
-    private int GALLERY = 1, CAMERA = 2;
+    private static final int GALLERY = 1, CAMERA = 2, BUSKING_ADDR = 3;
 
     public BuskingRegisterFragment() {
         // Required empty public constructor
@@ -74,12 +70,14 @@ public class BuskingRegisterFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, final ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_busking_register, container, false);
 
+        Button registerButton = view.findViewById(R.id.busking_register_button);
         final Button dateButton = view.findViewById(R.id.date_button);
         final Button timeButton = view.findViewById(R.id.time_button);
-        Button registerButton = view.findViewById(R.id.busking_register_button);
         final EditText introduceEditText = view.findViewById(R.id.edit_text_box);
         final ImageButton buskingGetImageButton = view.findViewById(R.id.buskingGetImageButton);
+        final Button buskingGetMapButton = view.findViewById(R.id.buskingGetMapButton);
 
+        select_place_TextView = view.findViewById(R.id.select_place_TextView);
         buskingSelectedImage = view.findViewById(R.id.buskingSelectedImage);
 
 
@@ -165,6 +163,15 @@ public class BuskingRegisterFragment extends Fragment {
             }
         });
 
+        buskingGetMapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(container.getContext(), ChooseAddrMap.class);
+                mapIntent.putExtra("requestCode", BUSKING_ADDR);
+                startActivityForResult(mapIntent, BUSKING_ADDR);
+            }
+        });
+
         return view;
     }
 
@@ -190,6 +197,10 @@ public class BuskingRegisterFragment extends Fragment {
         } else if (requestCode == CAMERA) {
             FixBitmap = (Bitmap) data.getExtras().get("data");
             buskingSelectedImage.setImageBitmap(FixBitmap);
+        } else if (requestCode == BUSKING_ADDR) {
+            String mapAddr = data.getStringExtra("mapAddr");
+            select_place_TextView.setText(mapAddr);
+            place = mapAddr;
         }
     }
 

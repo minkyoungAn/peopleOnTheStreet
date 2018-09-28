@@ -2,6 +2,7 @@ package buskinggo.seoul.com.buskinggo;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -35,6 +36,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -64,7 +67,7 @@ public class BuskingListFragment extends Fragment {
         Spinner Main_spinner = view.findViewById(R.id.sort_spinner);
 
         //스피너 어댑터 설정
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(context,R.array.sort,android.R.layout.simple_spinner_item);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(context,R.array.sort, R.layout.spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         Main_spinner.setAdapter(adapter);
 
@@ -120,6 +123,24 @@ public class BuskingListFragment extends Fragment {
 
             }
         });
+
+
+        buskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
+                    System.out.println(buskingNo);
+                    Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
+                    intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
 
         BuskingListFragment.BuskingAsync todayBuskingAsync = new BuskingListFragment.BuskingAsync();
         todayBuskingAsync.execute();
