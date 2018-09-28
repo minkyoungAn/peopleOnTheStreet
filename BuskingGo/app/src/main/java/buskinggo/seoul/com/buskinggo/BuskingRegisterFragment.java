@@ -5,10 +5,15 @@ import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +22,15 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
@@ -30,7 +39,13 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+
+import buskinggo.seoul.com.buskinggo.configure.AsyncRegisListener;
+import buskinggo.seoul.com.buskinggo.configure.RegisterBuskerActivity;
+import buskinggo.seoul.com.buskinggo.utils.AsyncUploadPhoto;
+import buskinggo.seoul.com.buskinggo.utils.PictureDialog;
 
 
 /**
@@ -38,12 +53,18 @@ import java.util.Locale;
  */
 public class BuskingRegisterFragment extends Fragment {
 
-    private String photo = "test";
     private String buskingDate;
     private String buskingTime;
     private String place = "test";
     private String introduce;
     InputMethodManager imm;
+
+    private Bitmap FixBitmap;
+    private ImageView buskingSelectedImage;
+    ByteArrayOutputStream byteArrayOutputStream;
+    byte[] byteArray;
+    String ConvertImage;
+    private int GALLERY = 1, CAMERA = 2;
 
     public BuskingRegisterFragment() {
         // Required empty public constructor
@@ -57,6 +78,9 @@ public class BuskingRegisterFragment extends Fragment {
         final Button timeButton = view.findViewById(R.id.time_button);
         Button registerButton = view.findViewById(R.id.busking_register_button);
         final EditText introduceEditText = view.findViewById(R.id.edit_text_box);
+        final ImageButton buskingGetImageButton = view.findViewById(R.id.buskingGetImageButton);
+
+        buskingSelectedImage = view.findViewById(R.id.buskingSelectedImage);
 
 
         imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -90,7 +114,7 @@ public class BuskingRegisterFragment extends Fragment {
 
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                        String msg = String.valueOf(year)+"-"+addZero(String.valueOf(month))+"-"+addZero(String.valueOf(date));
+                        String msg = String.valueOf(year) + "-" + addZero(String.valueOf(month)) + "-" + addZero(String.valueOf(date));
                         Toast.makeText(container.getContext(), msg, Toast.LENGTH_SHORT).show();
                         dateButton.setText(msg);
                     }
@@ -108,7 +132,7 @@ public class BuskingRegisterFragment extends Fragment {
                 TimePickerDialog dialog = new TimePickerDialog(container.getContext(), new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int min) {
-                        String msg = addZero(String.valueOf(hour))+":"+addZero(String.valueOf(min));
+                        String msg = addZero(String.valueOf(hour)) + ":" + addZero(String.valueOf(min));
                         Toast.makeText(container.getContext(), msg, Toast.LENGTH_SHORT).show();
                         timeButton.setText(msg);
                     }
@@ -120,86 +144,83 @@ public class BuskingRegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(MyApplication.buskerNo.equals("-1")) {
+                    Toast.makeText(container.getContext(), "버스커 등록을 먼저 해주세요!", Toast.LENGTH_SHORT).show();
+                    Intent buskerRegisIntent = new Intent(container.getContext(), RegisterBuskerActivity.class);
+                    startActivity(buskerRegisIntent);
+                    return;
+                }
                 buskingDate = String.valueOf(dateButton.getText());
-                buskingTime =  String.valueOf(timeButton.getText());
+                buskingTime = String.valueOf(timeButton.getText());
                 introduce = String.valueOf(introduceEditText.getText());
-                buskingRegister buskingRegister = new buskingRegister();
-                buskingRegister.execute(photo, buskingDate, buskingTime, place, introduce);
+                uploadToServer(buskingDate, buskingTime, place, introduce);
+            }
+        });
+
+        buskingGetImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PictureDialog pictureDialog = new PictureDialog();
+                pictureDialog.showPictureDialog(container.getContext());
             }
         });
 
         return view;
     }
 
-    @SuppressLint("StaticFieldLeak")
-    class buskingRegister extends AsyncTask<String, Void, String> {
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            Log.w("test", "test");
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_CANCELED) {
+            return;
         }
-
-        @Override
-        protected String doInBackground(String... params) {
-            HttpURLConnection httpURLConnection = null;
-
-            try {
-                String Photo = params[0];
-                String BuskingDate = params[1];
-                String BuskingTime = params[2];
-                String Place = params[3];
-                String Introduce = params[4];
-                Log.w("test", Photo+BuskingDate+BuskingTime+Place+Introduce);
-
-                String data = URLEncoder.encode("Photo", "UTF-8") + "=" + URLEncoder.encode(Photo, "UTF-8");// UTF-8로  설정 실제로 string 상으로 봤을땐, tmsg="String" 요런식으로 설정 된다.
-                data += "&" + URLEncoder.encode("BuskingDate", "UTF-8") + "=" + URLEncoder.encode(BuskingDate, "UTF-8");
-                data += "&" + URLEncoder.encode("BuskingTime", "UTF-8") + "=" + URLEncoder.encode(BuskingTime, "UTF-8");
-                data += "&" + URLEncoder.encode("Place", "UTF-8") + "=" + URLEncoder.encode(Place, "UTF-8");
-                data += "&" + URLEncoder.encode("Introduce", "UTF-8") + "=" + URLEncoder.encode(Introduce, "UTF-8");
-                //버스커 넘버도 넘겨야 함
-                String link = "http://buskinggo.cafe24.com/BuskingRegister.php";
-
-                URL url = new URL(link);
-
-                httpURLConnection = (HttpURLConnection) url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-
-                httpURLConnection.setDoInput(true);
-                httpURLConnection.setDoOutput(true);
-
-                OutputStreamWriter wr = new OutputStreamWriter(httpURLConnection.getOutputStream());
-                wr.write(data);
-                wr.flush();
-
-                BufferedReader reader = new BufferedReader(new InputStreamReader
-                        (httpURLConnection.getInputStream(), "UTF-8"));
-                StringBuilder sb = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    sb.append(line);//
-
+        if (requestCode == GALLERY) {
+            if (data != null) {
+                Uri contentURI = data.getData();
+                try {
+                    FixBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), contentURI);
+                    buskingSelectedImage.setImageBitmap(FixBitmap);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getActivity(), "Failed!", Toast.LENGTH_SHORT).show();
                 }
-
-                httpURLConnection.disconnect();
-                return sb.toString();
-            } catch (Exception e) {
-
-                assert httpURLConnection != null;
-                httpURLConnection.disconnect();
-                return "Exception Occure" + e.getMessage();
             }
+
+        } else if (requestCode == CAMERA) {
+            FixBitmap = (Bitmap) data.getExtras().get("data");
+            buskingSelectedImage.setImageBitmap(FixBitmap);
         }
     }
 
     //초기값과 날짜 or 시간을 선택했을 때 형식을 같게하기 위하여 1자리수(1월,2월...)일 경우 앞에 0(01월, 02월...)을 붙여주는 메소드
-    private String addZero(String string){
-
-        if(string.length() == 1)
-            string = "0"+string;
-
+    private String addZero(String string) {
+        if (string.length() == 1)
+            string = "0" + string;
         return string;
+    }
 
+    private void uploadToServer(String buskingDate, String buskingTime, String place, String introduce) {
+        byteArrayOutputStream = new ByteArrayOutputStream();
+        FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+        byteArray = byteArrayOutputStream.toByteArray();
+        ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        String url = "http://buskinggo.cafe24.com/registerBusking.php";
+
+        HashMap<String, String> extraData = new HashMap<>();
+        extraData.put("buskingDate", buskingDate);
+        extraData.put("buskingTime", buskingTime);
+        extraData.put("place", place);
+        extraData.put("introduce", introduce);
+        extraData.put("buskerNo", MyApplication.buskerNo);
+
+        AsyncUploadPhoto AsyncTaskUploadClassOBJ = new AsyncUploadPhoto(getActivity(), extraData, new AsyncRegisListener() {
+            @Override
+            public void taskComplete() {
+//               완료 후 처리
+            }
+        });
+        AsyncTaskUploadClassOBJ.execute(url, ConvertImage);
     }
 }

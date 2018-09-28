@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -115,10 +116,11 @@ public class LoginActivity extends AppCompatActivity {
                                 String mainPlace = jsonResponse.getString("MainPlace");
                                 String likeGenre = jsonResponse.getString("LikeGenre");
                                 String checkBusker = jsonResponse.getString("checkBusker");
+                                String buskerNo =  jsonResponse.getString("BuskerNo");
                                 userDTO = new UserDTO(Integer.parseInt(userNo), nickname, mainPlace, likeGenre, Integer.parseInt(checkBusker));
 
                                 AsyncLogin asyncLogin = new AsyncLogin();
-                                asyncLogin.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userEmail, userPassword);
+                                asyncLogin.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, userEmail, userPassword, buskerNo);
 
                                 AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                                 dialog = builder.setMessage("로그인에 성공하셨습니다.")
@@ -178,6 +180,7 @@ public class LoginActivity extends AppCompatActivity {
             MyApplication.userDTO = userDTO;
             MyApplication.userEmail = params[0];
             MyApplication.password = params[1];
+            MyApplication.buskerNo = params[2];
             return null;
         }
     }
