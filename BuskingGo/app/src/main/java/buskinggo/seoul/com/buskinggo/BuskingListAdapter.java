@@ -60,6 +60,7 @@ public class BuskingListAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
+
         String Photo;
         String place = null;
         String time = null;

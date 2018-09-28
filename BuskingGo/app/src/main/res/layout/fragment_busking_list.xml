@@ -37,10 +37,11 @@
         <ListView
             android:id="@+id/busking_listView"
             android:layout_width="280dp"
-            android:layout_height="110dp"
+            android:layout_height="0dp"
             android:layout_centerHorizontal="true"
             android:layout_below="@id/sort_spinner"
             android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
             android:dividerHeight="10dp">
 
         </ListView>

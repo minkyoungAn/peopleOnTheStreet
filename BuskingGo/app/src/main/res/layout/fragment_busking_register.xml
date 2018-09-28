@@ -40,8 +40,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/busking_image"
                 android:orientation="horizontal"
-                android:layout_margin="16sp"
-                >
+                android:layout_margin="16sp">
+
                 <TextView
                     android:layout_weight="0.5"
                     android:id="@+id/dateTextView"
@@ -52,6 +52,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
+
                 <TextView
                     android:layout_weight="0.5"
                     android:id="@+id/timeTextView"
@@ -62,6 +63,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:textStyle="bold"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -167,7 +169,8 @@
                 android:layout_below="@id/introduce_textView"
                 android:background="@drawable/edit_text_box"
                 android:inputType="text"
-                tools:ignore="LabelFor" />
+                android:gravity="top"
+                tools:ignore="LabelFor"/>
 
             <Button
                 android:id="@+id/busking_register_button"
@@ -181,6 +184,7 @@
                 android:textColor="@color/white"
                 android:textSize="14sp"
                 tools:ignore="HardcodedText" />
+
         </RelativeLayout>
 
     </ScrollView>

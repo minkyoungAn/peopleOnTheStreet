@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +16,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -27,7 +28,11 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -39,6 +44,10 @@ public class BuskingListFragment extends Fragment {
     private static final String TAG_JSON = "response";
     private Context context;
     private ListView buskingListView;
+    private BuskingListAdapter buskingListAdapter;
+
+    private JSONObject jsonObject;
+    private JSONArray jsonArray = new JSONArray();
 
     public BuskingListFragment() {
         // Required empty public constructor
@@ -63,8 +72,47 @@ public class BuskingListFragment extends Fragment {
         Main_spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //각 항목 클릭시 포지션값을 토스트에 띄운다.
-                Toast.makeText(context, Integer.toString(position), Toast.LENGTH_SHORT).show();
+                if(position == 0){
+                    try {
+                        jsonArray = sortByDate(jsonArray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
+                    buskingListView.setAdapter(buskingListAdapter);
+                    setListViewHeightBasedOnChildren(buskingListView);
+                    buskingListAdapter.notifyDataSetChanged();
+
+                }
+
+                if(position == 1){
+                    try {
+                        jsonArray = sortByBuskerName(jsonArray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
+                    buskingListView.setAdapter(buskingListAdapter);
+                    setListViewHeightBasedOnChildren(buskingListView);
+                    buskingListAdapter.notifyDataSetChanged();
+
+                }
+
+                if(position == 2){
+                    try {
+                        jsonArray = sortByPlace(jsonArray);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                    buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
+                    buskingListView.setAdapter(buskingListAdapter);
+                    setListViewHeightBasedOnChildren(buskingListView);
+                    buskingListAdapter.notifyDataSetChanged();
+
+                }
             }
 
             @Override
@@ -72,8 +120,6 @@ public class BuskingListFragment extends Fragment {
 
             }
         });
-
-
 
         BuskingListFragment.BuskingAsync todayBuskingAsync = new BuskingListFragment.BuskingAsync();
         todayBuskingAsync.execute();
@@ -93,9 +139,6 @@ public class BuskingListFragment extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
 
-            JSONObject jsonObject;
-            JSONArray jsonArray = new JSONArray();
-
             try {
                 jsonObject = new JSONObject(result);
                 jsonArray = jsonObject.getJSONArray(TAG_JSON);
@@ -103,11 +146,9 @@ public class BuskingListFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
-            BuskingListAdapter buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
+            buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
             buskingListView.setAdapter(buskingListAdapter);
             setListViewHeightBasedOnChildren(buskingListView);
-
 
         }
 
@@ -177,4 +218,87 @@ public class BuskingListFragment extends Fragment {
         listView.requestLayout();
     }
 
+    private static JSONArray sortByBuskerName(JSONArray array) throws JSONException {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < array.length(); i++) {
+            jsons.add(array.getJSONObject(i));
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                String lid = null;
+                Log.w("test", "2");
+                try {
+                    lid = lhs.getString("BuskerName");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String rid = null;
+                try {
+                    rid = rhs.getString("BuskerName");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Here you could parse string id to integer and then compare.
+                return lid.compareTo(rid);
+            }
+        });
+        return new JSONArray(jsons);
+    }
+
+    private static JSONArray sortByDate(JSONArray array) throws JSONException {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < array.length(); i++) {
+            jsons.add(array.getJSONObject(i));
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                String lid = null;
+                Log.w("test", "2");
+                try {
+                    lid = lhs.getString("BuskingTime");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String rid = null;
+                try {
+                    rid = rhs.getString("BuskingTime");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Here you could parse string id to integer and then compare.
+                return lid.compareTo(rid);
+            }
+        });
+        return new JSONArray(jsons);
+    }
+
+    private static JSONArray sortByPlace(JSONArray array) throws JSONException {
+        List<JSONObject> jsons = new ArrayList<JSONObject>();
+        for (int i = 0; i < array.length(); i++) {
+            jsons.add(array.getJSONObject(i));
+        }
+        Collections.sort(jsons, new Comparator<JSONObject>() {
+            @Override
+            public int compare(JSONObject lhs, JSONObject rhs) {
+                String lid = null;
+                Log.w("test", "2");
+                try {
+                    lid = lhs.getString("Place");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                String rid = null;
+                try {
+                    rid = rhs.getString("Place");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                // Here you could parse string id to integer and then compare.
+                return lid.compareTo(rid);
+            }
+        });
+        return new JSONArray(jsons);
+    }
 }
