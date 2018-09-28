@@ -30,6 +30,7 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
         try {
             int userNo = params[0];
             int buskingNo = params[1];
+            System.out.println(userNo + " UserNo " + buskingNo + "  buskingNo");
 
             String data;
             String link;
@@ -88,6 +89,8 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             wantSum = jsonObject.getString("wantSum");
             myWant = jsonObject.getString("myWant");
             buskingDTO = new BuskingDTO(photo, buskerName, buskingDate, buskingTime, place, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
+
+            System.out.println(photo+" | "+ buskerName+" | "+ buskingDate+" | "+ buskingTime+" | "+ place+" | "+ introduce+" | "+ Integer.parseInt(wantSum)+" | "+ Integer.parseInt(myWant));
 
 
             // ui 작업 리스너 호출

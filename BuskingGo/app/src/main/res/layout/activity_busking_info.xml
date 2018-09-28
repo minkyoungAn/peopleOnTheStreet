@@ -247,6 +247,7 @@
             android:layout_height="36dp"
             android:background="@drawable/reply_btn_border"
             android:textSize="12sp"
+            android:textColor="@color/white"
             android:text="@string/ok"
             />
     </LinearLayout>

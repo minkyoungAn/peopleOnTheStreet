@@ -2,13 +2,16 @@ package buskinggo.seoul.com.buskinggo;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -26,6 +29,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.LinkedHashMap;
 import java.util.Map;
+
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 
 
 /**
@@ -62,6 +67,42 @@ public class HomeFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        todayBuskingListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
+                    System.out.println(buskingNo);
+                    Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
+                    intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        recommendGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
+                    System.out.println(buskingNo);
+                    Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
+                    intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
+                    startActivity(intent);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    JSONArray jsonArray;
     private class TodayBuskingAsync extends AsyncTask<String, Void, String> {
         String errorString = null;
 
@@ -75,7 +116,7 @@ public class HomeFragment extends Fragment {
             super.onPostExecute(result);
 
             JSONObject jsonObject = new JSONObject();
-            JSONArray jsonArray = new JSONArray();
+            jsonArray = new JSONArray();
 
             try {
                 jsonObject = new JSONObject(result);
