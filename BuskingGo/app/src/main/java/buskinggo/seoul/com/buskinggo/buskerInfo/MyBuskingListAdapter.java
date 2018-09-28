@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
 
 public class MyBuskingListAdapter extends BaseAdapter {
@@ -53,6 +53,7 @@ public class MyBuskingListAdapter extends BaseAdapter {
             viewHolder.date = convertView.findViewById(R.id.tv_date_busking_item);
             viewHolder.place = convertView.findViewById(R.id.tv_place_busking_item);
             viewHolder.time = convertView.findViewById(R.id.tv_time_busking_item);
+
 
             convertView.setTag(viewHolder);
 

@@ -11,9 +11,9 @@ import android.widget.BaseAdapter;
 import java.io.File;
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
@@ -78,6 +78,7 @@ public class MyWantBuskingAdapter extends BaseAdapter {
         
         //|| photo.equals("null")
         if (date.equals("null") || place.equals("null") || time.equals("null") || name.equals("null") ) {
+            bitmapImgDownload(photo);
             return convertView;
 
         } else {

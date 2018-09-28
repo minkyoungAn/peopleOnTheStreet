@@ -1,4 +1,4 @@
-package buskinggo.seoul.com.buskinggo;
+package buskinggo.seoul.com.buskinggo.dto;
 
 import java.sql.Time;
 import java.util.ArrayList;

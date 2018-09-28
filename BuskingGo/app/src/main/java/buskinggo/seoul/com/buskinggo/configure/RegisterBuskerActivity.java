@@ -5,12 +5,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.MediaStore;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,16 +29,12 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
-import buskinggo.seoul.com.buskinggo.login.LoginActivity;
-import buskinggo.seoul.com.buskinggo.login.LoginRequest;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncUploadPhoto;
 import buskinggo.seoul.com.buskinggo.utils.PictureDialog;
-
-import static buskinggo.seoul.com.buskinggo.MyApplication.userEmail;
 
 public class RegisterBuskerActivity extends AppCompatActivity {
 
@@ -77,6 +71,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         genreSpinner = findViewById(R.id.genreSpinner);
         genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(genreAdapter);
+
 
         if(MyApplication.userDTO.getCheckBusker() == 1) {
             requestBuskerInfos();

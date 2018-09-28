@@ -10,7 +10,6 @@ import android.widget.TextView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class recommendAdapter extends BaseAdapter {
     private LayoutInflater inflater;
@@ -70,6 +69,7 @@ public class recommendAdapter extends BaseAdapter {
             place = String.valueOf(jsonObject.get("Place"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
+            time = time.substring(0,5);
         } catch (JSONException e) {
             e.printStackTrace();
         }

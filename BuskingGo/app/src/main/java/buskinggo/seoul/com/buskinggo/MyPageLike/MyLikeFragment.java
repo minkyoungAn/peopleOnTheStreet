@@ -16,11 +16,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.MyApplication;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.R;
-import buskinggo.seoul.com.buskinggo.UserDTO;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 
 public class MyLikeFragment extends Fragment {
@@ -33,9 +34,7 @@ public class MyLikeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_like,null);
-        if(this.getArguments() != null){
-            userDTO = (UserDTO) this.getArguments().getSerializable("userDTO");
-        }
+        userDTO = MyApplication.userDTO;
 
         buskerListView = view.findViewById(R.id.lv_my_like);
         TextView noList = view.findViewById(R.id.tv_no_list_my_like);
@@ -78,7 +77,6 @@ public class MyLikeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), BuskerInfoActivity.class);
-                intent.putExtra("userNo", userDTO.getUserNo());
                 intent.putExtra("buskerNo", buskerList.get(position).getBuskerNo());
                 startActivity(intent);
             }

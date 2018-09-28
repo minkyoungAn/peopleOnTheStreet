@@ -22,6 +22,7 @@ import buskinggo.seoul.com.buskinggo.MyPageLike.MyLikeFragment;
 import buskinggo.seoul.com.buskinggo.MyPagePast.MyPastFragment;
 import buskinggo.seoul.com.buskinggo.MyPageWantGo.MyWantGoFragment;
 import buskinggo.seoul.com.buskinggo.configure.ConfigureActivity;
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,8 +35,6 @@ public class MyPageFragment extends Fragment {
     private Fragment myLikeFragment;
     private Fragment myWantGoFragment;
     private Fragment myPastFragment;
-    UserDTO userDTO;
-
 
     @Nullable
     @Override
@@ -51,7 +50,9 @@ public class MyPageFragment extends Fragment {
 
         ViewPager pager = view.findViewById(R.id.pager);
         pager.setAdapter(new PagerAdapter(getChildFragmentManager()));
-        pager.setOffscreenPageLimit(3);
+        pager.setOffscreenPageLimit(1);
+
+
 
 
         pager.setCurrentItem(0);
@@ -79,19 +80,10 @@ public class MyPageFragment extends Fragment {
         @Override
         public Fragment getItem(int position) {
             if( position == 0 ) {
-                Bundle args = new Bundle();
-                args.putSerializable("userDTO", userDTO);
-                myLikeFragment.setArguments(args);
                 return myLikeFragment;
             } else if ( position == 1 ) {
-                Bundle args = new Bundle();
-                args.putSerializable("userDTO", userDTO);
-                myWantGoFragment.setArguments(args);
                 return myWantGoFragment;
             } else {
-                Bundle args = new Bundle();
-                args.putSerializable("userDTO", userDTO);
-                myPastFragment.setArguments(args);
                 return myPastFragment;
             }
         }
@@ -106,7 +98,6 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        userDTO = ((MainActivity) Objects.requireNonNull(getActivity())).userDTO;
 
         // setting 클릭시 이동
         ImageView setting = Objects.requireNonNull(getView()).findViewById(R.id.iv_my_page_setting);

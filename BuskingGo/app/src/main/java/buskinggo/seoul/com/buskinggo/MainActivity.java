@@ -8,6 +8,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,18 +44,34 @@ public class MainActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.action_home: // 홈
+                        findViewById(R.id.action_home).setClickable(false);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(homeFragment);
                         break;
                     case R.id.busking_list: // 버스킹 목록
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(false);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingListFragment);
                         break;
                     case R.id.busking_regist: // 버스킹 등록
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(false);
+                        findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingRegisterFragment);
                         break;
                     case R.id.seoul_street: // 거리예술존
                         changeFragment(seoulBuskingFragment);
                         break;
                     case R.id.my_page: // 마이페이지
+                        findViewById(R.id.action_home).setClickable(true);
+                        findViewById(R.id.busking_list).setClickable(true);
+                        findViewById(R.id.busking_regist).setClickable(true);
+                        findViewById(R.id.my_page).setClickable(false);
                         changeFragment(myPageFragment);
                         break;
                 }
@@ -71,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(fragment.getTag());
         fragmentTransaction.commit();
+    }
+
+    // 두번 뒤로가기 누르면 종료되도록
+    private long lastTimeBackPressed;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastTimeBackPressed < 1500) {
+            finish();
+            return;
+        }
+        Toast.makeText(this, "'뒤로' 버튼을 한 번 더 눌러 종료합니다", Toast.LENGTH_SHORT).show();
+        lastTimeBackPressed = System.currentTimeMillis();
     }
 
 }

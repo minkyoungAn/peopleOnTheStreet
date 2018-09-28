@@ -11,9 +11,9 @@ import android.widget.BaseAdapter;
 import java.io.File;
 import java.util.ArrayList;
 
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
@@ -70,6 +70,7 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
         String genre = buskerList.get(position).getGenre();
 
         if(photo.equals("null") || name.equals("null") || genre.equals("null")){
+            bitmapImgDownload(photo);
             return convertView;
         }else{
             viewHolder.name.setText(name);

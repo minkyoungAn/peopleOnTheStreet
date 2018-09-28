@@ -16,11 +16,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.MyApplication;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 import buskinggo.seoul.com.buskinggo.R;
 import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
@@ -38,13 +39,13 @@ public class BuskerInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busker_info);
         Intent intent = getIntent();
-        userNo = intent.getIntExtra("userNo", 0);
+        userNo = MyApplication.userDTO.getUserNo();
         buskerNo = intent.getIntExtra("buskerNo", 0);
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
 
         final ListView buskingListView = findViewById(R.id.lv_busker_info); // 리스트뷰
         TextView noList = findViewById(R.id.tv_no_list_my_busking);

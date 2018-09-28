@@ -1,5 +1,6 @@
 package buskinggo.seoul.com.buskinggo.buskingInfo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
@@ -7,38 +8,72 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Objects;
 
-import buskinggo.seoul.com.buskinggo.AsyncListener;
-import buskinggo.seoul.com.buskinggo.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.BuskerDTO;
-import buskinggo.seoul.com.buskinggo.BuskingDTO;
-import buskinggo.seoul.com.buskinggo.PhotoResizing;
+import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
+import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
+import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
+import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
 public class BuskingInfoActivity extends AppCompatActivity {
     int userNo; // 현재 유저
     int buskingNo; // 선택한 버스커
     int want = 0; // 가볼래요 유무
 
+    int replyNo = 100; // 댓글
+    int reReplyNo = 0; // 대댓글
+
+    ReplyListAdapter adapter; // 댓글
+    LinkedList<ReplyDTO> replyList; // 댓글 리스트
+    ListView replyListview;
+
+    InputMethodManager imm;
+    EditText editText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_busking_info);
         Intent intent = getIntent();
-        userNo = intent.getIntExtra("userNo", 0);
+        userNo = MyApplication.userDTO.getUserNo();
         buskingNo = intent.getIntExtra("buskingNo", 0);
 
         Toolbar toolbar = findViewById(R.id.busking_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
         Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_arrow_back_white_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_home_white_24dp);
+
+        replyListview = findViewById(R.id.lv_reply); // 리스트뷰
+        TextView noList = findViewById(R.id.tv_no_list_reply);
+        replyListview.setEmptyView(noList);
+
+        replyList = new LinkedList<>();
+        adapter = new ReplyListAdapter(getApplicationContext(),R.layout.busking_lnfo_reply_item, replyList);
+        replyListview.setAdapter(adapter);
+        setListViewHeight(replyListview);
+
+        imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
+
+        loadReply();
 
         // DB 저장된 값 로드
         AsyncBuskingInfo asyncBuskingInfo = new AsyncBuskingInfo(new AsyncListener() {
@@ -65,10 +100,12 @@ public class BuskingInfoActivity extends AppCompatActivity {
                     ivWant.setImageResource(R.drawable.ic_star_white_24dp);
                     want = 1;
                 }
+                String time = buskingDTO.getBuskingTime();
+                time = time.substring(0,5);
 
                 tvName.setText(buskingDTO.getBuskerName());
                 tvDate.setText(buskingDTO.getBuskingDate());
-                tvTime.setText(buskingDTO.getBuskingTime());
+                tvTime.setText(time);
                 tvPlace.setText(buskingDTO.getPlace());
                 tvIntroduce.setText(buskingDTO.getIntroduce());
                 tvWantSum.setText(String.valueOf(buskingDTO.getWantSum()));
@@ -110,6 +147,50 @@ public class BuskingInfoActivity extends AppCompatActivity {
             }
         });
 
+        // 댓글 달기
+        Button replyBtn = findViewById(R.id.reply_comment_btn);
+        replyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                editText = findViewById(R.id.reply_comment_edit);
+                String contents = editText.getText().toString();
+
+                if(replyList.size() != 0){
+                    replyNo = replyList.getFirst().getReplyNo();
+                    replyNo += 100;
+                }
+
+                // db 저장
+                AsyncInsertReply asyncInsertReply = new AsyncInsertReply(new AsyncInsertReply.AsyncReplyListener() {
+                    @Override
+                    public void taskComplete() {
+                        // 리스트 갱신
+                        loadReply();
+                    }
+                });
+                asyncInsertReply.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, String.valueOf(userNo), String.valueOf(buskingNo), contents, String.valueOf(replyNo), String.valueOf(reReplyNo));
+
+                // 키보드 내리기
+                hideKeyboard();
+                editText.setText("");
+
+            }
+        });
+
+        // 전체화면 클릭시 키보드 내리기
+        RelativeLayout rl = findViewById(R.id.rl_container_reply);
+        rl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hideKeyboard();
+            }
+        });
+
+    }
+
+    void hideKeyboard(){
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
     }
 
     void bitmapImgDownload(String photo) {
@@ -125,6 +206,43 @@ public class BuskingInfoActivity extends AppCompatActivity {
             }
         });
         asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskingPhoto");
+
+    }
+
+    void setListViewHeight(ListView listView){
+        ListAdapter listAdapter = listView.getAdapter();
+        if(listAdapter == null){
+            return;
+        }
+
+        int totalHeight = 0;
+        for(int i = 0; i < listAdapter.getCount(); i++){
+            View listitem = listAdapter.getView(i, null, listView);
+            listitem.measure(0,0);
+            totalHeight += listitem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() -1));
+        listView.setLayoutParams(params);
+        listView.requestLayout();
+    }
+
+    void loadReply(){
+        // 댓글 로드
+        new AsyncReplyList(new AsyncReplyList.ReplyListener() {
+
+            @Override
+            public void taskComplete(LinkedList<ReplyDTO> list) {
+                if (list != null) {
+                    replyList.clear();
+                    replyList.addAll(list);
+                    setListViewHeight(replyListview);
+                    adapter.notifyDataSetChanged();
+                }
+            }
+
+        }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskingNo);
 
     }
 }
