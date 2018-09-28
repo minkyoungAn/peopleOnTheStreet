@@ -78,7 +78,7 @@ public class BuskingListAdapter extends BaseAdapter {
 
         try {
             photo = String.valueOf(jsonObject.get("Photo"));
-            //date = String.valueOf(jsonObject.get("Date"));
+            date = String.valueOf(jsonObject.get("BuskingDate"));
             place = String.valueOf(jsonObject.get("Place"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
@@ -97,7 +97,7 @@ public class BuskingListAdapter extends BaseAdapter {
         TextView nameTextview = view.findViewById(R.id.textViewBuskerName);
         TextView placeTextview = view.findViewById(R.id.textViewBuskingPlace);
         TextView timeTextview = view.findViewById(R.id.textViewBuskingTime);
-        //TextView dateTextview = view.findViewById(R.id.tv_date_item);
+        TextView dateTextview = view.findViewById(R.id.tv_date_item);
         ImageView photoImageView = view.findViewById(R.id.imageViewBusking);
         Bitmap bitmap = bitmapImgDownload(photo);
         if (bitmap != null) {
@@ -107,7 +107,7 @@ public class BuskingListAdapter extends BaseAdapter {
         nameTextview.setText(name);
         placeTextview.setText(place);
         timeTextview.setText(time);
-        //dateTextview.setText(date);
+        dateTextview.setText(date);
 
         return view;
     }
