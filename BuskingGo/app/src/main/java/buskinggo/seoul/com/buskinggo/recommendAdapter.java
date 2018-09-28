@@ -1,28 +1,35 @@
 package buskinggo.seoul.com.buskinggo;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.util.concurrent.ExecutionException;
+
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
+import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
+import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
+
 public class recommendAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private JSONArray jsonArray;
     private int layout;
-    private JSONObject jsonObject;
-    private Context context;
 
-    public recommendAdapter(Context context, JSONArray jsonArray, int layout) {
-        this.inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+    recommendAdapter(Context context, JSONArray jsonArray, int layout) {
+        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.jsonArray = jsonArray;
         this.layout = layout;
-        this.context = context;
     }
 
     @Override
@@ -47,11 +54,11 @@ public class recommendAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if(view == null){
+        if (view == null) {
             view = inflater.inflate(layout, viewGroup, false);
         }
 
-        jsonObject = new JSONObject();
+        JSONObject jsonObject = new JSONObject();
 
         try {
             jsonObject = jsonArray.getJSONObject(i);
@@ -59,17 +66,17 @@ public class recommendAdapter extends BaseAdapter {
             e.printStackTrace();
         }
 
-        String Photo;
+        String photo = null;
         String place = null;
         String time = null;
         String name = null;
 
         try {
-            Photo = String.valueOf(jsonObject.get("Photo"));
+            photo = String.valueOf(jsonObject.get("Photo"));
             place = String.valueOf(jsonObject.get("Place"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
-            time = time.substring(0,5);
+            time = time.substring(0, 5);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -77,11 +84,39 @@ public class recommendAdapter extends BaseAdapter {
         TextView nameTextview = view.findViewById(R.id.busker_name);
         TextView placeTextview = view.findViewById(R.id.textViewBuskingPlace);
         TextView timeTextview = view.findViewById(R.id.textViewBuskingTime);
+        ImageView photoImageView = view.findViewById(R.id.like_busker_photo_item);
+        Bitmap bitmap = bitmapImgDownload(photo);
+        if (bitmap != null) {
+            photoImageView.setImageBitmap(bitmap);
+        }
+
 
         nameTextview.setText(name);
         placeTextview.setText(place);
         timeTextview.setText(time);
 
         return view;
+    }
+
+    private Bitmap bitmapImgDownload(String photo) {
+        if (photo == null) return null;
+
+        // 이미지 다운로드
+        AsyncPhoto asyncBuskerPhoto = new AsyncPhoto(new AsyncPhotoListener() {
+            @Override
+            public void taskComplete(File file) {
+            }
+        });
+
+        try {
+            File file = asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskingPhoto").get();
+            if (file != null) {
+                return new PhotoResizing().loadPictureWithResize(file, 150);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
