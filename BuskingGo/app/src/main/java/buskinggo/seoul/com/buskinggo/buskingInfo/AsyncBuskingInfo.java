@@ -30,6 +30,7 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
         try {
             int userNo = params[0];
             int buskingNo = params[1];
+            System.out.println(userNo + " UserNo " + buskingNo + "  buskingNo");
 
             String data;
             String link;
@@ -78,8 +79,9 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             JSONObject jsonObject = new JSONObject(result);
 
             if(jsonObject.getString("success").equals("false")) return;
-            String photo, buskerName, buskingDate, buskingTime, place, introduce, wantSum, myWant;
+            String photo, buskerNo, buskerName, buskingDate, buskingTime, place, introduce, wantSum, myWant;
             photo = jsonObject.getString("photo");
+            buskerNo = jsonObject.getString("buskerNo");
             buskerName = jsonObject.getString("buskerName");
             buskingDate = jsonObject.getString("buskingDate");
             buskingTime = jsonObject.getString("buskingTime");
@@ -87,7 +89,9 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             introduce = jsonObject.getString("introduce");
             wantSum = jsonObject.getString("wantSum");
             myWant = jsonObject.getString("myWant");
-            buskingDTO = new BuskingDTO(photo, buskerName, buskingDate, buskingTime, place, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
+            buskingDTO = new BuskingDTO(photo, Integer.parseInt(buskerNo), buskerName, buskingDate, buskingTime, place, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
+
+            System.out.println(photo+" | "+ buskerNo+" | "+ buskerName+" | "+ buskingDate+" | "+ buskingTime+" | "+ place+" | "+ introduce+" | "+ Integer.parseInt(wantSum)+" | "+ Integer.parseInt(myWant));
 
 
             // ui 작업 리스너 호출

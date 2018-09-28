@@ -41,6 +41,7 @@ public class BuskerInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userNo = MyApplication.userDTO.getUserNo();
         buskerNo = intent.getIntExtra("buskerNo", 0);
+        System.out.println(buskerNo + "buskerInfo buskerNo");
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
         setSupportActionBar(toolbar); // 툴바

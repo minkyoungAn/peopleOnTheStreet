@@ -3,10 +3,12 @@ package buskinggo.seoul.com.buskinggo;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -17,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     BuskingListFragment buskingListFragment;
     BuskingRegisterFragment buskingRegisterFragment;
-    SeoulBuskingFragment seoulBuskingFragment;
     MyPageFragment myPageFragment;
     UserDTO userDTO;
 
@@ -33,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         buskingListFragment = new BuskingListFragment();
         buskingRegisterFragment = new BuskingRegisterFragment();
-        seoulBuskingFragment = new SeoulBuskingFragment();
         myPageFragment = new MyPageFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -63,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
                         findViewById(R.id.busking_regist).setClickable(false);
                         findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingRegisterFragment);
-                        break;
-                    case R.id.seoul_street: // 거리예술존
-                        changeFragment(seoulBuskingFragment);
                         break;
                     case R.id.my_page: // 마이페이지
                         findViewById(R.id.action_home).setClickable(true);
@@ -105,4 +102,11 @@ public class MainActivity extends AppCompatActivity {
         lastTimeBackPressed = System.currentTimeMillis();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
+    }
 }

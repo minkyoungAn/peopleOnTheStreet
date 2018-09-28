@@ -25,6 +25,7 @@ import java.util.Objects;
 
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
@@ -35,7 +36,8 @@ import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
 public class BuskingInfoActivity extends AppCompatActivity {
     int userNo; // 현재 유저
-    int buskingNo; // 선택한 버스커
+    int buskingNo; // 선택한 버스킹
+    int buskerNo; // 선택한 버스커
     int want = 0; // 가볼래요 유무
 
     int replyNo = 100; // 댓글
@@ -55,6 +57,7 @@ public class BuskingInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userNo = MyApplication.userDTO.getUserNo();
         buskingNo = intent.getIntExtra("buskingNo", 0);
+        System.out.println(buskingNo + "  buskingNo");
 
         Toolbar toolbar = findViewById(R.id.busking_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
@@ -71,7 +74,6 @@ public class BuskingInfoActivity extends AppCompatActivity {
         setListViewHeight(replyListview);
 
         imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-
 
         loadReply();
 
@@ -95,6 +97,7 @@ public class BuskingInfoActivity extends AppCompatActivity {
                 TextView tvWantSum= findViewById(R.id.busking_info_want_cnt);
                 ImageView ivWant = findViewById(R.id.busking_info_want_img);
 
+                buskerNo = buskingDTO.getBuskerNo();
                 if(buskingDTO.getMyWant() != 0){
                     // 있으면 별 칠하기
                     ivWant.setImageResource(R.drawable.ic_star_white_24dp);
@@ -122,6 +125,17 @@ public class BuskingInfoActivity extends AppCompatActivity {
 
         final TextView tvWantSum= findViewById(R.id.busking_info_want_cnt);
         final ImageView ivWant = findViewById(R.id.busking_info_want_img);
+
+        // 이름 클릭시 버스커 상세보기
+        TextView tvName = findViewById(R.id.busking_info_name);
+        tvName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(BuskingInfoActivity.this, BuskerInfoActivity.class);
+                intent.putExtra("buskerNo", buskerNo);
+                startActivity(intent);
+            }
+        });
 
         // 가볼래요 클릭이벤트
         ivWant.setOnClickListener(new View.OnClickListener() {

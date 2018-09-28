@@ -23,12 +23,13 @@ public class AsyncUpdateWant extends AsyncTask<Integer, String, String> {
             int userNo = params[0];
             int buskingNo = params[1];
             int check = params[2];
+            System.out.println(userNo +" userNo | "+buskingNo +" | buskingNo "+check);
 
             String data;
             String link;
 
             data = URLEncoder.encode("userNo", "UTF-8") + "=" + userNo;
-            data += "&" + URLEncoder.encode("buskerNo", "UTF-8") + "=" + buskingNo;
+            data += "&" + URLEncoder.encode("buskingNo", "UTF-8") + "=" + buskingNo;
             data += "&" + URLEncoder.encode("check", "UTF-8") + "=" + check;
             link = "http://buskinggo.cafe24.com/" + "UpdateWant.php";
 

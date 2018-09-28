@@ -5,14 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/itemBuskingBackground"
-    android:padding="8dp"
-    android:layout_margin="4dp">
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/past_photo_item"
         android:background="@color/itemBuskingBackground"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:scaleType="centerCrop"
         android:layout_marginBottom="4sp"
         android:contentDescription="TODO"
@@ -23,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/past_photo_item"
         android:layout_centerVertical="true"
+        android:layout_marginStart="4dp"
         android:padding="4dp">
 
         <TextView
@@ -55,8 +55,7 @@
 
         <TextView
             android:id="@+id/past_date_item"
-            android:layout_below="@+id/past_name_item"
-            android:layout_toStartOf="@id/want_time_item"
+            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/white"

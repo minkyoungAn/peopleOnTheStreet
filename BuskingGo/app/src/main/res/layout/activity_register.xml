@@ -58,7 +58,7 @@
                     android:textSize="13sp"
                     android:text="중복체크"
                     android:textColor="@color/white"
-                    android:backgroundTint="@color/navigationViewBackground"
+                    android:backgroundTint="@color/colorPrimary"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -140,10 +140,12 @@
 
             <Button
                 android:id="@+id/registerButton"
-                android:layout_width="280dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="64dp"
+                android:layout_marginStart="64dp"
+                android:layout_marginEnd="64dp"
                 android:textSize="14sp"
                 android:text="가입하기"
                 android:backgroundTint="@color/colorPrimary"
