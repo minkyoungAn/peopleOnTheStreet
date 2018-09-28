@@ -21,12 +21,6 @@
         android:title="@string/buskingRegister"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/seoul_street"
-        android:enabled="true"
-        android:icon="@drawable/ic_home_white_24dp"
-        android:title="@string/seoulBusking"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/my_page"
         android:enabled="true"
         android:icon="@drawable/ic_person_white_24dp"

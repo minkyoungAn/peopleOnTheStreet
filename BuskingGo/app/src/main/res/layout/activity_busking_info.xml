@@ -212,8 +212,8 @@
                 android:layout_below="@+id/gl_busking_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:dividerHeight="4dp"
-                android:divider="@color/black"
+                android:dividerHeight="1dp"
+                android:divider="@color/itemBuskingBackground"
                 android:orientation="vertical"
                 />
 

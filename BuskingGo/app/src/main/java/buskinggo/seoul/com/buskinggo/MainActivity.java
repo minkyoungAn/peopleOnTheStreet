@@ -17,7 +17,6 @@ public class MainActivity extends AppCompatActivity {
     HomeFragment homeFragment;
     BuskingListFragment buskingListFragment;
     BuskingRegisterFragment buskingRegisterFragment;
-    SeoulBuskingFragment seoulBuskingFragment;
     MyPageFragment myPageFragment;
     UserDTO userDTO;
 
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
         homeFragment = new HomeFragment();
         buskingListFragment = new BuskingListFragment();
         buskingRegisterFragment = new BuskingRegisterFragment();
-        seoulBuskingFragment = new SeoulBuskingFragment();
         myPageFragment = new MyPageFragment();
         bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -63,9 +61,6 @@ public class MainActivity extends AppCompatActivity {
                         findViewById(R.id.busking_regist).setClickable(false);
                         findViewById(R.id.my_page).setClickable(true);
                         changeFragment(buskingRegisterFragment);
-                        break;
-                    case R.id.seoul_street: // 거리예술존
-                        changeFragment(seoulBuskingFragment);
                         break;
                     case R.id.my_page: // 마이페이지
                         findViewById(R.id.action_home).setClickable(true);
