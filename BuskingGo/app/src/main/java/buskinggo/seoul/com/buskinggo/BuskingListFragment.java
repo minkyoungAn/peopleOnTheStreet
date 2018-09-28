@@ -146,6 +146,7 @@ public class BuskingListFragment extends Fragment {
                 e.printStackTrace();
             }
 
+            Log.w("jsonArray", String.valueOf(jsonArray));
             buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
             buskingListView.setAdapter(buskingListAdapter);
             setListViewHeightBasedOnChildren(buskingListView);
@@ -156,7 +157,7 @@ public class BuskingListFragment extends Fragment {
         protected String doInBackground(String... strings) {
 
             try{
-                URL url = new URL("http://buskinggo.cafe24.com/TodayBuskingList.php");
+                URL url = new URL("http://buskinggo.cafe24.com/BuskingList.php");
 
                 Map<String,Object> params = new LinkedHashMap<>();
 
@@ -218,6 +219,7 @@ public class BuskingListFragment extends Fragment {
         listView.requestLayout();
     }
 
+    //버스커 이름으로 정렬
     private static JSONArray sortByBuskerName(JSONArray array) throws JSONException {
         List<JSONObject> jsons = new ArrayList<JSONObject>();
         for (int i = 0; i < array.length(); i++) {
@@ -246,6 +248,7 @@ public class BuskingListFragment extends Fragment {
         return new JSONArray(jsons);
     }
 
+    //버스킹날짜로 정렬
     private static JSONArray sortByDate(JSONArray array) throws JSONException {
         List<JSONObject> jsons = new ArrayList<JSONObject>();
         for (int i = 0; i < array.length(); i++) {
@@ -257,13 +260,13 @@ public class BuskingListFragment extends Fragment {
                 String lid = null;
                 Log.w("test", "2");
                 try {
-                    lid = lhs.getString("BuskingTime");
+                    lid = lhs.getString("BuskingDate");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
                 String rid = null;
                 try {
-                    rid = rhs.getString("BuskingTime");
+                    rid = rhs.getString("BuskingDate");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -274,6 +277,7 @@ public class BuskingListFragment extends Fragment {
         return new JSONArray(jsons);
     }
 
+    //버스킹장소로 정렬
     private static JSONArray sortByPlace(JSONArray array) throws JSONException {
         List<JSONObject> jsons = new ArrayList<JSONObject>();
         for (int i = 0; i < array.length(); i++) {
