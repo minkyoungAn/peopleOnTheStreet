@@ -65,11 +65,13 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         buskerIntroductionText = findViewById(R.id.buskerIntroductionText);
 
         guSpinner = findViewById(R.id.guSpinner);
-        guAdapter = ArrayAdapter.createFromResource(this, R.array.gus, android.R.layout.simple_spinner_dropdown_item);
+        guAdapter = ArrayAdapter.createFromResource(this, R.array.gus, R.layout.spinner_item);
+        guAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         guSpinner.setAdapter(guAdapter);
 
         genreSpinner = findViewById(R.id.genreSpinner);
-        genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_dropdown_item);
+        genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, R.layout.spinner_item);
+        genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(genreAdapter);
 
 

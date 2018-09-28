@@ -43,11 +43,13 @@ public class RegisterActivity extends AppCompatActivity {
         final EditText nicknameText = (EditText) findViewById(R.id.nicknameText);
 
         guSpinner = (Spinner) findViewById(R.id.guSpinner);
-        guAdapter = ArrayAdapter.createFromResource(this, R.array.gus, android.R.layout.simple_spinner_dropdown_item);
+        guAdapter = ArrayAdapter.createFromResource(this, R.array.gus, R.layout.spinner_item);
+        guAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         guSpinner.setAdapter(guAdapter);
 
         genreSpinner = (Spinner) findViewById(R.id.genreSpinner);
-        genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_dropdown_item);
+        genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, R.layout.spinner_item);
+        genreAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(genreAdapter);
 
         validateButton.setOnClickListener(new View.OnClickListener() {

@@ -14,7 +14,6 @@
         android:layout_marginStart="16sp"
         android:text="@string/buskinglist"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="@color/white"/>
 
 </FrameLayout>
