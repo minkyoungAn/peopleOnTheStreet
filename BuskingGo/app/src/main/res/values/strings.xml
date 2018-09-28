@@ -79,5 +79,9 @@
     <string name="busker_register">버스커 등록</string>
     <string name="todo">TODO</string>
 
+    <string name="n_id">B8IFDW8XxJeNp_Ts2QCz</string>
+    <string name="n_secret">yqkADGaQNK</string>
+    <string name="str_done">완료</string>
+    <string name="notice_select_addr">지도를 움직여 위치를 지정하세요.</string>
 
 </resources>

@@ -44,6 +44,7 @@
         <activity android:name=".configure.ChangePasswordActivity" />
         <activity android:name=".configure.RegisterBuskerActivity" />
         <activity android:name=".login.ForgotPasswordActivity"></activity>
+        <activity android:name=".map.ChooseAddrMap"></activity>
     </application>
 
 </manifest>
