@@ -39,9 +39,6 @@ public class HomeFragment extends Fragment {
 
     private Context context;
 
-    private ArrayList<HashMap<String, ArrayList<String>>> recommendBuskingArrayList;
-    private ArrayList<HashMap<String, ArrayList<String>>> TodayBuskingArrayList;
-
     private GridView recommendGridView;
     private ListView todayBuskingListView;
 
@@ -163,7 +160,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            RecommendAdapter recommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
+            recommendAdapter recommendAdapter = new recommendAdapter(context, jsonArray, R.layout.home_busking_item);
             recommendGridView.setAdapter(recommendAdapter);
         }
 

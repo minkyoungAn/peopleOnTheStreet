@@ -1,6 +1,12 @@
 <resources>
     <string name="app_name">BuskingGo</string>
 
+    <string-array name="sort">
+        <item>날짜순</item>
+        <item>버스커이름순</item>
+        <item>장소순</item>
+    </string-array>
+
     <string-array name="gus">
         <item>강서구</item>
         <item>양천구</item>
