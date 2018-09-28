@@ -75,6 +75,12 @@ public class MyWantBuskingAdapter extends BaseAdapter {
         String time = buskingList.get(position).getBuskingTime();
         String photo = buskingList.get(position).getPhoto();
         time = time.substring(0, 5);
+        String addr[] = place.split(" "); // 구, 동
+        if(addr.length > 2){
+            place = addr[1] +" "+ addr[2];
+        } else if(addr.length == 1){
+            place = addr[1];
+        }
         
         //|| photo.equals("null")
         if (date.equals("null") || place.equals("null") || time.equals("null") || name.equals("null") ) {

@@ -83,6 +83,13 @@ public class BuskingListAdapter extends BaseAdapter {
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
             time = time.substring(0,5);
+            String addr[] = place.split(" "); // 구, 동
+            if(addr.length > 2){
+                place = addr[1] +" "+ addr[2];
+            } else if(addr.length == 1){
+                place = addr[1];
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

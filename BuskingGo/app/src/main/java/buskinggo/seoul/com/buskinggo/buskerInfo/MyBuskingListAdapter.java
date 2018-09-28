@@ -55,6 +55,7 @@ public class MyBuskingListAdapter extends BaseAdapter {
             viewHolder.time = convertView.findViewById(R.id.tv_time_busking_item);
 
 
+
             convertView.setTag(viewHolder);
 
         }else{
@@ -66,6 +67,13 @@ public class MyBuskingListAdapter extends BaseAdapter {
         String place = buskingList.get(position).getPlace();
         String time = buskingList.get(position).getBuskingTime();
         time = time.substring(0,5);
+        String addr[] = place.split(" "); // 구, 동
+        if(addr.length > 2){
+            place = addr[1] +" "+ addr[2];
+        } else if(addr.length == 1){
+            place = addr[1];
+        }
+
 
         if(date.equals("null") || place.equals("null") || time.equals("null")){
             return convertView;
