@@ -5,14 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".buskerInfo.BuskerInfoActivity"
-    android:background="@color/black">
+    android:background="@color/mainBackground">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/busker_info_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:accessibilityHeading="false"
-        android:backgroundTint="@color/colorPrimaryDark"
+        android:background="@color/navigationViewBackground"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -33,7 +33,7 @@
             android:layout_width="160dp"
             android:layout_height="160dp"
             android:layout_rowSpan="4"
-            android:background="@color/black"
+            android:background="@color/mainBackground"
             android:scaleType="fitCenter"
             android:contentDescription="@string/todo" />
 
@@ -171,7 +171,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:dividerHeight="4dp"
-        android:divider="@color/black"
+        android:divider="@color/mainBackground"
         android:orientation="vertical"/>
 
 </RelativeLayout>

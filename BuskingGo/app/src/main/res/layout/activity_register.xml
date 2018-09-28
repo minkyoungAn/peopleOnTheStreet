@@ -18,7 +18,7 @@
                 android:textColor="#ffffff"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:contentDescription="TODO" />
+                android:contentDescription="@string/todo" />
 
         </RelativeLayout>
 
@@ -57,7 +57,8 @@
                     android:layout_gravity="center"
                     android:textSize="13sp"
                     android:text="중복체크"
-                    android:textColor="#000000"
+                    android:textColor="@color/white"
+                    android:backgroundTint="@color/navigationViewBackground"
                     tools:ignore="HardcodedText" />
 
             </LinearLayout>
@@ -102,7 +103,8 @@
                     android:padding="10dp"
                     android:text="주요 활동 장소"
                     android:textSize="14sp"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    tools:ignore="HardcodedText" />
 
                 <Spinner
                     android:id="@+id/guSpinner"
@@ -125,7 +127,8 @@
                     android:padding="10dp"
                     android:text="선호 장르"
                     android:textSize="14sp"
-                    android:textColor="#ffffff" />
+                    android:textColor="#ffffff"
+                    tools:ignore="HardcodedText" />
 
                 <Spinner
                     android:id="@+id/genreSpinner"
@@ -141,9 +144,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:text="가입하기"
-                android:textColor="#000000" />
+                android:backgroundTint="@color/colorPrimary"
+                android:textColor="@color/white"
+                tools:ignore="HardcodedText" />
 
         </LinearLayout>
 

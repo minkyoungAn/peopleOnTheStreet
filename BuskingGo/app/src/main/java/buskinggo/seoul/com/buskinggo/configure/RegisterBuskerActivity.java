@@ -72,6 +72,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         genreAdapter = ArrayAdapter.createFromResource(this, R.array.genres, android.R.layout.simple_spinner_dropdown_item);
         genreSpinner.setAdapter(genreAdapter);
 
+
         if(MyApplication.userDTO.getCheckBusker() == 1) {
             requestBuskerInfos();
         }

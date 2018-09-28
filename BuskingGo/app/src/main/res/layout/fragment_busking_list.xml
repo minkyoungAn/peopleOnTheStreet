@@ -10,10 +10,10 @@
         android:id="@+id/text_home"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginTop="16sp"
+        android:layout_marginStart="16sp"
         android:text="@string/buskinglist"
-        android:textSize="30sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="@color/white"/>
 

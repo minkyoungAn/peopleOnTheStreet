@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".buskingInfo.BuskingInfoActivity"
-    android:background="@color/black"
+    android:background="@color/mainBackground"
     android:id="@+id/rl_container_reply">
 
     <android.support.v7.widget.Toolbar
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:accessibilityHeading="false"
-        android:background="@color/black"
+        android:background="@color/navigationViewBackground"
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -32,7 +32,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black"
+            android:background="@color/mainBackground"
             android:focusable="true"
             android:focusableInTouchMode="true">
 
@@ -49,7 +49,7 @@
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_rowSpan="2"
-                    android:background="@color/black"
+                    android:background="@color/navigationViewBackground"
                     android:scaleType="fitCenter"
                     android:contentDescription="@string/todo" />
 
@@ -225,7 +225,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/itemBuskingBackground"
+        android:background="@color/navigationViewBackground"
         android:padding="8dp">
 
         <EditText

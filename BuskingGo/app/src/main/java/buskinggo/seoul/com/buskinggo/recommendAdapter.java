@@ -69,6 +69,7 @@ public class RecommendAdapter extends BaseAdapter {
             place = String.valueOf(jsonObject.get("Place"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
+            time = time.substring(0,5);
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import buskinggo.seoul.com.buskinggo.dto.UserDTO;
 
@@ -89,6 +90,19 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.container, fragment);
         fragmentTransaction.addToBackStack(fragment.getTag());
         fragmentTransaction.commit();
+    }
+
+    // 두번 뒤로가기 누르면 종료되도록
+    private long lastTimeBackPressed;
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - lastTimeBackPressed < 1500) {
+            finish();
+            return;
+        }
+        Toast.makeText(this, "'뒤로' 버튼을 한 번 더 눌러 종료합니다", Toast.LENGTH_SHORT).show();
+        lastTimeBackPressed = System.currentTimeMillis();
     }
 
 }
