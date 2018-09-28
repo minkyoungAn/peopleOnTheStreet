@@ -21,7 +21,7 @@ import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
-public class RecommendAdapter extends BaseAdapter {
+class RecommendAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private JSONArray jsonArray;
     private int layout;
