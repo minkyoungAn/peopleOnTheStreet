@@ -78,7 +78,7 @@ public class MyPastBuskingAdapter extends BaseAdapter {
         String addr[] = place.split(" "); // 구, 동
         if(addr.length > 2){
             place = addr[1] +" "+ addr[2];
-        } else if(addr.length == 1){
+        } else if(addr.length == 2){
             place = addr[1];
         }
 
