@@ -11,14 +11,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class recommendAdapter extends BaseAdapter {
+public class RecommendAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private JSONArray jsonArray;
     private int layout;
     private JSONObject jsonObject;
     private Context context;
 
-    public recommendAdapter(Context context, JSONArray jsonArray, int layout) {
+    public RecommendAdapter(Context context, JSONArray jsonArray, int layout) {
         this.inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.jsonArray = jsonArray;
         this.layout = layout;

@@ -24,8 +24,6 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -160,8 +158,8 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            recommendAdapter recommendAdapter = new recommendAdapter(context, jsonArray, R.layout.home_busking_item);
-            recommendGridView.setAdapter(recommendAdapter);
+            RecommendAdapter RecommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
+            recommendGridView.setAdapter(RecommendAdapter);
         }
 
         @Override
