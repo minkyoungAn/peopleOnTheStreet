@@ -154,6 +154,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
+                    android:layout_marginBottom="4dp"
                     android:textSize="14sp"
                     android:textColor="@color/white"
                     android:drawableStart="@drawable/ic_place_black_14dp"
