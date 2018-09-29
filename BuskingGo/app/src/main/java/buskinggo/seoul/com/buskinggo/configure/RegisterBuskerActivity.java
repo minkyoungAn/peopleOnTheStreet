@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -31,6 +32,8 @@ import java.util.HashMap;
 
 import buskinggo.seoul.com.buskinggo.MyApplication;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.login.LoginActivity;
+import buskinggo.seoul.com.buskinggo.login.LoginRequest;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncUploadPhoto;
@@ -75,7 +78,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         genreSpinner.setAdapter(genreAdapter);
 
 
-        if(MyApplication.userDTO.getCheckBusker() == 1) {
+        if (MyApplication.userDTO.getCheckBusker() == 1) {
             requestBuskerInfos();
         }
 
@@ -104,10 +107,10 @@ public class RegisterBuskerActivity extends AppCompatActivity {
         Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try{
+                try {
                     JSONObject jsonResponse = new JSONObject(response);
                     boolean success = jsonResponse.getBoolean("success");
-                    if(success){
+                    if (success) {
                         buskerNameText.setText(jsonResponse.getString("BuskerName"));
                         buskerIntroductionText.setText(jsonResponse.getString("Introduce"));
                         setSpinText(guSpinner, jsonResponse.getString("MainPlace"));
@@ -117,7 +120,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
                         AsyncPhoto asyncPhoto = new AsyncPhoto(new AsyncPhotoListener() {
                             @Override
                             public void taskComplete(File file) {
-                                if(file != null){
+                                if (file != null) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
                                     ShowSelectedImage.setImageBitmap(bitmap);
                                 }
@@ -125,11 +128,11 @@ public class RegisterBuskerActivity extends AppCompatActivity {
                         });
                         asyncPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, jsonResponse.getString("Photo"), "buskerPhoto");
                         pastImage = jsonResponse.getString("Photo");
-                    }else{
+                    } else {
                         Toast.makeText(RegisterBuskerActivity.this, "버스커 정보를 불러오는데 실패하였습니다", Toast.LENGTH_LONG)
                                 .show();
                     }
-                }catch(Exception e){
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
@@ -140,10 +143,8 @@ public class RegisterBuskerActivity extends AppCompatActivity {
     }
 
     private void setSpinText(Spinner spin, String text) {
-        for(int i= 0; i < spin.getAdapter().getCount(); i++)
-        {
-            if(spin.getAdapter().getItem(i).toString().equals(text))
-            {
+        for (int i = 0; i < spin.getAdapter().getCount(); i++) {
+            if (spin.getAdapter().getItem(i).toString().equals(text)) {
                 spin.setSelection(i);
             }
         }
@@ -179,13 +180,13 @@ public class RegisterBuskerActivity extends AppCompatActivity {
             FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
             byteArray = byteArrayOutputStream.toByteArray();
             ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
-        } catch(Exception e) {
+        } catch (Exception e) {
             ConvertImage = "";
         }
 
         HashMap<String, String> extraData = new HashMap<>();
         String url = null;
-        if(MyApplication.userDTO.getCheckBusker() == 1) {
+        if (MyApplication.userDTO.getCheckBusker() == 1) {
             url = "http://buskinggo.cafe24.com/updateBusker.php";
             extraData.put("pastImage", pastImage);
         } else {
@@ -202,6 +203,21 @@ public class RegisterBuskerActivity extends AppCompatActivity {
             @Override
             public void taskComplete() {
                 MyApplication.userDTO.setCheckBusker(1);
+                Response.Listener<String> responseListener = new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject jsonResponse = new JSONObject(response);
+                            String buskerNo = jsonResponse.getString("BuskerNo");
+                            MyApplication.buskerNo = buskerNo;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                };
+                BuskingNoRequest buskerNoRequest = new BuskingNoRequest(String.valueOf(MyApplication.userDTO.getUserNo()), responseListener);
+                RequestQueue queue = Volley.newRequestQueue(RegisterBuskerActivity.this);
+                queue.add(buskerNoRequest);
             }
         });
         AsyncTaskUploadClassOBJ.execute(url, ConvertImage);

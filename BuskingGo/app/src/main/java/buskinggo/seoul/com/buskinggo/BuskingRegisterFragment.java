@@ -63,6 +63,7 @@ public class BuskingRegisterFragment extends Fragment {
     byte[] byteArray;
     String ConvertImage;
     public static final int GALLERY = 1, CAMERA = 2, BUSKING_ADDR = 3;
+    private EditText introduceEditText;
 
     private String latitude, longitude;
 
@@ -77,7 +78,7 @@ public class BuskingRegisterFragment extends Fragment {
         Button registerButton = view.findViewById(R.id.busking_register_button);
         final Button dateButton = view.findViewById(R.id.date_button);
         final Button timeButton = view.findViewById(R.id.time_button);
-        final EditText introduceEditText = view.findViewById(R.id.edit_text_box);
+        introduceEditText = view.findViewById(R.id.edit_text_box);
         final ImageButton buskingGetImageButton = view.findViewById(R.id.buskingGetImageButton);
         final Button buskingGetMapButton = view.findViewById(R.id.buskingGetMapButton);
 
@@ -134,7 +135,6 @@ public class BuskingRegisterFragment extends Fragment {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int hour, int min) {
                         String msg = addZero(String.valueOf(hour)) + ":" + addZero(String.valueOf(min));
-                        Toast.makeText(container.getContext(), msg, Toast.LENGTH_SHORT).show();
                         timeButton.setText(msg);
                     }
                 }, cal.get(Calendar.HOUR_OF_DAY), cal.get(Calendar.MINUTE), true);
@@ -162,10 +162,6 @@ public class BuskingRegisterFragment extends Fragment {
                 }
 
                 uploadToServer(buskingDate, buskingTime, place, introduce);
-                introduceEditText.setText("");
-                HomeFragment homeFragment = new HomeFragment();
-                ((MainActivity)getActivity()).changeFragment(homeFragment);
-                ((MainActivity)getActivity()).bottomNavigationView.setSelectedItemId(R.id.action_home);
             }
         });
 
@@ -252,7 +248,10 @@ public class BuskingRegisterFragment extends Fragment {
         AsyncUploadPhoto AsyncTaskUploadClassOBJ = new AsyncUploadPhoto(getActivity(), extraData, new AsyncRegisListener() {
             @Override
             public void taskComplete() {
-//               완료 후 처리
+                introduceEditText.setText("");
+                HomeFragment homeFragment = new HomeFragment();
+                ((MainActivity)getActivity()).changeFragment(homeFragment);
+                ((MainActivity)getActivity()).bottomNavigationView.setSelectedItemId(R.id.action_home);
             }
         });
         AsyncTaskUploadClassOBJ.execute(url, ConvertImage);
