@@ -1,6 +1,7 @@
 package buskinggo.seoul.com.buskinggo.buskingInfo;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.json.JSONObject;
 
@@ -79,17 +80,19 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             JSONObject jsonObject = new JSONObject(result);
 
             if(jsonObject.getString("success").equals("false")) return;
-            String photo, buskerNo, buskerName, buskingDate, buskingTime, place, introduce, wantSum, myWant;
+            String photo, buskerNo, buskerName, buskingDate, buskingTime, place, latitude, longitude, introduce, wantSum, myWant;
             photo = jsonObject.getString("photo");
             buskerNo = jsonObject.getString("buskerNo");
             buskerName = jsonObject.getString("buskerName");
             buskingDate = jsonObject.getString("buskingDate");
             buskingTime = jsonObject.getString("buskingTime");
             place = jsonObject.getString("place");
+            latitude = jsonObject.getString("latitude");
+            longitude = jsonObject.getString("longitude");
             introduce = jsonObject.getString("introduce");
             wantSum = jsonObject.getString("wantSum");
             myWant = jsonObject.getString("myWant");
-            buskingDTO = new BuskingDTO(photo, Integer.parseInt(buskerNo), buskerName, buskingDate, buskingTime, place, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
+            buskingDTO = new BuskingDTO(photo, Integer.parseInt(buskerNo), buskerName, buskingDate, buskingTime, place, latitude, longitude, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
 
             System.out.println(photo+" | "+ buskerNo+" | "+ buskerName+" | "+ buskingDate+" | "+ buskingTime+" | "+ place+" | "+ introduce+" | "+ Integer.parseInt(wantSum)+" | "+ Integer.parseInt(myWant));
 

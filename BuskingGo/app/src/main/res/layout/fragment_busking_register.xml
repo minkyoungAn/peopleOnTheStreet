@@ -169,7 +169,8 @@
                 android:layout_margin="16sp"
                 android:layout_below="@id/introduce_textView"
                 android:background="@drawable/edit_text_box"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:padding="16dp"
                 android:gravity="top"
                 tools:ignore="LabelFor" />
 

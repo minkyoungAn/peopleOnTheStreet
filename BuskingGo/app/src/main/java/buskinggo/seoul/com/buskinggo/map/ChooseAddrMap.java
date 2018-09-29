@@ -8,11 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nhn.android.maps.NMapActivity;
+import com.nhn.android.maps.NMapController;
 import com.nhn.android.maps.NMapView;
 import com.nhn.android.maps.maplib.NGeoPoint;
 import com.nhn.android.maps.nmapmodel.NMapError;
+import com.nhn.android.maps.overlay.NMapPOIdata;
 import com.nhn.android.maps.overlay.NMapPOIitem;
 import com.nhn.android.mapviewer.overlay.NMapOverlayManager;
 import com.nhn.android.mapviewer.overlay.NMapPOIdataOverlay;
@@ -20,11 +23,16 @@ import com.nhn.android.mapviewer.overlay.NMapResourceProvider;
 
 import java.util.HashMap;
 
+import buskinggo.seoul.com.buskinggo.BuskingRegisterFragment;
 import buskinggo.seoul.com.buskinggo.R;
+import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
+
+import static android.view.View.GONE;
 
 public class ChooseAddrMap extends NMapActivity implements View.OnClickListener {
     private final String TAG = "ChooseAddrMap";
 
+    private NMapView mMapView;
     private NMapResourceProvider nMapResourceProvider;
     private NMapOverlayManager mapOverlayManager;
 
@@ -33,7 +41,6 @@ public class ChooseAddrMap extends NMapActivity implements View.OnClickListener 
     double longitude;
     double latitude;
 
-    String apptNo;
     int requestCode;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +51,28 @@ public class ChooseAddrMap extends NMapActivity implements View.OnClickListener 
 
         init();
 
-        TextView tv = findViewById(R.id.tv_add_addr);
-        ImageView placeImg1 = findViewById(R.id.iv_center_place_above);
-        ImageView placeImg2 = findViewById(R.id.iv_center_place);
-        nowAddr = findViewById(R.id.tv_add_addr_now);
         Button ok = findViewById(R.id.btn_map_ok);
         ok.setOnClickListener(this);
-        tv.bringToFront();
-        placeImg1.bringToFront();
-        placeImg2.bringToFront();
-        nowAddr.bringToFront();
-
+        nowAddr = findViewById(R.id.tv_add_addr_now);
+        if (requestCode == BuskingRegisterFragment.BUSKING_ADDR) {
+            TextView tv = findViewById(R.id.tv_add_addr);
+            ImageView placeImg1 = findViewById(R.id.iv_center_place_above);
+            ImageView placeImg2 = findViewById(R.id.iv_center_place);
+            tv.bringToFront();
+            placeImg1.bringToFront();
+            placeImg2.bringToFront();
+            nowAddr.bringToFront();
+        } else if (requestCode == BuskingInfoActivity.BUSKING_DETAIL) {
+            nowAddr.setVisibility(GONE);
+            double latitude = intent.getDoubleExtra("latitude", 0);
+            double longitude = intent.getDoubleExtra("longitude", 0);
+            setMarker(latitude, longitude);
+        }
 
     }
 
     private void init() {
-
-        NMapView mMapView = findViewById(R.id.map_view_non);
+        mMapView = findViewById(R.id.map_view_non);
         mMapView.setClientId(getResources().getString(R.string.n_id)); // 클라이언트 아이디 값 설정
         mMapView.setClickable(true);
         mMapView.setEnabled(true);
@@ -71,9 +83,26 @@ public class ChooseAddrMap extends NMapActivity implements View.OnClickListener 
 
         mMapView.setOnMapStateChangeListener(changeListener);
         mMapView.setOnMapViewTouchEventListener(mapListener);
+        mMapView.getMapController().setMapCenter(126.9837848, 37.5194914, 8);  // 초기 중심값
 
         nMapResourceProvider = new NMapViewerResourceProvider(this);
         mapOverlayManager = new NMapOverlayManager(this, mMapView, nMapResourceProvider);
+    }
+
+    private void setMarker(double latitude, double longitude) {
+        NMapController nMapController = mMapView.getMapController();
+        int markerId = NMapPOIflagType.PIN;
+
+        // set POI data
+        NMapPOIdata poiData = new NMapPOIdata(1, nMapResourceProvider);
+        poiData.beginPOIdata(1);
+        poiData.addPOIitem(longitude, latitude, "버스킹 위치", markerId, 0);
+        poiData.endPOIdata();
+        // create POI data overlay
+        NMapPOIdataOverlay poiDataOverlay = mapOverlayManager.createPOIdataOverlay(poiData, null);
+        poiDataOverlay.showAllPOIdata(1);
+
+        nMapController.setMapCenter(longitude, latitude, 11);
     }
 
     private NMapView.OnMapStateChangeListener changeListener = new NMapView.OnMapStateChangeListener() {
@@ -86,19 +115,21 @@ public class ChooseAddrMap extends NMapActivity implements View.OnClickListener 
         @Override
         public void onMapCenterChange(NMapView nMapView, NGeoPoint nGeoPoint) {
             Log.e(TAG, "OnMapStateChangeListener onMapCenterChange : " + nGeoPoint.getLatitude() + " ㅡ  " + nGeoPoint.getLongitude());
-            longitude = nGeoPoint.getLongitude();
-            latitude = nGeoPoint.getLatitude();
+            if (requestCode == BuskingRegisterFragment.BUSKING_ADDR) {
+                longitude = nGeoPoint.getLongitude();
+                latitude = nGeoPoint.getLatitude();
 
-            GeocodeToAddress geocodeToAddress = new GeocodeToAddress(new AddressAsyncResponse() {
+                GeocodeToAddress geocodeToAddress = new GeocodeToAddress(new AddressAsyncResponse() {
 
-                @Override
-                public void processFinish(HashMap<String, String> hashMap) {
-                    String address = null;
-                    if (hashMap != null) address = hashMap.get("address");
-                    nowAddr.setText(address);
-                }
-            });
-            geocodeToAddress.execute(longitude + "," + latitude);
+                    @Override
+                    public void processFinish(HashMap<String, String> hashMap) {
+                        String address = null;
+                        if (hashMap != null) address = hashMap.get("address");
+                        nowAddr.setText(address);
+                    }
+                });
+                geocodeToAddress.execute(longitude + "," + latitude);
+            }
         }
 
         @Override
@@ -158,16 +189,21 @@ public class ChooseAddrMap extends NMapActivity implements View.OnClickListener 
         int id = v.getId();
         switch (id) {
             case R.id.btn_map_ok:
-                // 중심 경위도와 주소 전달.
-                Intent intent = getIntent();
-                String address = nowAddr.getText().toString();
-                intent.putExtra("longitude", longitude);
-                intent.putExtra("latitude", latitude);
-                intent.putExtra("mapAddr", address);
+                if (requestCode == BuskingRegisterFragment.BUSKING_ADDR) {
+                    // 중심 경위도와 주소 전달.
+                    Intent intent = getIntent();
+                    String address = nowAddr.getText().toString();
+                    intent.putExtra("longitude", longitude);
+                    intent.putExtra("latitude", latitude);
+                    intent.putExtra("mapAddr", address);
 
-                setResult(RESULT_OK, intent);
-                finish();
-                break;
+                    setResult(RESULT_OK, intent);
+                    finish();
+                    break;
+                } else if (requestCode == BuskingInfoActivity.BUSKING_DETAIL) {
+                    finish();
+                    break;
+                }
         }
     }
 }

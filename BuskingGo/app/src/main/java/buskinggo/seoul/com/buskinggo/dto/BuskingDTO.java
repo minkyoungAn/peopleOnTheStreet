@@ -12,6 +12,8 @@ public class BuskingDTO {
     private String buskingDate;
     private String buskingTime;
     private String place;
+    private Double latitude;
+    private Double longitude;
     private String introduce;
     private int wantSum;
     private int myWant;
@@ -32,7 +34,7 @@ public class BuskingDTO {
         this.buskingTime = buskingTime;
     }
 
-    public BuskingDTO(String photo, int buskerNo, String buskerName, String buskingDate, String buskingTime, String place, String introduce, int wantSum, int myWant){
+    public BuskingDTO(String photo, int buskerNo, String buskerName, String buskingDate, String buskingTime, String place, String latitude, String longitude, String introduce, int wantSum, int myWant){
         this.buskerName = buskerName;
         this.photo = photo;
         this.buskerNo = buskerNo;
@@ -42,6 +44,8 @@ public class BuskingDTO {
         this.introduce = introduce;
         this.wantSum = wantSum;
         this.myWant = myWant;
+        this.latitude = Double.parseDouble(latitude);
+        this.longitude = Double.parseDouble(longitude);
     }
 
 
@@ -123,5 +127,13 @@ public class BuskingDTO {
 
     public void setMyWant(int myWant) {
         this.myWant = myWant;
+    }
+
+    public Double getLatitude() {
+        return latitude;
+    }
+
+    public Double getLongitude() {
+        return longitude;
     }
 }

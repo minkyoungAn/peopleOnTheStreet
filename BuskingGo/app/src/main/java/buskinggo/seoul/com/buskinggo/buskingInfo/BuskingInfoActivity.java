@@ -3,8 +3,10 @@ package buskinggo.seoul.com.buskinggo.buskingInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -17,8 +19,10 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -29,16 +33,22 @@ import buskinggo.seoul.com.buskinggo.buskerInfo.BuskerInfoActivity;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
 import buskinggo.seoul.com.buskinggo.dto.ReplyDTO;
+import buskinggo.seoul.com.buskinggo.map.ChooseAddrMap;
 import buskinggo.seoul.com.buskinggo.utils.AsyncListener;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
 public class BuskingInfoActivity extends AppCompatActivity {
+    public static final int BUSKING_DETAIL = 4;
+
     int userNo; // 현재 유저
     int buskingNo; // 선택한 버스킹
     int buskerNo; // 선택한 버스커
     int want = 0; // 가볼래요 유무
+
+    double latitude;
+    double longitude;
 
     int replyNo = 100; // 댓글
     int reReplyNo = 0; // 대댓글
@@ -97,6 +107,9 @@ public class BuskingInfoActivity extends AppCompatActivity {
                 TextView tvWantSum= findViewById(R.id.busking_info_want_cnt);
                 ImageView ivWant = findViewById(R.id.busking_info_want_img);
 
+                latitude = buskingDTO.getLatitude();
+                longitude = buskingDTO.getLongitude();
+
                 buskerNo = buskingDTO.getBuskerNo();
                 if(buskingDTO.getMyWant() != 0){
                     // 있으면 별 칠하기
@@ -134,6 +147,19 @@ public class BuskingInfoActivity extends AppCompatActivity {
                 Intent intent = new Intent(BuskingInfoActivity.this, BuskerInfoActivity.class);
                 intent.putExtra("buskerNo", buskerNo);
                 startActivity(intent);
+            }
+        });
+
+        // 장소 클릭시 상세보기
+        TextView tvPlace = findViewById(R.id.busking_info_place_item);
+        tvPlace.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mapIntent = new Intent(BuskingInfoActivity.this, ChooseAddrMap.class);
+                mapIntent.putExtra("requestCode", BUSKING_DETAIL);
+                mapIntent.putExtra("latitude", latitude);
+                mapIntent.putExtra("longitude", longitude);
+                startActivityForResult(mapIntent, BUSKING_DETAIL);
             }
         });
 
@@ -257,6 +283,5 @@ public class BuskingInfoActivity extends AppCompatActivity {
             }
 
         }).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, buskingNo);
-
     }
 }

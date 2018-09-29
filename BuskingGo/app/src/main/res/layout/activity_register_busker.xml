@@ -152,7 +152,7 @@
                 android:textSize="14sp"
                 android:gravity="top"
                 android:background="@drawable/edit_text_box"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 tools:ignore="LabelFor" />
 
             <Button

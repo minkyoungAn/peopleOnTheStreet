@@ -60,7 +60,7 @@ public class BuskingRegisterFragment extends Fragment {
     ByteArrayOutputStream byteArrayOutputStream;
     byte[] byteArray;
     String ConvertImage;
-    private static final int GALLERY = 1, CAMERA = 2, BUSKING_ADDR = 3;
+    public static final int GALLERY = 1, CAMERA = 2, BUSKING_ADDR = 3;
 
     private String latitude, longitude;
 
@@ -241,6 +241,8 @@ public class BuskingRegisterFragment extends Fragment {
         extraData.put("place", place);
         extraData.put("introduce", introduce);
         extraData.put("buskerNo", MyApplication.buskerNo);
+        extraData.put("latitude", latitude);
+        extraData.put("longitude", longitude);
 
         AsyncUploadPhoto AsyncTaskUploadClassOBJ = new AsyncUploadPhoto(getActivity(), extraData, new AsyncRegisListener() {
             @Override

@@ -3,7 +3,6 @@ package buskinggo.seoul.com.buskinggo;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,7 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -33,9 +31,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
-import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
-import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
-import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
 
 /**
@@ -204,7 +199,7 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            recommendAdapter recommendAdapter = new recommendAdapter(context, jsonArray, R.layout.home_busking_item);
+            RecommendAdapter recommendAdapter = new RecommendAdapter(context, jsonArray, R.layout.home_busking_item);
             recommendGridView.setAdapter(recommendAdapter);
         }
 
