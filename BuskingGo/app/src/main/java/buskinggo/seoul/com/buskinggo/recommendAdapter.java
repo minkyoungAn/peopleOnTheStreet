@@ -21,12 +21,12 @@ import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.utils.PhotoResizing;
 
-public class recommendAdapter extends BaseAdapter {
+public class RecommendAdapter extends BaseAdapter {
     private LayoutInflater inflater;
     private JSONArray jsonArray;
     private int layout;
 
-    recommendAdapter(Context context, JSONArray jsonArray, int layout) {
+    RecommendAdapter(Context context, JSONArray jsonArray, int layout) {
         this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.jsonArray = jsonArray;
         this.layout = layout;
