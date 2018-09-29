@@ -67,7 +67,6 @@ public class BuskingInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userNo = MyApplication.userDTO.getUserNo();
         buskingNo = intent.getIntExtra("buskingNo", 0);
-        System.out.println(buskingNo + "  buskingNo");
 
         Toolbar toolbar = findViewById(R.id.busking_info_toolbar);
         setSupportActionBar(toolbar); // 툴바

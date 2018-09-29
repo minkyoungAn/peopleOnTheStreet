@@ -94,9 +94,6 @@ public class AsyncBuskingInfo extends AsyncTask<Integer, String, String> {
             myWant = jsonObject.getString("myWant");
             buskingDTO = new BuskingDTO(photo, Integer.parseInt(buskerNo), buskerName, buskingDate, buskingTime, place, latitude, longitude, introduce, Integer.parseInt(wantSum), Integer.parseInt(myWant));
 
-            System.out.println(photo+" | "+ buskerNo+" | "+ buskerName+" | "+ buskingDate+" | "+ buskingTime+" | "+ place+" | "+ introduce+" | "+ Integer.parseInt(wantSum)+" | "+ Integer.parseInt(myWant));
-
-
             // ui 작업 리스너 호출
             asyncListener.buskingComplete(buskingDTO);
         } catch (Exception e) {

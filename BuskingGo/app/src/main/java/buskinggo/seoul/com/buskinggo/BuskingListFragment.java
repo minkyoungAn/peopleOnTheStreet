@@ -130,7 +130,6 @@ public class BuskingListFragment extends Fragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
                     String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
-                    System.out.println(buskingNo);
                     Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
                     intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
                     startActivity(intent);

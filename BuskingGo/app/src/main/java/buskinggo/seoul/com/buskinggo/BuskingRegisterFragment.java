@@ -114,8 +114,7 @@ public class BuskingRegisterFragment extends Fragment {
 
                     @Override
                     public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                        String msg = String.valueOf(year) + "-" + addZero(String.valueOf(month)+1) + "-" + addZero(String.valueOf(date));
-                        Toast.makeText(container.getContext(), msg, Toast.LENGTH_SHORT).show();
+                        String msg = String.valueOf(year) + "-" + addZero(String.valueOf(month + 1)) + "-" + addZero(String.valueOf(date));
                         dateButton.setText(msg);
                     }
 

@@ -41,7 +41,6 @@ public class BuskerInfoActivity extends AppCompatActivity {
         Intent intent = getIntent();
         userNo = MyApplication.userDTO.getUserNo();
         buskerNo = intent.getIntExtra("buskerNo", 0);
-        System.out.println(buskerNo + "buskerInfo buskerNo");
 
         Toolbar toolbar = findViewById(R.id.busker_info_toolbar);
         setSupportActionBar(toolbar); // 툴바
@@ -141,7 +140,6 @@ public class BuskerInfoActivity extends AppCompatActivity {
         ivFavorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("좋아요 클릭" + favorite);
                 if(favorite == 1){
                     ivFavorite.setImageResource(R.drawable.ic_favorite_border_white_24dp);
                     favorite = 0;

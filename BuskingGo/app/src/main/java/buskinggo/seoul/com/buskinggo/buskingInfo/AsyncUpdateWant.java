@@ -23,7 +23,6 @@ public class AsyncUpdateWant extends AsyncTask<Integer, String, String> {
             int userNo = params[0];
             int buskingNo = params[1];
             int check = params[2];
-            System.out.println(userNo +" userNo | "+buskingNo +" | buskingNo "+check);
 
             String data;
             String link;
