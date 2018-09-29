@@ -3,12 +3,12 @@ package buskinggo.seoul.com.buskinggo.buskingInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.SpannableString;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -19,10 +19,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Objects;
@@ -99,9 +97,13 @@ public class BuskingInfoActivity extends AppCompatActivity {
             public void buskingComplete(BuskingDTO buskingDTO) {
 
                 TextView tvName = findViewById(R.id.busking_info_name);
+                SpannableString nameUnderline = new SpannableString(buskingDTO.getBuskerName());
+                nameUnderline.setSpan(new UnderlineSpan(), 0, nameUnderline.length(), 0);
                 TextView tvDate = findViewById(R.id.busking_info_date_Item);
                 TextView tvTime = findViewById(R.id.busking_info_time_item);
                 TextView tvPlace = findViewById(R.id.busking_info_place_item);
+                SpannableString placeUnderline = new SpannableString(buskingDTO.getPlace());
+                placeUnderline.setSpan(new UnderlineSpan(), 0, placeUnderline.length(), 0);
                 TextView tvIntroduce = findViewById(R.id.busking_info_introduce_item);
                 TextView tvWantSum= findViewById(R.id.busking_info_want_cnt);
                 ImageView ivWant = findViewById(R.id.busking_info_want_img);
@@ -118,10 +120,10 @@ public class BuskingInfoActivity extends AppCompatActivity {
                 String time = buskingDTO.getBuskingTime();
                 time = time.substring(0,5);
 
-                tvName.setText(buskingDTO.getBuskerName());
+                tvName.setText(nameUnderline);
                 tvDate.setText(buskingDTO.getBuskingDate());
                 tvTime.setText(time);
-                tvPlace.setText(buskingDTO.getPlace());
+                tvPlace.setText(placeUnderline);
                 tvIntroduce.setText(buskingDTO.getIntroduce());
                 tvWantSum.setText(String.valueOf(buskingDTO.getWantSum()));
 

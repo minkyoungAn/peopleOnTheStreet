@@ -56,17 +56,6 @@
                 android:paddingStart="8dp"
                 android:layout_marginBottom="8dp"/>
 
-          <!--  <TextView
-                android:id="@+id/reply_add"
-                android:layout_below="@id/reply_comment"
-                android:layout_alignParentEnd="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:padding="8dp"
-                android:drawableStart="@drawable/comment_black_oval_bubble_16dp"
-                android:drawablePadding="4dp"
-                android:text="@string/reply"/>-->
         </RelativeLayout>
 
     </GridLayout>
@@ -75,8 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_below="@id/gl_reply"
-        android:background="@color/itemBuskingBackground"
-        />
-
+        android:background="@color/itemBuskingBackground" />
 
 </RelativeLayout>
