@@ -3,6 +3,7 @@ package buskinggo.seoul.com.buskinggo.utils;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.util.HashMap;
@@ -31,7 +32,7 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(mContext, "Image is Uploading", "Please Wait", false, false);
+        progressDialog = ProgressDialog.show(mContext, "등록 진행 중입니다.", "잠시만 기다려주세요.", false, false);
     }
 
     @Override
@@ -40,9 +41,10 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
         ConvertImage = params[1];
 
         ImageProcess imageProcessClass = new ImageProcess();
-        HashMapParams.put(ImageTag, String.valueOf(System.currentTimeMillis()));
-        HashMapParams.put(ImageName, ConvertImage);
-
+        if(!(ConvertImage.isEmpty())){
+            HashMapParams.put(ImageTag, String.valueOf(System.currentTimeMillis()));
+            HashMapParams.put(ImageName, ConvertImage);
+        }
         String FinalData = imageProcessClass.ImageHttpRequest(url, HashMapParams);
         return FinalData;
     }

@@ -50,8 +50,8 @@ public class BuskingRegisterFragment extends Fragment {
 
     private String buskingDate;
     private String buskingTime;
-    private String place;
-    private String introduce;
+    private String place = "";
+    private String introduce = "";
     InputMethodManager imm;
 
     private TextView select_place_TextView;
@@ -61,6 +61,8 @@ public class BuskingRegisterFragment extends Fragment {
     byte[] byteArray;
     String ConvertImage;
     private static final int GALLERY = 1, CAMERA = 2, BUSKING_ADDR = 3;
+
+    private String latitude, longitude;
 
     public BuskingRegisterFragment() {
         // Required empty public constructor
@@ -142,15 +144,22 @@ public class BuskingRegisterFragment extends Fragment {
         registerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                buskingDate = String.valueOf(dateButton.getText());
+                buskingTime = String.valueOf(timeButton.getText());
+                introduce = String.valueOf(introduceEditText.getText());
+
                 if(MyApplication.buskerNo.equals("-1")) {
                     Toast.makeText(container.getContext(), "버스커 등록을 먼저 해주세요!", Toast.LENGTH_SHORT).show();
                     Intent buskerRegisIntent = new Intent(container.getContext(), RegisterBuskerActivity.class);
                     startActivity(buskerRegisIntent);
                     return;
                 }
-                buskingDate = String.valueOf(dateButton.getText());
-                buskingTime = String.valueOf(timeButton.getText());
-                introduce = String.valueOf(introduceEditText.getText());
+
+                if(place.equals("") || introduce.equals("")) {
+                    Toast.makeText(container.getContext(), "빈칸 없이 입력해주세요", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 uploadToServer(buskingDate, buskingTime, place, introduce);
             }
         });
@@ -199,8 +208,10 @@ public class BuskingRegisterFragment extends Fragment {
             buskingSelectedImage.setImageBitmap(FixBitmap);
         } else if (requestCode == BUSKING_ADDR) {
             String mapAddr = data.getStringExtra("mapAddr");
-            select_place_TextView.setText(mapAddr);
+            latitude = String.valueOf(data.getDoubleExtra("latitude", 0.0));
+            longitude = String.valueOf(data.getDoubleExtra("longitude", 0.0));
             place = mapAddr;
+            select_place_TextView.setText(mapAddr);
         }
     }
 
@@ -212,10 +223,15 @@ public class BuskingRegisterFragment extends Fragment {
     }
 
     private void uploadToServer(String buskingDate, String buskingTime, String place, String introduce) {
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
-        ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+            byteArray = byteArrayOutputStream.toByteArray();
+            ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } catch(Exception e) {
+            ConvertImage = "";
+        }
 
         String url = "http://buskinggo.cafe24.com/registerBusking.php";
 

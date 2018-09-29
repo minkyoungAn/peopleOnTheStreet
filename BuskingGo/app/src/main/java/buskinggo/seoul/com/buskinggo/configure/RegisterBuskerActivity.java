@@ -173,10 +173,14 @@ public class RegisterBuskerActivity extends AppCompatActivity {
     }
 
     public void uploadToServer() {
-        byteArrayOutputStream = new ByteArrayOutputStream();
-        FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
-        byteArray = byteArrayOutputStream.toByteArray();
-        ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        try {
+            byteArrayOutputStream = new ByteArrayOutputStream();
+            FixBitmap.compress(Bitmap.CompressFormat.JPEG, 40, byteArrayOutputStream);
+            byteArray = byteArrayOutputStream.toByteArray();
+            ConvertImage = Base64.encodeToString(byteArray, Base64.DEFAULT);
+        } catch(Exception e) {
+            ConvertImage = "";
+        }
 
         HashMap<String, String> extraData = new HashMap<>();
         String url = null;
