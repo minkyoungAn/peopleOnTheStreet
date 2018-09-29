@@ -70,10 +70,12 @@ public class RecommendBuskingAdapter extends BaseAdapter {
         String place = null;
         String time = null;
         String name = null;
+        String date = null;
 
         try {
             photo = String.valueOf(jsonObject.get("Photo"));
             place = String.valueOf(jsonObject.get("Place"));
+            date = String.valueOf(jsonObject.get("BuskingDate"));
             time = String.valueOf(jsonObject.get("BuskingTime"));
             name = String.valueOf(jsonObject.get("BuskerName"));
             time = time.substring(0, 5);
@@ -91,6 +93,7 @@ public class RecommendBuskingAdapter extends BaseAdapter {
         TextView nameTextview = view.findViewById(R.id.busker_name);
         TextView placeTextview = view.findViewById(R.id.textViewBuskingPlace);
         TextView timeTextview = view.findViewById(R.id.textViewBuskingTime);
+        TextView dateTextview = view.findViewById(R.id.tv_recommend_date_item);
         ImageView photoImageView = view.findViewById(R.id.like_busker_photo_item);
         Bitmap bitmap = bitmapImgDownload(photo);
         if (bitmap != null) {
@@ -101,6 +104,7 @@ public class RecommendBuskingAdapter extends BaseAdapter {
         nameTextview.setText(name);
         placeTextview.setText(place);
         timeTextview.setText(time);
+        dateTextview.setText(date);
 
         return view;
     }

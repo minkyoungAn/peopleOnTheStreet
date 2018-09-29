@@ -39,6 +39,9 @@ import buskinggo.seoul.com.buskinggo.buskingInfo.BuskingInfoActivity;
  */
 public class HomeFragment extends Fragment {
 
+    JSONArray jsonArray;
+    JSONArray recommendJsonArray;
+
     private static final String TAG_JSON = "response";
 
     private Context context;
@@ -90,7 +93,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 try {
-                    String buskingNo = jsonArray.getJSONObject(position).getString("BuskingNo");
+                    String buskingNo = recommendJsonArray.getJSONObject(position).getString("BuskingNo");
                     Intent intent = new Intent(getActivity(), BuskingInfoActivity.class);
                     intent.putExtra("buskingNo",  Integer.parseInt(buskingNo));
                     startActivity(intent);
@@ -101,7 +104,6 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    JSONArray jsonArray;
     private class TodayBuskingAsync extends AsyncTask<String, Void, String> {
         String errorString = null;
 
@@ -188,16 +190,16 @@ public class HomeFragment extends Fragment {
             super.onPostExecute(result);
 
             JSONObject jsonObject = new JSONObject();
-            JSONArray jsonArray = new JSONArray();
+            recommendJsonArray = new JSONArray();
 
             try {
                 jsonObject = new JSONObject(result);
-                jsonArray = jsonObject.getJSONArray(TAG_JSON);
+                recommendJsonArray = jsonObject.getJSONArray(TAG_JSON);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            RecommendBuskingAdapter recommendAdapter = new RecommendBuskingAdapter(context, jsonArray, R.layout.home_busking_item);
+            RecommendBuskingAdapter recommendAdapter = new RecommendBuskingAdapter(context, recommendJsonArray, R.layout.home_busking_item);
             recommendGridView.setAdapter(recommendAdapter);
         }
 
