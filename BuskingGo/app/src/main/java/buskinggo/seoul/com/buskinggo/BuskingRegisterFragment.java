@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -160,6 +162,10 @@ public class BuskingRegisterFragment extends Fragment {
                 }
 
                 uploadToServer(buskingDate, buskingTime, place, introduce);
+                introduceEditText.setText("");
+                HomeFragment homeFragment = new HomeFragment();
+                ((MainActivity)getActivity()).changeFragment(homeFragment);
+                ((MainActivity)getActivity()).bottomNavigationView.setSelectedItemId(R.id.action_home);
             }
         });
 

@@ -7,8 +7,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -166,7 +164,6 @@ public class BuskingListFragment extends Fragment {
                 e.printStackTrace();
             }
 
-            Log.w("jsonArray", String.valueOf(jsonArray));
             buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
             buskingListView.setAdapter(buskingListAdapter);
             setListViewHeightBasedOnChildren(buskingListView);
@@ -249,7 +246,6 @@ public class BuskingListFragment extends Fragment {
             @Override
             public int compare(JSONObject lhs, JSONObject rhs) {
                 String lid = null;
-                Log.w("test", "2");
                 try {
                     lid = lhs.getString("BuskerName");
                 } catch (JSONException e) {
@@ -278,7 +274,6 @@ public class BuskingListFragment extends Fragment {
             @Override
             public int compare(JSONObject lhs, JSONObject rhs) {
                 String lid = null;
-                Log.w("test", "2");
                 try {
                     lid = lhs.getString("BuskingDate");
                 } catch (JSONException e) {
@@ -307,7 +302,6 @@ public class BuskingListFragment extends Fragment {
             @Override
             public int compare(JSONObject lhs, JSONObject rhs) {
                 String lid = null;
-                Log.w("test", "2");
                 try {
                     lid = lhs.getString("Place");
                 } catch (JSONException e) {
