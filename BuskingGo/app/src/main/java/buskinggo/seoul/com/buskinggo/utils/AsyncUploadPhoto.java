@@ -16,7 +16,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
     private AsyncRegisListener asyncListener;
 
     private Context mContext;
-    private ProgressDialog progressDialog;
     private String url;
     private String ConvertImage;
     private String ImageTag = "image_tag";
@@ -32,7 +31,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        progressDialog = ProgressDialog.show(mContext, "등록 진행 중입니다.", "잠시만 기다려주세요.", false, false);
     }
 
     @Override
@@ -52,7 +50,6 @@ public class AsyncUploadPhoto extends AsyncTask<String, Void, String> {
     @Override
     protected void onPostExecute(String resultMessage) {
         super.onPostExecute(resultMessage);
-        progressDialog.dismiss();
         Toast.makeText(mContext, resultMessage, Toast.LENGTH_LONG).show();
         asyncListener.taskComplete();
     }

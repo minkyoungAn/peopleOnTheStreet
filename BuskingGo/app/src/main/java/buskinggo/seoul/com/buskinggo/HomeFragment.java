@@ -23,6 +23,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -123,7 +124,6 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-
             BuskingListAdapter buskingListAdapter = new BuskingListAdapter(context, jsonArray, R.layout.busking_list_item);
             todayBuskingListView.setAdapter(buskingListAdapter);
             setListViewHeightBasedOnChildren(todayBuskingListView);
@@ -203,29 +203,25 @@ public class HomeFragment extends Fragment {
 
         @Override
         protected String doInBackground(String... strings) {
+            HttpURLConnection httpURLConnection = null;
 
             try{
-                URL url = new URL("http://buskinggo.cafe24.com/TodayBuskingList.php");
+                URL url = new URL("http://buskinggo.cafe24.com/RecommendBusking.php");
 
-                Map<String,Object> params = new LinkedHashMap<>();
+                String data;
 
-                StringBuilder postData = new StringBuilder();
-                for (Map.Entry<String,Object> param : params.entrySet()) {
-                    if (postData.length() != 0) postData.append('&');
-                    postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                    postData.append('=');
-                    postData.append(URLEncoder.encode(String.valueOf(param.getValue()), "UTF-8"));
-                }
-                byte[] postDataBytes = postData.toString().getBytes("UTF-8");
+                data = URLEncoder.encode("userNo", "UTF-8") + "=" + MyApplication.userDTO.getUserNo();
 
-                HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-                conn.setRequestProperty("Content-Length", String.valueOf(postDataBytes.length));
-                conn.setDoOutput(true);
-                conn.getOutputStream().write(postDataBytes);
+                httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setDoOutput(true);
 
-                Reader in = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+                OutputStreamWriter wr = new OutputStreamWriter(httpURLConnection.getOutputStream());
+                wr.write(data); // data 보내기
+                wr.flush();
+
+                Reader in = new BufferedReader(new InputStreamReader(httpURLConnection.getInputStream(), "UTF-8"));
 
                 StringBuilder sb = new StringBuilder();
                 for (int c; (c = in.read()) >= 0;)
@@ -233,7 +229,7 @@ public class HomeFragment extends Fragment {
                 String response = sb.toString().trim();
 
                 in.close();
-                conn.disconnect();
+                httpURLConnection.disconnect();
                 return response;
 
             }

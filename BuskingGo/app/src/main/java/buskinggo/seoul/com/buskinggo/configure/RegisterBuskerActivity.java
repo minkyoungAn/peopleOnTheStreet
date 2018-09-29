@@ -94,6 +94,7 @@ public class RegisterBuskerActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 uploadToServer();
+                finish();
             }
         });
 

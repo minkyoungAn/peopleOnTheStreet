@@ -149,7 +149,7 @@ public class BuskingRegisterFragment extends Fragment {
                 buskingTime = String.valueOf(timeButton.getText());
                 introduce = String.valueOf(introduceEditText.getText());
 
-                if(MyApplication.buskerNo.equals("-1")) {
+                if(MyApplication.userDTO.getCheckBusker() == 0) {
                     Toast.makeText(container.getContext(), "버스커 등록을 먼저 해주세요!", Toast.LENGTH_SHORT).show();
                     Intent buskerRegisIntent = new Intent(container.getContext(), RegisterBuskerActivity.class);
                     startActivity(buskerRegisIntent);
