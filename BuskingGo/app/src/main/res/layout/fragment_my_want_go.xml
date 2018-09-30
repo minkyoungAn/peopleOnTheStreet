@@ -16,6 +16,7 @@
         android:visibility="gone"/>
 
     <GridView
+        android:layout_marginTop="10dp"
         android:numColumns="2"
         android:id="@+id/lv_my_want"
         android:layout_width="match_parent"
@@ -24,6 +25,7 @@
         android:layout_marginRight="16sp"
         android:divider="@color/black"
         android:dividerHeight="4dp"
+        android:verticalSpacing="10dip"
         android:orientation="vertical"
         android:gravity="center_horizontal"/>
 
