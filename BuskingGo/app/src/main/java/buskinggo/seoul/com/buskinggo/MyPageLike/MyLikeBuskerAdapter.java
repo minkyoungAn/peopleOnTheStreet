@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.dto.BuskerDTO;
@@ -22,7 +25,6 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
     private LayoutInflater mInflater;
     private ArrayList<BuskerDTO> buskerList;
     private int mLayout;
-    private MyLikeBuskerViewHolder viewHolder;
 
 
     MyLikeBuskerAdapter(Context context, int layout, ArrayList<BuskerDTO> buskerList) {
@@ -50,50 +52,52 @@ public class MyLikeBuskerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup viewGroup) {
-        if(convertView == null){
+
+
+        if (convertView == null) {
             convertView = mInflater.inflate(mLayout, viewGroup, false);
-
-            viewHolder = new MyLikeBuskerViewHolder();
-            viewHolder.photo = convertView.findViewById(R.id.like_busker_photo_item);
-            viewHolder.name = convertView.findViewById(R.id.like_busker_name_item);
-            viewHolder.genre = convertView.findViewById(R.id.like_busker_genre_item);
-
-            convertView.setTag(viewHolder);
-
-        }else{
-
-            viewHolder = (MyLikeBuskerViewHolder) convertView.getTag();
         }
+
+        ImageView ivPhoto = convertView.findViewById(R.id.like_busker_photo_item);
+        TextView tvName = convertView.findViewById(R.id.like_busker_name_item);
+        TextView tvGenre = convertView.findViewById(R.id.like_busker_genre_item);
+
 
         String photo = buskerList.get(position).getPhoto();
         String name = buskerList.get(position).getBuskerName();
         String genre = buskerList.get(position).getGenre();
 
-        if(photo.equals("null") || name.equals("null") || genre.equals("null")){
-            bitmapImgDownload(photo);
-            return convertView;
-        }else{
-            viewHolder.name.setText(name);
-            viewHolder.genre.setText(genre);
-            bitmapImgDownload(photo);
+
+        tvName.setText(name);
+        tvGenre.setText(genre);
+        Bitmap bitmap = bitmapImgDownload(photo);
+        if (bitmap != null) {
+            ivPhoto.setImageBitmap(bitmap);
         }
 
         return convertView;
     }
 
-    private void bitmapImgDownload(String photo) {
+    private Bitmap bitmapImgDownload(String photo) {
+        if (photo == null) return null;
+
         // 이미지 다운로드
         AsyncPhoto asyncBuskerPhoto = new AsyncPhoto(new AsyncPhotoListener() {
             @Override
             public void taskComplete(File file) {
-                if(file != null){
-                    Bitmap bitmap = new PhotoResizing().loadPictureWithResize(file, 160);
-                    viewHolder.photo.setImageBitmap(bitmap);
-                }
             }
         });
-        asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto");
 
+        try {
+            File file = asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskerPhoto").get();
+            if (file != null) {
+                return new PhotoResizing().loadPictureWithResize(file, 160);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
 

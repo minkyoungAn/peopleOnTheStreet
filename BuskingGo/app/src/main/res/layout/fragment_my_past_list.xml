@@ -22,7 +22,7 @@
         android:layout_marginTop="16sp"
         android:layout_marginLeft="16sp"
         android:layout_marginRight="16sp"
-        android:divider="@color/black"
+        android:divider="@color/mainBackground"
         android:dividerHeight="8dp"
         android:orientation="vertical" />
 

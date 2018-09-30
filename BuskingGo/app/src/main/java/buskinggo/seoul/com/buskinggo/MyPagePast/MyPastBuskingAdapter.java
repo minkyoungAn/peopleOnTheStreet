@@ -7,9 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import buskinggo.seoul.com.buskinggo.utils.AsyncPhotoListener;
 import buskinggo.seoul.com.buskinggo.dto.BuskingDTO;
@@ -19,7 +22,6 @@ import buskinggo.seoul.com.buskinggo.utils.AsyncPhoto;
 
 public class MyPastBuskingAdapter extends BaseAdapter {
 
-    private MyPastBuskingViewHolder viewHolder;
     private Context mContext;
     private LayoutInflater mInflater;
     private ArrayList<BuskingDTO> buskingList;
@@ -54,20 +56,12 @@ public class MyPastBuskingAdapter extends BaseAdapter {
 
         if (convertView == null) {
             convertView = mInflater.inflate(mLayout, viewGroup, false);
-
-            viewHolder = new MyPastBuskingViewHolder();
-            viewHolder.name = convertView.findViewById(R.id.past_name_item);
-            viewHolder.place = convertView.findViewById(R.id.past_place_item);
-            viewHolder.date = convertView.findViewById(R.id.past_date_item);
-            viewHolder.time = convertView.findViewById(R.id.past_time_item);
-            viewHolder.photo = convertView.findViewById(R.id.past_photo_item);
-
-            convertView.setTag(viewHolder);
-
-        } else {
-
-            viewHolder = (MyPastBuskingViewHolder) convertView.getTag();
         }
+        TextView tvName = convertView.findViewById(R.id.past_name_item);
+        TextView tvPlace = convertView.findViewById(R.id.past_place_item);
+        TextView tvDate = convertView.findViewById(R.id.past_date_item);
+        TextView tvTime = convertView.findViewById(R.id.past_time_item);
+        ImageView ivPhoto = convertView.findViewById(R.id.past_photo_item);
 
         String name = buskingList.get(position).getBuskerName();
         String date = buskingList.get(position).getBuskingDate();
@@ -76,41 +70,45 @@ public class MyPastBuskingAdapter extends BaseAdapter {
         String photo = buskingList.get(position).getPhoto();
         time = time.substring(0, 5);
         String addr[] = place.split(" "); // 구, 동
-        if(addr.length > 2){
-            place = addr[1] +" "+ addr[2];
-        } else if(addr.length == 2){
+        if (addr.length > 2) {
+            place = addr[1] + " " + addr[2];
+        } else if (addr.length == 2) {
             place = addr[1];
         }
 
-        //|| photo.equals("null")
-        if (date.equals("null") || place.equals("null") || time.equals("null") || name.equals("null") ) {
-            bitmapImgDownload(photo);
-            return convertView;
 
-        } else {
-            viewHolder.date.setText(date);
-            viewHolder.time.setText(time);
-            viewHolder.place.setText(place);
-            viewHolder.name.setText(name);
-            bitmapImgDownload(photo);
+        tvDate.setText(date);
+        tvTime.setText(time);
+        tvPlace.setText(place);
+        tvName.setText(name);
+        Bitmap bitmap = bitmapImgDownload(photo);
+        if (bitmap != null) {
+            ivPhoto.setImageBitmap(bitmap);
         }
 
         return convertView;
     }
 
-    private void bitmapImgDownload(String photo) {
+    private Bitmap bitmapImgDownload(String photo) {
+        if (photo == null) return null;
+
         // 이미지 다운로드
         AsyncPhoto asyncBuskerPhoto = new AsyncPhoto(new AsyncPhotoListener() {
             @Override
             public void taskComplete(File file) {
-                if(file != null){
-                    Bitmap bitmap = new PhotoResizing().loadPictureWithResize(file, 150);
-                    viewHolder.photo.setImageBitmap(bitmap);
-                }
             }
         });
-        asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskingPhoto");
 
+        try {
+            File file = asyncBuskerPhoto.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, photo, "buskingPhoto").get();
+            if (file != null) {
+                return new PhotoResizing().loadPictureWithResize(file, 150);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }
 
